@@ -17,7 +17,7 @@ cd tkb_2605
 docker compose up --build
 ```
 
-- http://localhost:5173 を開く。「Backend Connected」「Database Ready」が出れば成功。
+- http://localhost:5173 を開く。ログイン画面の「画面をプレビュー」からホームへ進み、「Backend Connected」「Database Ready」が出れば成功。
 - 初回はイメージのビルドとnpmのインストールで数分かかる。DBのmigrateは起動時に自動で走る。
 - React（`frontend/src`）とDjango（`backend/`）のコードは保存すると自動で反映される。
 
@@ -42,6 +42,24 @@ DBは `sqlite-data` というDockerのボリュームに保存されるので、
 - **port is already allocated**：5173か8000を他のアプリが使っている。そのアプリを止めるか、`compose.yaml` の左側のポート番号を変える。
 - **「Backend Unreachable」**：`docker compose logs backend` を見る。たいていは Python の構文エラーかmigrationの失敗。
 - **`npm ci` で失敗する**：`package-lock.json` が `package.json` と合っていない。`docker compose exec frontend npm install` で作り直してコミットする。
+
+## フロントエンドのルーティング
+
+URLは `frontend/src/routes.ts`、画面の割り当ては `frontend/src/App.tsx` で管理する。
+
+| 画面 | URL |
+|---|---|
+| ログイン | `/login` |
+| ホーム・タイムライン | `/` |
+| チャット一覧 | `/chats` |
+| 初心者向けおすすめ | `/recommendations` |
+| 種目選択 | `/exercises` |
+| 種目ごとの記録 | `/workouts/:workoutId/exercises/:exerciseId` |
+| 結果 | `/workouts/:workoutId/results` |
+
+ログイン以外の上記画面は共通のガードを通す。認証APIは未実装のため、現在は開発環境の「画面をプレビュー」からのみ確認できる。本番ビルドにはプレビュー入口を表示せず、保護されたURLは `/login` に戻す。プレビュー状態はメモリ内のみで、再読み込みすると解除される。直接開いたURLのパス・検索条件・ハッシュはログイン画面を経由して引き継ぐ。
+
+各画面はひな形であり、ログイン・グループ権限確認・記録の保存・共有は今後実装する。認証連携時にはガードを実際のセッションに接続し、バックエンドの各APIでもグループへのアクセス権を確認する。記録画面へ進む仮リンクでは `preview` をIDに使っており、API連携時に実際のIDへ置き換える。「別の種目を選ぶ」では `workoutId` を検索パラメータで引き継ぎ、同じトレーニングを継続する。チャット詳細は今回の対象外。
 
 ## 開発の流れ（GitHub Flow）
 
