@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router";
 import { Avatar } from "../components/Avatar.tsx";
 import { Icon } from "../components/Icon.tsx";
@@ -6,6 +7,8 @@ import { currentUser } from "../features/social/seed.ts";
 import { paths } from "../routes.ts";
 
 export default function Home() {
+  const [feed, setFeed] = useState<"following" | "followers" | "notifications">("following");
+
   return <>
     <div className="home-top">
     <header className="home-header">
@@ -37,8 +40,17 @@ export default function Home() {
     </section>
     </div>
     <section className="timeline-section" aria-labelledby="timeline-heading">
-      <div className="timeline-heading"><h2 id="timeline-heading"><span>TIMELINE</span></h2><span className="timeline-live"><span />トレーニングの投稿</span></div>
-      <ApiTimeline />
+      <div className="timeline-heading"><h2 id="timeline-heading"><span>TIMELINE</span></h2><span className="timeline-live"><span />{feed === "notifications" ? "通知" : "トレーニングの投稿"}</span></div>
+      <div className="feed-tabs" role="group" aria-label="タイムラインの表示切り替え">
+        <button type="button" className={feed === "following" ? "active" : ""} aria-pressed={feed === "following"} onClick={() => setFeed("following")}>フォロー中</button>
+        <button type="button" className={feed === "followers" ? "active" : ""} aria-pressed={feed === "followers"} onClick={() => setFeed("followers")}>フォロワー</button>
+        <button type="button" className={feed === "notifications" ? "active" : ""} aria-pressed={feed === "notifications"} onClick={() => setFeed("notifications")}>通知</button>
+      </div>
+      <div hidden={feed === "notifications"}>
+        <p className="feed-note">フォロー・フォロワー別の表示は準備中です。現在は投稿一覧を表示しています。</p>
+        <ApiTimeline />
+      </div>
+      {feed === "notifications" && <p className="feed-note" role="status">通知は準備中です。</p>}
     </section>
   </>;
 }

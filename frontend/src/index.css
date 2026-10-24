@@ -92,6 +92,12 @@ svg { flex-shrink: 0; }
 .timeline-heading h2 > span { font-size: 8px; letter-spacing: .16em; font-weight: 500; color: #a4ad9d; }
 .timeline-live { display: flex; align-items: center; gap: 5px; font-size: 8px; color: #9aa48f; }
 .timeline-live > span { width: 4px; height: 4px; background: #a2b58c; border-radius: 50%; }
+.feed-tabs { display: flex; border-bottom: 1px solid var(--line); padding: 0 25px; gap: 32px; }
+.feed-tabs button { position: relative; display: inline-flex; align-items: center; justify-content: center; min-height: 44px; color: #6c7763; font-size: 12px; background: transparent; padding: 0 9px; }
+.feed-tabs .active { color: var(--green); font-weight: 700; }
+.feed-tabs .active:after { content: ""; position: absolute; bottom: -1px; left: 0; right: 0; height: 3px; background: #426c4b; border-radius: 3px 3px 0 0; }
+.feed-tabs button:hover { color: var(--green); }
+.feed-note { padding: 8px 28px; color: var(--muted); font-size: 11px; line-height: 1.6; }
 .avatar-link { display: inline-flex; flex-shrink: 0; border-radius: 50%; height: fit-content; }
 .avatar { display: inline-flex; flex-shrink: 0; overflow: hidden; border-radius: 50%; background: #e1e9d8; --avatar-shirt: #5b7954; }
 .avatar svg { width: 100%; height: 100%; }
@@ -172,6 +178,9 @@ a.post-content:hover { color: #426b43; }
   .timeline-heading h2 { font-size: 14px; gap: 9px; }
   .timeline-heading h2 > span { font-size: 7px; }
   .timeline-live { font-size: 7px; }
+  .feed-tabs { padding: 0 12px; gap: 0; }
+  .feed-tabs button { flex: 1; min-width: 0; padding: 0 4px; }
+  .feed-note { padding-right: 20px; padding-left: 20px; }
   .post-card { padding: 20px 18px 14px; gap: 10px; }
   .post-author { font-size: 13px; }
   .post-text { font-size: 14px; line-height: 1.85; }
