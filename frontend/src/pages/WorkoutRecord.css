@@ -2,8 +2,8 @@
 .record-screen h1 { margin: 0; text-align: center; font-size: 22px; font-weight: 700; line-height: 1.4; overflow-wrap: anywhere; }
 .record-context { margin: 6px 0 18px; text-align: center; font-size: 11px; color: #708176; }
 .record-sets { display: grid; gap: 12px; }
-.record-row { display: grid; grid-template-columns: 22px minmax(0, 1.35fr) minmax(0, 1fr) 32px; align-items: end; gap: 10px; }
-.record-number { align-self: center; padding-top: 17px; text-align: center; font-size: 18px; font-weight: 600; }
+.record-row { display: grid; grid-template-columns: 56px minmax(0, 1.35fr) minmax(0, 1fr) 32px; align-items: end; gap: 10px; }
+.record-number { align-self: center; padding-top: 17px; text-align: center; font-size: 12px; font-weight: 600; white-space: nowrap; }
 .record-weight, .record-reps { display: grid; gap: 3px; min-width: 0; font-size: 10px; color: #6c7c72; }
 .record-weight-input { display: flex; align-items: center; gap: 7px; }
 .record-weight-input > span { font-size: 12px; }
@@ -29,7 +29,7 @@
   .record-actions button { height: 42px; }
 }
 @media (max-width: 374px) {
-  .record-row { grid-template-columns: 20px minmax(0, 1.35fr) minmax(0, 1fr) 28px; gap: 8px; }
+  .record-row { grid-template-columns: 56px minmax(0, 1.35fr) minmax(0, 1fr) 28px; gap: 8px; }
   .record-delete { width: 28px; }
   .record-screen input { padding: 6px; }
 }

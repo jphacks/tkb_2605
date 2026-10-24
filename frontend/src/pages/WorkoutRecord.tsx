@@ -42,7 +42,7 @@ function RecordEditor({ workoutId, exerciseId, entry }: { workoutId: string; exe
     <p className="record-context">セットごとに重量と回数を入力</p>
     <div className="record-sets">
       {sets.map((set, index) => <div className="record-row" role="group" aria-label={`セット${index + 1}`} key={set.id}>
-        <span className="record-number" aria-hidden="true">{index + 1}</span>
+        <span className="record-number" aria-hidden="true">セット{index + 1}</span>
         <label className="record-weight"><span>重量</span><span className="record-weight-input"><input type="text" inputMode="decimal" value={set.weight} aria-label={`セット${index + 1} 重量`} onChange={(event) => edit((items) => items.map((item) => item.id === set.id ? { ...item, weight: event.target.value } : item))} /><span>kg</span></span></label>
         <label className="record-reps"><span>回数</span><input type="text" inputMode="numeric" placeholder="回数" value={set.reps} aria-label={`セット${index + 1} 回数`} onChange={(event) => edit((items) => items.map((item) => item.id === set.id ? { ...item, reps: event.target.value } : item))} /></label>
         {index > 0 ? <button type="button" className="record-delete" aria-label={`セット${index + 1}を削除`} onClick={() => edit((items) => items.filter((item) => item.id !== set.id))}><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3M6 7l1 14h10l1-14M10 10v7m4-7v7" /></svg></button> : <span className="record-delete-space" />}
