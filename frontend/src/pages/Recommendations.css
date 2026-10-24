@@ -6,6 +6,13 @@
   color: #243b30;
 }
 
+.recommendations-title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
 .recommendations-sr-only {
   position: absolute;
   width: 1px;

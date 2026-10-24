@@ -46,7 +46,7 @@ export default function Recommendations() {
 
   return (
     <section className="recommendations-screen" aria-labelledby="recommendations-title">
-      <h1 id="recommendations-title" className="recommendations-sr-only">おすすめメニュー</h1>
+      <h1 id="recommendations-title" className="recommendations-title">おすすめメニュー</h1>
       <label htmlFor="recommendations-menu" className="recommendations-sr-only">おすすめメニューを選択</label>
       <select id="recommendations-menu" className="recommendations-select" value={selectedMenu} onChange={(event) => setSelectedMenu(event.target.value)}>
         <option value="" disabled>おすすめメニューを選択</option>
