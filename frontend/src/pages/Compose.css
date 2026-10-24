@@ -1,4 +1,9 @@
 .compose-dialog {
+  --compose-accent: rgb(139, 40, 23);
+  --compose-accent-hover: #6e2013;
+  --compose-accent-soft: #f8ebe7;
+  --compose-border: #ead4cc;
+  --compose-muted: #795c55;
   position: fixed;
   inset: 8vh 0 auto;
   width: min(600px, calc(100vw - 32px));
@@ -8,15 +13,15 @@
   padding: 0;
   overflow-y: auto;
   overscroll-behavior: contain;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--compose-border);
   border-radius: 16px;
-  background: white;
-  color: #0f1419;
-  box-shadow: 0 16px 60px #00000026;
+  background: #fffdfb;
+  color: #35211b;
+  box-shadow: 0 16px 60px rgb(65 24 16 / .22);
 }
 
 .compose-dialog::backdrop {
-  background: #00000066;
+  background: rgb(44 22 18 / .42);
 }
 
 .compose-dialog button,
@@ -30,6 +35,8 @@
   justify-content: space-between;
   gap: 12px;
   padding: 12px 16px;
+  border-bottom: 1px solid var(--compose-border);
+  background: var(--compose-accent-soft);
 }
 
 .compose-heading,
@@ -60,20 +67,20 @@
 
 .compose-close {
   background: transparent;
-  color: #0f1419;
+  color: var(--compose-accent);
 }
 
 .compose-close:hover:not(:disabled) {
-  background: #eff3f4;
+  background: #f0d9d1;
 }
 
 .compose-submit {
-  background: #0f1419;
+  background: var(--compose-accent);
   color: white;
 }
 
 .compose-submit:hover:not(:disabled) {
-  background: #30383f;
+  background: var(--compose-accent-hover);
 }
 
 .compose-dialog button:disabled {
@@ -83,7 +90,7 @@
 
 .compose-dialog button:focus-visible,
 .compose-dialog textarea:focus-visible {
-  outline: 2px solid #1d9bf0;
+  outline: 2px solid var(--compose-accent);
   outline-offset: 3px;
 }
 
@@ -101,8 +108,8 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: #eff3f4;
-  color: #536471;
+  background: var(--compose-accent-soft);
+  color: var(--compose-accent);
 }
 
 .compose-editor {
@@ -125,7 +132,7 @@
 }
 
 .compose-dialog textarea::placeholder {
-  color: #536471;
+  color: var(--compose-muted);
   opacity: 1;
 }
 
@@ -133,9 +140,10 @@
   display: inline-block;
   margin-top: 16px;
   padding: 6px 12px;
-  border: 1px solid #cfd9de;
+  border: 1px solid var(--compose-border);
   border-radius: 8px;
-  color: #536471;
+  background: var(--compose-accent-soft);
+  color: var(--compose-accent);
   font-size: 13px;
 }
 
