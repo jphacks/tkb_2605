@@ -9,7 +9,7 @@ export default function Home() {
   return <>
     <div className="home-top">
     <header className="home-header">
-      <h1>ホーム<span>HOME</span></h1>
+      <h1><span>HOME</span></h1>
       <div className="home-header-actions">
         <Link className="icon-button home-settings" to="/settings" aria-label="設定を開く"><Icon name="settings" size={18} /></Link>
         <Link className="icon-button home-notification" to="/notifications" aria-label="通知を見る"><Icon name="bell" size={18} /></Link>
@@ -37,7 +37,7 @@ export default function Home() {
     </section>
     </div>
     <section className="timeline-section" aria-labelledby="timeline-heading">
-      <div className="timeline-heading"><h2 id="timeline-heading">タイムライン<span>TIMELINE</span></h2><span className="timeline-live"><span />トレーニングの投稿</span></div>
+      <div className="timeline-heading"><h2 id="timeline-heading"><span>TIMELINE</span></h2><span className="timeline-live"><span />トレーニングの投稿</span></div>
       <ApiTimeline />
     </section>
   </>;

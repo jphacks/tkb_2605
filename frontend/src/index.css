@@ -182,7 +182,6 @@ a.post-content:hover { color: #426b43; }
 
 }
 @media (max-width: 374px) {
-  .home-header h1 > span { display: none; }
   .training-button strong { font-size: 12px; }
   .timeline-live { display: none; }
   .post-meta { column-gap: 4px; }
