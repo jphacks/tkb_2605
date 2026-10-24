@@ -4,6 +4,7 @@ export const paths = {
   login: "/login",
   home: "/",
   chats: "/chats",
+  compose: "/compose",
   recommendations: "/recommendations",
   exercises: "/exercises",
   workoutExercise: "/workouts/:workoutId/exercises/:exerciseId",

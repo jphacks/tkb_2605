@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router";
 import ProtectedRoutes from "./components/ProtectedRoutes.tsx";
 import AppLayout from "./layouts/AppLayout.tsx";
 import Chats from "./pages/Chats.tsx";
+import Compose from "./pages/Compose.tsx";
 import Exercises from "./pages/Exercises.tsx";
 import Home from "./pages/Home.tsx";
 import Login from "./pages/Login.tsx";
@@ -25,6 +26,7 @@ export default function App() {
         <Route element={<AppLayout onExitPreview={() => setPreviewEnabled(false)} />}>
           <Route index element={<Home />} />
           <Route path={paths.chats} element={<Chats />} />
+          <Route path={paths.compose} element={<Compose />} />
           <Route path={paths.recommendations} element={<Recommendations />} />
           <Route path={paths.exercises} element={<Exercises />} />
           <Route path={paths.workoutExercise} element={<WorkoutRecord />} />
