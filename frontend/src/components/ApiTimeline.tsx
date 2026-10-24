@@ -3,6 +3,15 @@ import { fetchPosts, togglePostLike, type ApiPost } from "../api/posts.ts";
 import { Link } from "react-router";
 import { Icon } from "./Icon.tsx";
 
+function appendUniquePosts(current: ApiPost[], incoming: ApiPost[]): ApiPost[] {
+  const seen = new Set(current.map((post) => post.post_id));
+  return [...current, ...incoming.filter((post) => {
+    if (seen.has(post.post_id)) return false;
+    seen.add(post.post_id);
+    return true;
+  })];
+}
+
 export function ApiTimeline() {
   const [posts, setPosts] = useState<ApiPost[]>([]);
   const [next, setNext] = useState<number | null>(0);
@@ -12,6 +21,7 @@ export function ApiTimeline() {
   const [liking, setLiking] = useState<string[]>([]);
   const pendingLikes = useRef(new Set<string>());
   const pendingPage = useRef(false);
+  const nextOffset = useRef<number | null>(0);
   const mounted = useRef(false);
   const pageController = useRef<AbortController | null>(null);
 
@@ -21,7 +31,11 @@ export function ApiTimeline() {
     pageController.current = controller;
     pendingPage.current = true;
     fetchPosts({ signal: controller.signal }).then((page) => {
-      if (!controller.signal.aborted) { setPosts(page.results); setNext(page.next_offset); }
+      if (!controller.signal.aborted) {
+        nextOffset.current = page.next_offset;
+        setPosts(appendUniquePosts([], page.results));
+        setNext(page.next_offset);
+      }
     }).catch((reason: unknown) => {
       if (!controller.signal.aborted) setError(reason instanceof Error ? reason.message : "投稿を取得できませんでした。");
     }).finally(() => {
@@ -31,16 +45,19 @@ export function ApiTimeline() {
   }, []);
 
   async function loadMore() {
-    if (pendingPage.current || next === null) return;
+    if (!mounted.current || pendingPage.current || nextOffset.current === null) return;
+    const offset = nextOffset.current;
     pendingPage.current = true;
     const controller = new AbortController();
     pageController.current = controller;
     setLoading(true); setError("");
     try {
-      const page = await fetchPosts({ offset: next, signal: controller.signal });
+      const page = await fetchPosts({ offset, signal: controller.signal });
       if (controller.signal.aborted) return;
       // Offset pagination can overlap when a new post is inserted; keep existing like state.
-      setPosts((items) => [...items, ...page.results.filter((post) => !items.some((item) => item.post_id === post.post_id))]);
+      setPosts((items) => appendUniquePosts(items, page.results));
+      // Advance only after success, before releasing the request lock. Failed pages retry this offset.
+      nextOffset.current = page.next_offset;
       setNext(page.next_offset);
     } catch (reason) {
       if (!controller.signal.aborted) setError(reason instanceof Error ? reason.message : "投稿を取得できませんでした。");
@@ -77,8 +94,8 @@ export function ApiTimeline() {
     </article>)}</div>
     {loading && <p className="feed-status" role="status">投稿を読み込んでいます…</p>}
     {error && <div className="feed-status"><p className="feed-error" role="alert">{error}</p><button type="button" className="secondary-button" disabled={loading} onClick={() => void loadMore()}>再試行</button></div>}
-    {!loading && !error && !posts.length && <div className="empty-state"><Icon name="message" size={30} /><h3>まだ投稿がありません</h3><p>トレーニングの記録がここに表示されます。</p></div>}
-    {!loading && !error && next !== null && posts.length > 0 && <div className="feed-status"><button type="button" className="secondary-button" onClick={() => void loadMore()}>もっと見る</button></div>}
+    {!loading && !error && next === null && !posts.length && <div className="empty-state"><Icon name="message" size={30} /><h3>まだ投稿がありません</h3><p>トレーニングの記録がここに表示されます。</p></div>}
+    {!loading && !error && next !== null && <div className="feed-status"><button type="button" className="secondary-button" onClick={() => void loadMore()}>もっと見る</button></div>}
     {!loading && !error && next === null && posts.length > 0 && <div className="feed-end"><span /><Icon name="check" size={15} />ここまでの投稿をチェックしました<span /></div>}
   </div>;
 }

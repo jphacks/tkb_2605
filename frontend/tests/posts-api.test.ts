@@ -38,6 +38,24 @@ test("end of history is null and invalid paging is rejected before a request", a
   assert.equal(requests.length, 1);
 });
 
+test("an empty page can continue at the exact offset returned by the API", async () => {
+  respond({ results: [], next_offset: 37 });
+  const first = await fetchPosts();
+  assert.deepEqual(first, { results: [], next_offset: 37 });
+  assert.equal(requests[0].url, "/api/posts/?limit=20&offset=0");
+  respond({ results: [fixture], next_offset: null });
+  const last = await fetchPosts({ offset: first.next_offset! });
+  assert.equal(requests[1].url, "/api/posts/?limit=20&offset=37");
+  assert.equal(last.next_offset, null);
+});
+
+test("invalid or non-advancing next offsets are rejected rather than repeating a page", async () => {
+  for (const next_offset of [-1, 19, 20, 20.5, "40"]) {
+    respond({ results: [fixture], next_offset });
+    await assert.rejects(fetchPosts({ offset: 20 }), /応答形式/);
+  }
+});
+
 test("like sends a bodyless PUT and uses the returned authoritative state", async () => {
   respond({ post_id: "a/b", like_count: 6, is_liked: false });
   assert.deepEqual(await togglePostLike("a/b"), { post_id: "a/b", like_count: 6, is_liked: false });
