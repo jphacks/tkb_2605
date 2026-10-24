@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test:record": "node --experimental-strip-types --test tests/record-draft.test.ts"
   },
   "dependencies": {
     "react": "^19.3.1",
