@@ -1,0 +1,44 @@
+# Development environment: `docker compose up --build`, then open http://localhost:5173
+# Production uses compose.prod.yaml (see README).
+services:
+  backend:
+    build:
+      context: ./backend
+      target: dev
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      DJANGO_DEBUG: "1"
+      SQLITE_PATH: /data/db.sqlite3
+    volumes:
+      - ./backend:/app
+      - sqlite-data:/data
+    ports:
+      - "8000:8000"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://localhost:8000/api/health/').status==200 else 1)"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+      start_period: 10s
+
+  frontend:
+    build:
+      context: ./frontend
+      target: dev
+    environment:
+      CHOKIDAR_USEPOLLING: ${CHOKIDAR_USEPOLLING:-false}
+    volumes:
+      - ./frontend:/app
+      - frontend-node-modules:/app/node_modules
+    ports:
+      - "5173:5173"
+    depends_on:
+      backend:
+        condition: service_healthy
+
+volumes:
+  # WARNING: `docker compose down -v` deletes these, including the SQLite database.
+  sqlite-data:
+  frontend-node-modules:

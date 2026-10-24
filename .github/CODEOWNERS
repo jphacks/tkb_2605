@@ -1,0 +1,5 @@
+# Production deploy path: changes here reach the VM automatically after merge, so the owner reviews them.
+/.github/   @reindeer39
+/ops/       @reindeer39
+/compose.prod.yaml @reindeer39
+/frontend/nginx.conf @reindeer39

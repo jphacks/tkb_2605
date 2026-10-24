@@ -1,0 +1,10 @@
+[Unit]
+Description=Workout app: check for a new main every 5 minutes
+
+[Timer]
+OnBootSec=2min
+OnUnitInactiveSec=5min
+RandomizedDelaySec=30
+
+[Install]
+WantedBy=timers.target

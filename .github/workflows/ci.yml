@@ -1,0 +1,113 @@
+name: CI
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+# a newer push to the same PR cancels the older run; main runs are never cancelled (Publish images waits for them)
+concurrency:
+  group: ci-${{ github.event.pull_request.number || github.sha }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  frontend:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - run: npm ci --no-audit --no-fund
+      - run: npm run lint
+      - run: npm run build
+
+  backend:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: backend
+    env:
+      DJANGO_DEBUG: "1"
+      SQLITE_PATH: /tmp/ci.sqlite3
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: backend/requirements.txt
+      - run: pip install -r requirements.txt
+      - run: python manage.py check
+      - run: python manage.py makemigrations --check --dry-run
+      - run: python manage.py migrate --noinput
+      - run: python manage.py test
+
+  compose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+      - name: Dev stack starts and serves /api/health/ through the Vite proxy
+        run: |
+          docker compose up --build -d
+          for i in $(seq 1 60); do
+            if curl -fsS http://localhost:5173/api/health/ | tee /tmp/health.json | grep -q '"database":"ok"'; then exit 0; fi
+            sleep 3
+          done
+          cat /tmp/health.json || true
+          docker compose logs
+          exit 1
+
+  prod:
+    # the same images Publish pushes, so a broken prod Dockerfile or nginx.conf fails the PR instead of the deploy
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      IMAGE_TAG: ci
+      # busybox wget in the web image resolves localhost to ::1, and nginx listens on IPv4 only
+      PUBLIC_HOST: 127.0.0.1
+      DJANGO_SECRET_KEY: ci-only-not-secret
+      TUNNEL_TOKEN: unused
+      DATA_DIR: /tmp/workout-data
+    steps:
+      - uses: actions/checkout@v7
+      - uses: docker/setup-buildx-action@v4
+      - uses: docker/build-push-action@v7
+        with:
+          context: frontend
+          target: prod
+          load: true
+          tags: ghcr.io/jphacks/tkb_2605-web:ci
+          cache-from: type=gha,scope=web
+      - uses: docker/build-push-action@v7
+        with:
+          context: backend
+          target: prod
+          load: true
+          tags: ghcr.io/jphacks/tkb_2605-backend:ci
+          cache-from: type=gha,scope=backend
+      - name: Prod stack (without cloudflared) migrates and serves the SPA and /api/health/ through nginx
+        run: |
+          mkdir -p "$DATA_DIR" && chmod 777 "$DATA_DIR"
+          dc() { docker compose -f compose.prod.yaml "$@"; }
+          dc run --rm --no-deps backend python manage.py migrate --noinput
+          dc up -d --wait --wait-timeout 120 web backend
+          for i in $(seq 1 20); do
+            dc exec -T web wget -qO- http://127.0.0.1:8080/api/health/ > /tmp/health.json 2>/dev/null && break
+            sleep 2
+          done
+          cat /tmp/health.json
+          grep -q '"database":"ok"' /tmp/health.json
+          dc exec -T web wget -qO- http://127.0.0.1:8080/some/spa/route | grep -q '<div id="root">'
+      - if: failure()
+        run: docker compose -f compose.prod.yaml logs

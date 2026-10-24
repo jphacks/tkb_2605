@@ -1,0 +1,7 @@
+[Unit]
+Description=Workout app SQLite backup
+After=docker.service
+
+[Service]
+Type=oneshot
+ExecStart=/srv/workout/app/ops/backup.sh

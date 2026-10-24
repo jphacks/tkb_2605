@@ -1,0 +1,37 @@
+# Weekly dependency PRs, grouped so the team gets at most one PR per ecosystem.
+# Major versions are left out; upgrade those deliberately in a feature branch.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /frontend
+    schedule: { interval: weekly, day: monday, timezone: Asia/Tokyo }
+    groups:
+      npm:
+        update-types: [minor, patch]
+    ignore:
+      - dependency-name: "*"
+        update-types: [version-update:semver-major]
+  - package-ecosystem: pip
+    directory: /backend
+    schedule: { interval: weekly, day: monday, timezone: Asia/Tokyo }
+    groups:
+      pip:
+        update-types: [minor, patch]
+    ignore:
+      - dependency-name: "*"
+        update-types: [version-update:semver-major]
+  - package-ecosystem: docker
+    directories: [/frontend, /backend]
+    schedule: { interval: weekly, day: monday, timezone: Asia/Tokyo }
+    groups:
+      docker:
+        update-types: [minor, patch]
+    ignore:
+      - dependency-name: "*"
+        update-types: [version-update:semver-major]
+  - package-ecosystem: github-actions
+    directory: /
+    schedule: { interval: monthly, timezone: Asia/Tokyo }
+    groups:
+      actions:
+        patterns: ["*"]
