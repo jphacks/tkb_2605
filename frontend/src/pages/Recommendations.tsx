@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { WORKOUT_MOCK_NOTICE } from "../api/workouts.ts";
 import { resolveRecommendation, type RecommendationKey } from "../features/exercises/serverCatalog.ts";
 import { useExerciseCatalog } from "../features/exercises/useExerciseCatalog.ts";
 import { useWorkoutSelection } from "../features/workouts/useWorkoutSelection.ts";
@@ -39,7 +40,7 @@ const menus: Menu[] = [
 
 export default function Recommendations() {
   const { catalog, error: catalogError } = useExerciseCatalog();
-  const { select, busy, error, uncertain, reconcile } = useWorkoutSelection("recommendations");
+  const { select, busy, error } = useWorkoutSelection("recommendations");
   const [selectedMenu, setSelectedMenu] = useState("");
   const menu = menus.find((_, index) => String(index + 1) === selectedMenu);
 
@@ -52,17 +53,17 @@ export default function Recommendations() {
         {menus.map((item, index) => <option key={item.part} value={index + 1}>おすすめメニュー{index + 1} {item.part}メニュー</option>)}
       </select>
       <p className="recommendations-note">説明はサンプルです。画像は準備中です。</p>
+      <p className="recommendations-note">{WORKOUT_MOCK_NOTICE}</p>
       {catalogError && <p className="recommendations-error" role="alert">{catalogError}</p>}
       {error && <p className="recommendations-error" role="alert">{error}</p>}
       {busy && <p className="recommendations-note" role="status">トレーニングを確認しています…</p>}
-      {uncertain && <button className="recommendations-retry" type="button" onClick={() => void reconcile()} disabled={busy}>保存状態を確認</button>}
       {menu && catalog && <ul className="recommendations-list" aria-label={`${menu.part}メニューの種目候補`}>
         {menu.exercises.map((recommendation) => {
           const exercise = resolveRecommendation(catalog, recommendation.key);
           if (!exercise) return <li key={recommendation.key} className="recommendations-unavailable">種目データの準備中です。</li>;
           return (
             <li key={recommendation.key}>
-              <button className="recommendations-exercise" type="button" onClick={() => void select(exercise.exercise_id)} disabled={busy || uncertain} aria-label={exercise.display_name + "を選んで記録へ"}>
+              <button className="recommendations-exercise" type="button" onClick={() => void select(exercise.exercise_id)} disabled={busy} aria-label={exercise.display_name + "を選んで記録へ"}>
                 <span className="recommendations-image" aria-hidden="true">
                   <svg viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="4" y="5" width="24" height="22" rx="3" /><circle cx="12" cy="12" r="2" /><path d="m5 23 7-7 5 5 4-4 7 7" /></svg>
                   <span>画像準備中</span>

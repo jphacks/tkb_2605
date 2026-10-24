@@ -4,7 +4,7 @@ import { Avatar } from "../components/Avatar.tsx";
 import { Icon } from "../components/Icon.tsx";
 import { ApiTimeline } from "../components/ApiTimeline.tsx";
 import { currentUser } from "../features/social/seed.ts";
-import { startWorkout, StartWorkoutUncertainError } from "../features/workouts/startWorkout.ts";
+import { startWorkout } from "../features/workouts/startWorkout.ts";
 import { workoutSessionVersion } from "../features/workouts/session.ts";
 import { paths } from "../routes.ts";
 
@@ -13,7 +13,6 @@ export default function Home() {
   const [feed, setFeed] = useState<"following" | "followers" | "notifications">("following");
   const [starting, setStarting] = useState(false);
   const [startError, setStartError] = useState("");
-  const [uncertain, setUncertain] = useState(false);
   const locked = useRef(false);
   const mounted = useRef(true);
   useEffect(() => {
@@ -30,11 +29,10 @@ export default function Home() {
     const active = () => mounted.current && version === workoutSessionVersion();
     try {
       const result = await startWorkout();
-      if (active()) await navigate({ pathname: paths.exercises, search: "?" + createSearchParams({ workoutId: result.workout.workout_id }) }, { state: { workoutWarning: result.storageWarning } });
+      if (active()) await navigate({ pathname: paths.exercises, search: "?" + createSearchParams({ workoutId: result.workout_id }) });
     } catch (reason) {
       if (active()) {
         setStartError(reason instanceof Error ? reason.message : "トレーニングを開始できませんでした。");
-        setUncertain(reason instanceof StartWorkoutUncertainError);
       }
     } finally {
       locked.current = false;
@@ -65,7 +63,7 @@ export default function Home() {
             <path d="M85 0 60 64M555 0l25 64M320 0v58" />
           </svg>
           <div className="chest-actions" aria-busy={starting}>
-            <button type="button" onClick={() => void start()} disabled={starting || uncertain} className="training-button training-start" aria-label="トレーニング開始"><Icon name="dumbbell" size={18} /><strong><span>トレーニング</span><span>開始</span></strong></button>
+            <button type="button" onClick={() => void start()} disabled={starting} className="training-button training-start" aria-label="トレーニング開始"><Icon name="dumbbell" size={18} /><strong><span>トレーニング</span><span>開始</span></strong></button>
             <Link to={paths.recommendations} className="training-button training-recommended" aria-label="おすすめトレーニング"><Icon name="sparkles" size={18} /><strong><span>おすすめ</span><span>トレーニング</span></strong></Link>
           </div>
         </div>

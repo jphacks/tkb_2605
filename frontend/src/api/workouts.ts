@@ -1,4 +1,6 @@
 // HTTP contract: https://github.com/jphacks/tkb_2605/issues/31
+// Current endpoints return fixed samples, ignore request bodies, and do not persist.
+export const WORKOUT_MOCK_NOTICE = "現在は動作確認用のサンプルが表示されます。選択した種目や入力内容、終了状態は保存されません。";
 export type Workout = { workout_id: string; user_id: number; performed_at: string; is_completed: boolean };
 export type WorkoutExercise = { workout_exercise_id: string; workout_id: string; exercise_id: string; display_name: string; position: number };
 export type WorkoutSetInput = { set_number: number; reps: number; weight: string };
@@ -80,7 +82,7 @@ function requestHeaders(write: boolean): Headers {
   }
   return headers;
 }
-const uncertainMessage = "送信結果を確認できません。同じ操作を繰り返す前に、保存済みの記録を確認してください。";
+const uncertainMessage = "応答を確認できませんでした。接続を確認して再試行してください。";
 function invalidResponse(write: boolean, status?: number, cause?: unknown): WorkoutApiError {
   return new WorkoutApiError("記録APIの応答形式を確認できませんでした。" + (write ? uncertainMessage : ""), {
     kind: "response", writeOutcome: write ? "unknown" : undefined, status, cause,
@@ -92,8 +94,8 @@ async function request(url: string, method: "GET" | "POST" | "PATCH", expectedSt
   const write = method !== "GET";
   let response: Response;
   try {
-    // No automatic write retries or redirect replays: a failed response can still
-    // represent a committed POST. UI must reconcile unknown outcomes before resending.
+    // No automatic retries. A response confirms only the current mock operation,
+    // never database persistence or an authenticated user's identity.
     response = await fetch(url, { method, credentials: "same-origin", redirect: "error", headers: requestHeaders(write),
       ...(write ? { body: JSON.stringify(body) } : {}), ...(signal ? { signal } : {}) });
   } catch (cause) {
@@ -122,54 +124,44 @@ async function request(url: string, method: "GET" | "POST" | "PATCH", expectedSt
 }
 
 export async function createWorkout(): Promise<Workout> {
-  const value = await request("/api/note/workouts/", "POST", 201, {});
+  const value = await request("/api/workouts/", "POST", 201, {});
   if (!validWorkout(value) || value.is_completed) throw invalidResponse(true, 201);
   return value;
 }
 
 export async function addWorkoutExercise(workoutId: string, exerciseId: string): Promise<WorkoutExercise> {
-  const url = `/api/note/workouts/${encodedId(workoutId)}/exercises/`;
+  const url = `/api/workouts/${encodedId(workoutId)}/exercises/`;
   encodedId(exerciseId);
   const value = await request(url, "POST", 201, { exercise_id: exerciseId });
-  if (!object(value) || !validExerciseFields(value) || !("workout_id" in value) || value.workout_id !== workoutId || value.exercise_id !== exerciseId) {
+  if (!object(value) || !validExerciseFields(value) || !("workout_id" in value) || value.workout_id !== workoutId) {
     throw invalidResponse(true, 201);
   }
   return value as WorkoutExercise;
 }
 
-// Decimal text avoids binary rounding when comparing the server's recorded weight.
-function normalizedWeight(value: string): string {
-  const [whole, fraction = "0"] = value.split(".");
-  return whole.replace(/^0+(?=\d)/, "") + "." + fraction;
-}
-
 export async function saveWorkoutSets(workoutExerciseId: string, sets: readonly WorkoutSetInput[]): Promise<WorkoutSets> {
-  const url = `/api/note/workout-exercises/${encodedId(workoutExerciseId)}/sets/`;
+  const url = `/api/workout-exercises/${encodedId(workoutExerciseId)}/sets/`;
   if (!Array.isArray(sets) || !sets.length || !sets.every(validSetInput) || !unique(sets.map((set) => set.set_number))) {
     throw new WorkoutApiError("セットを1つ以上指定し、セット番号・回数は1以上の整数、重量は0以上・小数第1位までの文字列で入力してください。", { kind: "input", writeOutcome: "not-sent" });
   }
-  // This endpoint creates all sets once. No append, replace or edit API is defined.
+  // This is the frontend's input format, not a request contract enforced by the
+  // current backend. It returns fixed sets regardless of these values or count.
   const sent = sets.map(({ set_number, reps, weight }) => ({ set_number, reps, weight }));
   const value = await request(url, "POST", 201, { sets: sent });
-  if (!object(value) || value.workout_exercise_id !== workoutExerciseId || !validSets(value.sets, false, false) || value.sets.length !== sent.length) {
+  if (!object(value) || value.workout_exercise_id !== workoutExerciseId || !validSets(value.sets, false, false)) {
     throw invalidResponse(true, 201);
   }
-  const requested = new Map(sent.map((set) => [set.set_number, set]));
-  if (!value.sets.every((set) => {
-    const input = requested.get(set.set_number);
-    return input && input.reps === set.reps && normalizedWeight(input.weight) === normalizedWeight(set.weight);
-  })) throw invalidResponse(true, 201);
   return value as WorkoutSets;
 }
 
 export async function fetchWorkout(workoutId: string, { signal }: { signal?: AbortSignal } = {}): Promise<WorkoutDetail> {
-  const value = await request(`/api/note/workouts/${encodedId(workoutId)}/`, "GET", 200, undefined, signal);
+  const value = await request(`/api/workouts/${encodedId(workoutId)}/`, "GET", 200, undefined, signal);
   if (!validDetail(value) || value.workout_id !== workoutId) throw invalidResponse(false, 200);
   return value;
 }
 
 export async function completeWorkout(workoutId: string): Promise<Workout> {
-  const value = await request(`/api/note/workouts/${encodedId(workoutId)}/`, "PATCH", 200, { is_completed: true });
+  const value = await request(`/api/workouts/${encodedId(workoutId)}/`, "PATCH", 200, { is_completed: true });
   if (!validWorkout(value) || value.workout_id !== workoutId || !value.is_completed) throw invalidResponse(true, 200);
   return value;
 }

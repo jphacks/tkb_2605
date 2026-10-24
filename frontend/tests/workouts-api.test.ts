@@ -41,10 +41,10 @@ afterEach(() => {
   else Reflect.deleteProperty(globalThis, "document");
 });
 
-test("start POST sends only an empty JSON object and uses server identity and time", async () => {
+test("start POST uses the current URL and accepts the fixed mock identity and time", async () => {
   respond(workout, 201);
   assert.deepEqual(await createWorkout(), workout);
-  assert.equal(requests[0].url, "/api/note/workouts/");
+  assert.equal(requests[0].url, "/api/workouts/");
   assert.equal(requests[0].init?.method, "POST");
   assert.equal(requests[0].init?.credentials, "same-origin");
   assert.equal(requests[0].init?.redirect, "error");
@@ -54,7 +54,7 @@ test("start POST sends only an empty JSON object and uses server identity and ti
 test("adding a master exercise encodes the workout ID and sends no generated IDs or position", async () => {
   respond(exercise, 201);
   assert.deepEqual(await addWorkoutExercise(workout.workout_id, exercise.exercise_id), exercise);
-  assert.equal(requests[0].url, "/api/note/workouts/workout%2F1/exercises/");
+  assert.equal(requests[0].url, "/api/workouts/workout%2F1/exercises/");
   assert.equal(requests[0].init?.method, "POST");
   assert.deepEqual(lastBody(), { exercise_id: "master/bench" });
 });
@@ -64,7 +64,7 @@ test("all sets are sent in one POST as decimal text and returned server IDs repl
   const extraInput = input.map((set) => ({ ...set, local_row_id: "local-only" }));
   const result = await saveWorkoutSets(exercise.workout_exercise_id, extraInput);
   assert.equal(requests.length, 1);
-  assert.equal(requests[0].url, "/api/note/workout-exercises/workout-exercise%2F1/sets/");
+  assert.equal(requests[0].url, "/api/workout-exercises/workout-exercise%2F1/sets/");
   assert.equal(requests[0].init?.method, "POST");
   assert.deepEqual(lastBody(), { sets: input });
   assert.deepEqual(result, saved);
@@ -87,7 +87,7 @@ test("GET forwards its AbortSignal and restores both saved and not-yet-recorded 
   respond(response);
   const signal = new AbortController().signal;
   assert.deepEqual(await fetchWorkout(workout.workout_id, { signal }), response);
-  assert.equal(requests[0].url, "/api/note/workouts/workout%2F1/");
+  assert.equal(requests[0].url, "/api/workouts/workout%2F1/");
   assert.equal(requests[0].init?.method, "GET");
   assert.equal(requests[0].init?.signal, signal);
   assert.equal(requests[0].init?.body, undefined);
@@ -99,7 +99,7 @@ test("GET forwards its AbortSignal and restores both saved and not-yet-recorded 
 test("completion PATCH is separate from set submission and requires completed server state", async () => {
   respond({ ...workout, is_completed: true });
   assert.deepEqual(await completeWorkout(workout.workout_id), { ...workout, is_completed: true });
-  assert.equal(requests[0].url, "/api/note/workouts/workout%2F1/");
+  assert.equal(requests[0].url, "/api/workouts/workout%2F1/");
   assert.equal(requests[0].init?.method, "PATCH");
   assert.deepEqual(lastBody(), { is_completed: true });
   respond(workout);
@@ -148,11 +148,13 @@ test("an invalid CSRF cookie does not become a forged header or a client-side su
   assert.equal(new Headers(requests[0].init?.headers).has("X-CSRFToken"), false);
 });
 
-test("response workout IDs, master exercise IDs and workout-exercise IDs must match the request", async () => {
-  for (const response of [{ ...exercise, workout_id: "other" }, { ...exercise, exercise_id: "other" }]) {
+test("response IDs reflected from URL must match; the fixed exercise need not match selection", async () => {
+  for (const response of [{ ...exercise, workout_id: "other" }]) {
     respond(response, 201);
     await assert.rejects(addWorkoutExercise(workout.workout_id, exercise.exercise_id), failure("response", "unknown"));
   }
+  respond({ ...exercise, exercise_id: "exercise-1" }, 201);
+  assert.equal((await addWorkoutExercise(workout.workout_id, "selected-master-uuid")).exercise_id, "exercise-1");
   respond({ ...saved, workout_exercise_id: "other" }, 201);
   await assert.rejects(saveWorkoutSets(exercise.workout_exercise_id, input), failure("response", "unknown"));
   respond({ ...detail, workout_id: "other" });
@@ -172,19 +174,38 @@ test("workout shape requires an integer Django user ID, server string ID, timest
   }
 });
 
-test("saved-set responses must account for every submitted value exactly once with unique server IDs", async () => {
+test("mock set responses still require valid shapes and unique IDs", async () => {
   for (const sets of [
-    [], saved.sets.slice(0, 1), [...saved.sets, { ...saved.sets[0], workout_set_id: "extra", set_number: 3 }],
+    [],
     saved.sets.map((set) => ({ ...set, workout_set_id: "same" })),
     saved.sets.map((set) => ({ ...set, set_number: 1 })),
-    [{ ...saved.sets[0], reps: 100 }, saved.sets[1]],
-    [{ ...saved.sets[0], weight: "20.1" }, saved.sets[1]],
     [{ ...saved.sets[0], weight: 20 }, saved.sets[1]],
     [{ ...saved.sets[0], workout_set_id: "" }, saved.sets[1]],
   ]) {
     respond({ workout_exercise_id: exercise.workout_exercise_id, sets }, 201);
     await assert.rejects(saveWorkoutSets(exercise.workout_exercise_id, input), failure("response", "unknown"));
   }
+});
+
+test("fixed sample sets are accepted even when count, reps and weight differ from input", async () => {
+  const sample = { workout_exercise_id: "custom-exercise", sets: [
+    { workout_set_id: "workout-set-1", set_number: 1, reps: 10, weight: "20.0" },
+    { workout_set_id: "workout-set-2", set_number: 2, reps: 9, weight: "18.0" },
+    { workout_set_id: "workout-set-3", set_number: 3, reps: 8, weight: "16.0" },
+  ] };
+  respond(sample, 201);
+  const result = await saveWorkoutSets("custom-exercise", [{ set_number: 1, reps: 42, weight: "99.5" }]);
+  assert.deepEqual(result, sample);
+  assert.deepEqual(lastBody(), { sets: [{ set_number: 1, reps: 42, weight: "99.5" }] });
+});
+
+test("PATCH true is only a mock response and subsequent GET false is returned unchanged", async () => {
+  respond({ ...workout, is_completed: true });
+  assert.equal((await completeWorkout(workout.workout_id)).is_completed, true);
+  respond(detail);
+  assert.equal((await fetchWorkout(workout.workout_id)).is_completed, false);
+  respond(workout, 201);
+  assert.deepEqual(await createWorkout(), await createWorkout());
 });
 
 test("detail responses enforce independent ordered positions/set numbers and unique saved IDs", async () => {

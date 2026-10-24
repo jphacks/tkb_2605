@@ -1,17 +1,15 @@
 import { useEffect, useState } from "react";
-import { createSearchParams, Link, useLocation, useParams } from "react-router";
-import { fetchWorkout, type WorkoutDetail } from "../api/workouts.ts";
-import { forgetWorkout } from "../features/workouts/activeWorkout.ts";
+import { Link, useParams } from "react-router";
+import { fetchWorkout, WORKOUT_MOCK_NOTICE, type WorkoutDetail } from "../api/workouts.ts";
 import { paths } from "../routes.ts";
 import "./WorkoutResults.css";
 
 type ResultsState =
   | { status: "loading" }
   | { status: "error"; message: string }
-  | { status: "success"; workout: WorkoutDetail; storageWarning: string };
+  | { status: "success"; workout: WorkoutDetail };
 
 function WorkoutResultsContent({ workoutId }: { workoutId: string }) {
-  const location = useLocation();
   const [state, setState] = useState<ResultsState>({ status: "loading" });
   const [attempt, setAttempt] = useState(0);
 
@@ -19,8 +17,7 @@ function WorkoutResultsContent({ workoutId }: { workoutId: string }) {
     const controller = new AbortController();
     fetchWorkout(workoutId, { signal: controller.signal }).then((workout) => {
       if (controller.signal.aborted) return;
-      const storageWarning = workout.is_completed ? forgetWorkout(workout) : "";
-      setState({ status: "success", workout, storageWarning });
+      setState({ status: "success", workout });
     }).catch((reason: unknown) => {
       if (!controller.signal.aborted) setState({ status: "error", message: reason instanceof Error ? reason.message : "記録を取得できませんでした。" });
     });
@@ -39,8 +36,7 @@ function WorkoutResultsContent({ workoutId }: { workoutId: string }) {
     <section className="workout-results" aria-labelledby="workout-results-heading">
       <header className="workout-results-header">
         <h1 id="workout-results-heading">今日のメニュー</h1>
-        {workout && <p>{workout.is_completed ? "トレーニング完了" : "トレーニングはまだ終了していません。保存済みの記録を表示しています。"}</p>}
-        {state.status === "success" && state.storageWarning && <p className="workout-results-warning" role="status">{state.storageWarning}</p>}
+        <p>{WORKOUT_MOCK_NOTICE}</p>
       </header>
 
       <div className="workout-results-content" tabIndex={0} role="region" aria-label="行ったメニュー" aria-busy={state.status === "loading"}>
@@ -70,18 +66,13 @@ function WorkoutResultsContent({ workoutId }: { workoutId: string }) {
           </ol>
         ) : (
           <div className="workout-results-empty" role="status">
-            <p>保存済みのメニューがありません</p>
-            <p>種目の記録が保存されると、ここに表示されます。</p>
+            <p>応答にメニューがありません</p>
           </div>
         ))}
       </div>
 
       <footer className="workout-results-actions">
-        {workout?.is_completed ? <Link
-          to={{ pathname: "/compose", search: `?${createSearchParams({ workoutId })}` }}
-          state={{ backgroundLocation: location }}
-          className="workout-results-share"
-        >共有</Link> : <button type="button" className="workout-results-share" disabled>共有</button>}
+        <button type="button" className="workout-results-share" disabled title="サンプルのため共有できません">共有</button>
         <Link to={paths.home} className="workout-results-close">閉じる</Link>
       </footer>
     </section>
