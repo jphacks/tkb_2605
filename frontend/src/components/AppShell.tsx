@@ -34,12 +34,5 @@ export default function AppShell({ onExitPreview }: { onExitPreview: () => void 
       <p className="sidebar-footnote">日々の積み重ねを、仲間と一緒に。<br /><span>© WORKOUT</span></p>
     </aside>
     <Link className="floating-compose" to="/compose" aria-label="投稿を作成"><Icon name="plus" size={28} /></Link>
-    <nav className="mobile-nav" aria-label="モバイルナビゲーション">
-      <NavLink to="/" end><Icon name="home" /><span>ホーム</span></NavLink>
-      <Link to={paths.exercises}><Icon name="dumbbell" /><span>トレーニング</span></Link>
-      <Link to={paths.chats}><Icon name="message" /><span>チャット</span></Link>
-      <Link to="/notifications"><span className="mobile-icon"><Icon name="bell" /></span><span>通知</span></Link>
-      <Link to={`/profile/${currentUser.id}`}><Icon name="user" /><span>マイページ</span></Link>
-    </nav>
   </div>;
 }

@@ -63,7 +63,7 @@ svg { flex-shrink: 0; }
 .main-column { position: relative; min-width: 0; background: white; border-left: 1px solid var(--line); border-right: 1px solid var(--line); }
 .preview-exit { position: absolute; z-index: 1; top: 12px; right: 124px; padding: 2px 0; background: transparent; color: #6e786e; font-size: 10px; text-decoration: underline; }
 /* Keep controls usable on short screens; the timeline gets roughly two thirds of the available height in portrait. */
-.home-top { --home-bottom-inset: 0px; --home-header-height: 44px; --chest-height: 64px; --home-top-height: clamp(180px, calc((100dvh - var(--home-bottom-inset)) / 3), 224px); height: var(--home-top-height); display: grid; grid-template-rows: var(--home-header-height) minmax(0, 1fr); }
+.home-top { --home-header-height: 44px; --chest-height: 64px; --home-top-height: clamp(180px, calc(100dvh / 3), 224px); height: var(--home-top-height); display: grid; grid-template-rows: var(--home-header-height) minmax(0, 1fr); }
 .home-header { display: flex; align-items: center; justify-content: space-between; padding: 0 24px; background: #fcfcf8; }
 .home-header h1 { display: flex; align-items: center; gap: 10px; font-size: 16px; font-weight: 750; letter-spacing: .05em; }
 .home-header h1 > span { color: #9ba496; font-size: 9px; letter-spacing: .18em; font-weight: 500; }
@@ -162,7 +162,6 @@ a.post-content:hover { color: #426b43; }
 .sidebar-footnote span { font-size: 8px; letter-spacing: .1em; }
 .floating-compose { position: fixed; bottom: 30px; right: max(28px, calc((100vw - 1230px) / 2 + 290px)); z-index: 10; display: grid; place-items: center; width: 56px; height: 56px; background: var(--green); color: white; border-radius: 50%; box-shadow: 0 5px 18px #1e49382b; }
 .floating-compose:hover { background: var(--green-dark); box-shadow: 0 5px 18px #1e49384d; }
-.mobile-nav { display: none; }
 .empty-state { display: flex; align-items: center; flex-direction: column; gap: 13px; text-align: center; padding: 55px 25px; }
 .empty-state > svg { color: #91a47d; }
 .empty-state h2, .empty-state h3 { font-size: 17px; font-weight: 600; }
@@ -184,8 +183,7 @@ a.post-content:hover { color: #426b43; }
   body { background: white; }
   .app-shell { display: block; padding: 0; max-width: 100%; }
   .sidebar, .right-sidebar { display: none; }
-  .main-column { border: 0; min-height: 100dvh; padding-bottom: calc(85px + env(safe-area-inset-bottom)); }
-  .home-top { --home-bottom-inset: calc(67px + env(safe-area-inset-bottom)); }
+  .main-column { border: 0; min-height: 100dvh; padding-bottom: calc(20px + env(safe-area-inset-bottom)); }
   .home-header { padding: 0 16px; }
   .preview-exit { right: 116px; }
   .training-button > svg { display: none; }
@@ -204,19 +202,12 @@ a.post-content:hover { color: #426b43; }
   .post-image { border-radius: 10px; }
   .post-actions { gap: 26px; }
   .post-category { font-size: 6px; }
-  .floating-compose { bottom: calc(85px + env(safe-area-inset-bottom)); right: 20px; width: 54px; height: 54px; }
-  .mobile-nav { display: grid; position: fixed; z-index: 20; bottom: 0; left: 0; right: 0; grid-template-columns: repeat(5, minmax(0, 1fr)); height: calc(67px + env(safe-area-inset-bottom)); padding: 7px 8px calc(7px + env(safe-area-inset-bottom)); background: #fffffff5; backdrop-filter: blur(12px); border-top: 1px solid #e6ebdf; }
-  .mobile-nav > a { display: flex; min-width: 0; flex-direction: column; justify-content: center; align-items: center; gap: 3px; color: #9aa48f; border-radius: 9px; }
-  .mobile-nav > a > span { font-size: 9px; }
-  .mobile-nav > a.active { color: var(--green); background: #f2f6ec; }
-  .mobile-icon { position: relative; }
-  .mobile-badge { position: absolute; top: -3px; right: -8px; min-width: 14px; height: 14px; display: grid; place-items: center; border-radius: 50%; background: var(--green); color: white; font-size: 8px; }
+  .floating-compose { bottom: calc(20px + env(safe-area-inset-bottom)); right: 20px; width: 54px; height: 54px; }
 
 }
 @media (max-width: 374px) {
   .home-header h1 > span { display: none; }
   .training-button strong { font-size: 12px; }
-  .mobile-nav > a > span { font-size: 8px; }
   .timeline-live { display: none; }
   .post-meta { column-gap: 4px; }
   .post-handle { font-size: 9px; }
