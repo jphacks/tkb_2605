@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { PendingLink as Link } from "./PendingLink.tsx";
 import type { User } from "../features/social/types.ts";
 
 export function Avatar({ user, size = "medium", linked = true }: { user: User; size?: "small" | "medium" | "large"; linked?: boolean }) {

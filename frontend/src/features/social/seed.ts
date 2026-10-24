@@ -4,7 +4,6 @@ export const CURRENT_USER_ID = "me";
 
 export function createSeedData(): SocialData {
   return {
-    version: 1,
     users: [
       {
         id: CURRENT_USER_ID,
@@ -90,3 +89,7 @@ export function createSeedData(): SocialData {
     ],
   };
 }
+
+// Static samples for the home screen; no persistence or destination-screen logic.
+export const homePreview = createSeedData();
+export const currentUser = homePreview.users.find((user) => user.id === CURRENT_USER_ID)!;

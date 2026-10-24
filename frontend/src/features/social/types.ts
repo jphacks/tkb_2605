@@ -28,23 +28,7 @@ export type Notification = {
 };
 
 export type SocialData = {
-  version: 1;
   users: User[];
   posts: Post[];
   notifications: Notification[];
-};
-
-export type SocialSnapshot = Omit<SocialData, "version"> & {
-  currentUser: User;
-  storageError: string | null;
-  addPost: (text: string, image?: string, parentId?: string) => string;
-  toggleLike: (postId: string) => void;
-  updateProfile: (changes: Pick<User, "name" | "bio">) => void;
-  markNotificationsRead: () => void;
-  toggleFollow: (userId: string) => void;
-};
-
-export type SocialStore = {
-  getSnapshot: () => SocialSnapshot;
-  subscribe: (listener: () => void) => () => void;
 };
