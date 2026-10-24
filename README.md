@@ -17,7 +17,7 @@ cd tkb_2605
 docker compose up --build
 ```
 
-- http://localhost:5173 を開くとホーム画面が表示される。接続状態は http://localhost:5173/status で確認でき、「Backend Connected」「Database Ready」が出れば成功。
+- http://localhost:5173 を開き、ログイン画面の「画面をプレビュー」からホームへ進む。API・DB接続は http://localhost:5173/api/health/ が `{"status":"ok","database":"ok"}` を返すことを確認する。
 - 初回はイメージのビルドとnpmのインストールで数分かかる。DBのmigrateは起動時に自動で走る。
 - React（`frontend/src`）とDjango（`backend/`）のコードは保存すると自動で反映される。
 
@@ -43,13 +43,12 @@ DBは `sqlite-data` というDockerのボリュームに保存されるので、
 | URL | 画面・操作 |
 |---|---|
 | `/` | フォロー中／フォロワーの投稿表示、画像、いいね表示の切り替え、各画面への導線 |
-| `/status` | 開発環境のAPI・DB接続確認 |
 
-種目選択・おすすめ・投稿作成・投稿詳細／返信・プロフィール・設定・通知の各画面は後続実装とする。ホーム上の対応するリンクを押すと「準備中」と表示し、ホームに留まる。遷移予定のURLはリンクに保持しているが、未実装URLへの直接アクセスはホームへ戻す。
+ホームのPRはホーム画面と導線のみを対象にする。種目・おすすめ・チャットは既存の `paths.exercises`・`paths.recommendations`・`paths.chats` へ接続し、それぞれの画面は別ブランチ・別PRで実装する。投稿作成・投稿詳細／返信・プロフィール・設定・通知は、ホーム上のリンクを押すと「準備中」と表示してホームに留まる。既存のログインガードは維持する。
 
 ユーザー・投稿・通知件数はホームの表示確認用サンプル。いいねの表示変更はその画面内のみで、リロードすると初期値に戻る。認証・API接続・投稿やプロフィールの編集・ブラウザ保存は含まない。
 
-主な動作確認：フォロー中／フォロワーの切り替え → いいねの表示切り替え → 各導線の準備中表示 → PC／スマートフォンでTLの表示比率と胸元のボタンの収まりを確認。静的チェックは `docker compose exec -T frontend npm run lint` と `docker compose exec -T frontend npm run build`。
+主な動作確認：フォロー中／フォロワーの切り替え → いいねの表示切り替え → 既存ルートへの遷移と未実装画面の準備中表示 → PC／スマートフォンでTLの表示比率と胸元のボタンの収まりを確認。静的チェックは `docker compose exec -T frontend npm run lint` と `docker compose exec -T frontend npm run build`。
 
 ### よくあるエラー
 
@@ -57,6 +56,24 @@ DBは `sqlite-data` というDockerのボリュームに保存されるので、
 - **port is already allocated**：5173か8000を他のアプリが使っている。そのアプリを止めるか、`compose.yaml` の左側のポート番号を変える。
 - **「Backend Unreachable」**：`docker compose logs backend` を見る。たいていは Python の構文エラーかmigrationの失敗。
 - **`npm ci` で失敗する**：`package-lock.json` が `package.json` と合っていない。`docker compose exec frontend npm install` で作り直してコミットする。
+
+## フロントエンドのルーティング
+
+URLは `frontend/src/routes.ts`、画面の割り当ては `frontend/src/App.tsx` で管理する。
+
+| 画面 | URL |
+|---|---|
+| ログイン | `/login` |
+| ホーム・タイムライン | `/` |
+| チャット一覧 | `/chats` |
+| 初心者向けおすすめ | `/recommendations` |
+| 種目選択 | `/exercises` |
+| 種目ごとの記録 | `/workouts/:workoutId/exercises/:exerciseId` |
+| 結果 | `/workouts/:workoutId/results` |
+
+ログイン以外の上記画面は共通のガードを通す。認証APIは未実装のため、現在は開発環境の「画面をプレビュー」からのみ確認できる。本番ビルドにはプレビュー入口を表示せず、保護されたURLは `/login` に戻す。プレビュー状態はメモリ内のみで、再読み込みすると解除される。直接開いたURLのパス・検索条件・ハッシュはログイン画面を経由して引き継ぐ。
+
+各画面はひな形であり、ログイン・グループ権限確認・記録の保存・共有は今後実装する。認証連携時にはガードを実際のセッションに接続し、バックエンドの各APIでもグループへのアクセス権を確認する。記録画面へ進む仮リンクでは `preview` をIDに使っており、API連携時に実際のIDへ置き換える。「別の種目を選ぶ」では `workoutId` を検索パラメータで引き継ぎ、同じトレーニングを継続する。チャット詳細は今回の対象外。
 
 ## 開発の流れ（GitHub Flow）
 

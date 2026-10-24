@@ -4,6 +4,7 @@ import { Avatar } from "../components/Avatar.tsx";
 import { Icon } from "../components/Icon.tsx";
 import { PostCard } from "../components/PostCard.tsx";
 import { currentUser, homePreview } from "../features/social/seed.ts";
+import { paths } from "../routes.ts";
 
 export default function Home() {
   const { posts, notifications } = homePreview;
@@ -30,8 +31,8 @@ export default function Home() {
             <path d="M85 0 60 64M555 0l25 64M320 0v58M116 2c52-2 126-2 192 0v53c-55 8-137 7-192-2ZM524 2c-52-2-126-2-192 0v53c55 8 137 7 192-2Z" />
           </svg>
           <div className="chest-actions">
-            <Link to="/training" className="training-button training-start" aria-label="トレーニングを始める"><Icon name="dumbbell" size={18} /><strong><span>トレーニング</span><span>を始める</span></strong></Link>
-            <Link to="/training/recommended" className="training-button training-recommended" aria-label="おすすめトレーニング"><Icon name="sparkles" size={18} /><strong><span>おすすめ</span><span>トレーニング</span></strong></Link>
+            <Link to={paths.exercises} className="training-button training-start" aria-label="トレーニングを始める"><Icon name="dumbbell" size={18} /><strong><span>トレーニング</span><span>を始める</span></strong></Link>
+            <Link to={paths.recommendations} className="training-button training-recommended" aria-label="おすすめトレーニング"><Icon name="sparkles" size={18} /><strong><span>おすすめ</span><span>トレーニング</span></strong></Link>
           </div>
         </div>
       </div>
