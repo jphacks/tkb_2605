@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import { fetchHealth, type Health } from "../api/health.ts";
+import ComposeLink from "../components/ComposeLink.tsx";
 import Page from "../components/Page.tsx";
 import { paths } from "../routes.ts";
 
@@ -35,6 +36,7 @@ export default function Home() {
   return (
     <Page title="ホーム・タイムライン" description="メンバーの投稿やトレーニングの概要を表示する画面です。">
       <div className="flex flex-wrap gap-3">
+        <ComposeLink className="rounded-lg bg-gray-900 px-4 py-3 font-medium text-white">投稿する</ComposeLink>
         <Link to={paths.exercises} className="rounded-lg bg-emerald-700 px-4 py-3 font-medium text-white">トレーニングを開始</Link>
         <Link to={paths.recommendations} className="rounded-lg border border-gray-300 px-4 py-3">初心者向けおすすめ</Link>
         <Link to={paths.chats} className="rounded-lg border border-gray-300 px-4 py-3">チャット一覧</Link>

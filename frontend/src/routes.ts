@@ -3,6 +3,7 @@ import { generatePath } from "react-router";
 export const paths = {
   login: "/login",
   home: "/",
+  compose: "/compose",
   chats: "/chats",
   recommendations: "/recommendations",
   exercises: "/exercises",
