@@ -9,6 +9,8 @@
 
 ## 開発環境
 
+4画面の定義済みAPI・未接続範囲・下書き仕様は [API・データ仕様との対応](docs/api-compatibility.md) を参照。
+
 必要なもの：Git と Docker Desktop（Windows は WSL2 バックエンド）。Node や Python をPCに入れる必要はない。
 
 ```bash

@@ -1,15 +1,16 @@
 import { useState } from "react";
 import { Link, useSearchParams } from "react-router";
-import { sampleExercises } from "../features/exercises/sampleExercises.ts";
+import { sampleExercises } from "../features/exercises/catalog.ts";
 import { paths, workoutExercisePath } from "../routes.ts";
 
 export default function Exercises() {
   const [searchParams] = useSearchParams();
+  // This UUID identifies a local draft until a workout creation API is defined.
   const [newWorkoutId] = useState(() => crypto.randomUUID());
   const workoutId = searchParams.get("workoutId") || newWorkoutId;
   const [query, setQuery] = useState("");
   const normalizedQuery = query.normalize("NFKC").trim().toLocaleLowerCase("ja-JP");
-  const exercises = sampleExercises.filter((exercise) => exercise.name.normalize("NFKC").toLocaleLowerCase("ja-JP").includes(normalizedQuery));
+  const exercises = sampleExercises.filter((exercise) => exercise.display_name.normalize("NFKC").toLocaleLowerCase("ja-JP").includes(normalizedQuery));
 
   return (
     <section className="mx-auto max-w-xl" aria-labelledby="exercise-heading">
@@ -30,13 +31,13 @@ export default function Exercises() {
         <p role="status" aria-live="polite" className="text-xs text-gray-500">{exercises.length}種目</p>
       </div>
       <ul className="mt-2 overflow-hidden rounded-2xl border border-gray-200 bg-white">
-        {exercises.map((exercise) => <li key={exercise.id} className="border-b border-gray-100 last:border-b-0">
-          <Link to={workoutExercisePath(workoutId, exercise.id)} state={{ exerciseName: exercise.name, returnTo: "exercises" }} aria-label={exercise.name + "を選んで記録へ"} className="flex min-h-16 items-center gap-3 px-3 py-2 transition-colors hover:bg-emerald-50 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-emerald-700">
+        {exercises.map((exercise) => <li key={exercise.exercise_id} className="border-b border-gray-100 last:border-b-0">
+          <Link to={{ pathname: workoutExercisePath(workoutId, exercise.exercise_id), search: "?from=exercises" }} state={{ exerciseName: exercise.display_name, returnTo: "exercises" }} aria-label={exercise.display_name + "を選んで記録へ"} className="flex min-h-16 items-center gap-3 px-3 py-2 transition-colors hover:bg-emerald-50 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-emerald-700">
             <span className="flex size-12 shrink-0 flex-col items-center justify-center rounded-lg bg-stone-100 text-stone-400" aria-hidden="true">
               <svg viewBox="0 0 32 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="h-6 w-8"><path d="M10 12h12M3 9v6m26-6v6" /><rect x="5" y="5" width="5" height="14" rx="1.5" /><rect x="22" y="5" width="5" height="14" rx="1.5" /></svg>
               <span className="text-[8px] leading-3">画像準備中</span>
             </span>
-            <span className="min-w-0 flex-1"><span className="block text-[11px] leading-4 text-emerald-700">{exercise.bodyPart}</span><span className="block break-words text-sm font-medium leading-6 text-gray-800">{exercise.name}</span></span>
+            <span className="min-w-0 flex-1"><span className="block text-[11px] leading-4 text-emerald-700">{exercise.body_parts.map((part) => part.name).join("・")}</span><span className="block break-words text-sm font-medium leading-6 text-gray-800">{exercise.display_name}</span></span>
             <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" className="size-4 shrink-0 text-gray-400" aria-hidden="true"><path d="m7 4 6 6-6 6" /></svg>
           </Link>
         </li>)}
