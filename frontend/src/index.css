@@ -78,7 +78,7 @@ svg { flex-shrink: 0; }
 .body-fill { fill: #edf1e4; fill-opacity: .75; stroke: none; }
 .upper-body { height: calc(100% - var(--chest-height)); }
 .head-avatar { position: absolute; top: 2px; left: 50%; transform: translateX(-50%); display: flex; }
-.head-avatar .avatar { --head-size: clamp(24px, calc((var(--home-top-height) - var(--home-header-height) - var(--chest-height)) * .6), 44px); width: var(--head-size); height: var(--head-size); border: 2px solid #fcfcf8; box-shadow: 0 0 0 1px #d8e1cf; }
+.head-avatar .avatar { --head-size: clamp(30px, calc((var(--home-top-height) - var(--home-header-height) - var(--chest-height)) * .65), 56px); width: var(--head-size); height: var(--head-size); border: 2px solid #fcfcf8; box-shadow: 0 0 0 1px #d8e1cf; }
 .chest-region { position: absolute; bottom: 0; width: 100%; height: var(--chest-height); }
 /* Each button sits inside one outlined pectoral, with a gap over the sternum. */
 .chest-actions { position: absolute; top: 8px; bottom: 12px; left: 20%; right: 20%; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10%; }
@@ -120,6 +120,7 @@ svg { flex-shrink: 0; }
 .post-author { font-weight: 700; font-size: 13px; max-width: 100%; overflow-wrap: anywhere; }
 .post-author:hover { text-decoration: underline; }
 .post-handle, .post-meta time, .meta-dot { color: #6f796a; font-size: 11px; }
+.notification-time { color: var(--muted); font-size: 11px; }
 .post-content { display: block; margin-top: 8px; }
 a.post-content:hover { color: #426b43; }
 .post-text { font-size: 14px; line-height: 1.9; letter-spacing: .015em; white-space: pre-wrap; overflow-wrap: anywhere; }

@@ -1,4 +1,4 @@
-import { PendingLink as Link } from "./PendingLink.tsx";
+import { Link } from "react-router";
 import type { Post } from "../features/social/types.ts";
 import { currentUser, homePreview } from "../features/social/seed.ts";
 import { Avatar } from "./Avatar.tsx";

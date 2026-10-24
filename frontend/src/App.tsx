@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router";
 import ProtectedRoutes from "./components/ProtectedRoutes.tsx";
 import AppShell from "./components/AppShell.tsx";
 import AppLayout from "./layouts/AppLayout.tsx";
+import HomeDestination from "./pages/HomeDestination.tsx";
 import Chats from "./pages/Chats.tsx";
 import Exercises from "./pages/Exercises.tsx";
 import Home from "./pages/Home.tsx";
@@ -27,6 +28,11 @@ export default function App() {
           <Route index element={<Home />} />
         </Route>
         <Route element={<AppLayout onExitPreview={() => setPreviewEnabled(false)} />}>
+          <Route path="/compose" element={<HomeDestination title="投稿" />} />
+          <Route path="/posts/:postId" element={<HomeDestination title="投稿詳細・返信" />} />
+          <Route path="/notifications" element={<HomeDestination title="通知" />} />
+          <Route path="/settings" element={<HomeDestination title="設定" />} />
+          <Route path="/profile/*" element={<HomeDestination title="プロフィール" />} />
           <Route path={paths.chats} element={<Chats />} />
           <Route path={paths.recommendations} element={<Recommendations />} />
           <Route path={paths.exercises} element={<Exercises />} />

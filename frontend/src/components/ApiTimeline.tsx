@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { fetchPosts, togglePostLike, type ApiPost } from "../api/posts.ts";
-import { PendingLink as Link } from "./PendingLink.tsx";
+import { Link } from "react-router";
 import { Icon } from "./Icon.tsx";
 
 export function ApiTimeline() {
