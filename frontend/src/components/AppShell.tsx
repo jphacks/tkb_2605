@@ -1,0 +1,38 @@
+import { Link, NavLink, Outlet } from "react-router";
+import { currentUser } from "../features/social/seed.ts";
+import { paths } from "../routes.ts";
+import { Avatar } from "./Avatar.tsx";
+import { Icon } from "./Icon.tsx";
+
+export default function AppShell({ onExitPreview }: { onExitPreview: () => void }) {
+  return <div className="app-shell">
+    <a className="skip-link" href="#main-content">メインコンテンツへ</a>
+    <aside className="sidebar">
+      <Link to="/" className="brand" aria-label="WORKOUT ホーム"><span className="brand-symbol"><Icon name="dumbbell" size={24} /></span><span>WORKOUT<span className="brand-caption">MOVE. SHARE. GROW.</span></span></Link>
+      <nav className="desktop-nav" aria-label="メインナビゲーション">
+        <NavLink to="/" end><Icon name="home" />ホーム<span className="nav-active-dot" /></NavLink>
+        <Link to={paths.chats}><Icon name="message" />チャット</Link>
+        <Link to="/notifications"><Icon name="bell" />通知</Link>
+        <Link to={`/profile/${currentUser.id}`}><Icon name="user" />プロフィール</Link>
+        <Link to="/settings"><Icon name="settings" />設定</Link>
+      </nav>
+      <Link to="/compose" className="sidebar-compose primary-button"><Icon name="plus" size={20} />投稿する</Link>
+      <div className="sidebar-bottom"><span className="small-label">ONE MORE REP. ONE MORE STEP.</span><Link className="account-link" to={`/profile/${currentUser.id}`}><Avatar user={currentUser} size="small" linked={false} /><span><strong>{currentUser.name}</strong><small>プロフィール表示例</small></span><Icon name="chevron-right" size={17} /></Link></div>
+    </aside>
+    <main id="main-content" className="main-column">
+      {import.meta.env.DEV && <button className="preview-exit" type="button" onClick={onExitPreview}>プレビューを終了</button>}
+      <Outlet />
+    </main>
+    <aside className="right-sidebar" aria-label="あなたのプロフィールとトレーニングのヒント">
+      <div className="community-label"><span /> YOUR DAILY TRAINING CLUB</div>
+      <section className="summary-card">
+        <div className="summary-cover"><span>KEEP<br />MOVING.</span><Icon name="sparkles" size={40} /></div>
+        <div className="summary-body"><Avatar user={currentUser} size="large" /><Link className="summary-name" to={`/profile/${currentUser.id}`}>{currentUser.name}</Link><span className="muted">プロフィール表示例</span><p>{currentUser.bio}</p>
+        </div>
+      </section>
+      <section className="tip-card"><span className="eyebrow"><Icon name="leaf" size={16} /> SMALL STEP, BIG CHANGE</span><h2>昨日の自分に、<br />ひとつプラス。</h2><p>短い時間でも大丈夫。<br />あなたのペースで、続けよう。</p><Link to={paths.recommendations}>今日のメニューを探す<Icon name="arrow-right" size={17} /></Link></section>
+      <p className="sidebar-footnote">日々の積み重ねを、仲間と一緒に。<br /><span>© WORKOUT</span></p>
+    </aside>
+    <Link className="floating-compose" to="/compose" aria-label="投稿を作成"><Icon name="plus" size={28} /></Link>
+  </div>;
+}
