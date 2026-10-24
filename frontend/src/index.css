@@ -61,7 +61,7 @@ svg { flex-shrink: 0; }
 .account-link small { color: #92998e; font-size: 10px; }
 .account-link > svg { margin-left: auto; color: #8a9688; }
 .main-column { position: relative; min-width: 0; background: white; border-left: 1px solid var(--line); border-right: 1px solid var(--line); }
-.preview-exit { position: absolute; z-index: 1; top: 5px; right: 60px; padding: 2px 0; background: transparent; color: #6e786e; font-size: 10px; text-decoration: underline; }
+.preview-exit { position: absolute; z-index: 1; top: 5px; right: 92px; padding: 2px 0; background: transparent; color: #6e786e; font-size: 10px; text-decoration: underline; }
 /* Reserve at least two thirds of the viewport for the timeline, excluding the mobile navigation. */
 .home-top { --home-bottom-inset: 0px; --home-header-height: 32px; --chest-height: 64px; --home-top-height: min(196px, calc(100dvh / 3 - var(--home-bottom-inset))); height: var(--home-top-height); display: grid; grid-template-rows: var(--home-header-height) minmax(0, 1fr); }
 .home-header { display: flex; align-items: center; justify-content: space-between; padding: 0 24px; background: #fcfcf8; }
@@ -69,7 +69,8 @@ svg { flex-shrink: 0; }
 .home-header h1 > span { color: #9ba496; font-size: 9px; letter-spacing: .18em; font-weight: 500; }
 .icon-button { display: inline-flex; align-items: center; justify-content: center; min-width: 42px; height: 42px; border-radius: 50%; color: #7b8778; background: transparent; }
 .icon-button:hover { background: #f0f4eb; color: var(--green); }
-.home-notification { position: relative; min-width: 28px; height: 28px; }
+.home-header-actions { display: flex; align-items: center; gap: 4px; }
+.home-settings, .home-notification { position: relative; min-width: 28px; height: 28px; }
 .unread-dot { display: inline-block; flex-shrink: 0; width: 7px; height: 7px; border-radius: 50%; background: #739b63; }
 .home-notification .unread-dot { position: absolute; top: 8px; right: 9px; border: 2px solid white; width: 9px; height: 9px; }
 .training-hero { position: relative; min-height: 0; overflow: hidden; padding: 0 8px; background: #fcfcf8; border-bottom: 1px solid var(--line); }

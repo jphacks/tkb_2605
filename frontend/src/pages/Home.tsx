@@ -19,7 +19,13 @@ export default function Home() {
 
   return <>
     <div className="home-top">
-    <header className="home-header"><h1>ホーム<span>HOME</span></h1><Link className="icon-button home-notification" to="/notifications" aria-label={sample ? `通知の表示例を見る（未読${unread}件）` : "通知を見る"}><Icon name="bell" size={18} />{unread > 0 && <span className="unread-dot" />}</Link></header>
+    <header className="home-header">
+      <h1>ホーム<span>HOME</span></h1>
+      <div className="home-header-actions">
+        <Link className="icon-button home-settings" to="/settings" aria-label="設定を開く"><Icon name="settings" size={18} /></Link>
+        <Link className="icon-button home-notification" to="/notifications" aria-label={sample ? `通知の表示例を見る（未読${unread}件）` : "通知を見る"}><Icon name="bell" size={18} />{unread > 0 && <span className="unread-dot" />}</Link>
+      </div>
+    </header>
     <section className="training-hero" aria-labelledby="training-heading">
       <h2 id="training-heading" className="visually-hidden">トレーニングを選ぶ</h2>
       <div className="body-navigation">
