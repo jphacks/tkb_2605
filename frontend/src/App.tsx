@@ -12,6 +12,7 @@ import NotFound from "./pages/NotFound.tsx";
 import Recommendations from "./pages/Recommendations.tsx";
 import WorkoutRecord from "./pages/WorkoutRecord.tsx";
 import WorkoutResults from "./pages/WorkoutResults.tsx";
+import { clearWorkoutSession } from "./features/workouts/session.ts";
 import { paths } from "./routes.ts";
 
 export default function App() {
@@ -19,15 +20,19 @@ export default function App() {
   // TODO: Add the authenticated session once the backend login API is available.
   // Preview access is development-only and is never treated as an authenticated user.
   const allowPreview = import.meta.env.DEV && previewEnabled;
+  function exitPreview() {
+    clearWorkoutSession();
+    setPreviewEnabled(false);
+  }
 
   return (
     <Routes>
       <Route path={paths.login} element={<Login onPreview={() => setPreviewEnabled(true)} />} />
       <Route element={<ProtectedRoutes allowAccess={allowPreview} />}>
-        <Route element={<AppShell onExitPreview={() => setPreviewEnabled(false)} />}>
+        <Route element={<AppShell onExitPreview={exitPreview} />}>
           <Route index element={<Home />} />
         </Route>
-        <Route element={<AppLayout onExitPreview={() => setPreviewEnabled(false)} />}>
+        <Route element={<AppLayout onExitPreview={exitPreview} />}>
           <Route path="/compose" element={<HomeDestination title="投稿" />} />
           <Route path="/posts/:postId" element={<HomeDestination title="投稿詳細・返信" />} />
           <Route path="/notifications" element={<HomeDestination title="通知" />} />

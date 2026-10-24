@@ -85,6 +85,5 @@ export function saveDraft(storage: DraftStorage, workoutId: string, exercise: Ex
   return draft;
 }
 
-// The backend table contract exists in #14; its HTTP save contract is not defined yet.
-// A future server adapter must supply actual user/server IDs and the eventual HTTP contract.
-// This module only stores local drafts; performed_at starts at their first successful save.
+// Legacy draft helpers are retained for existing data compatibility. The current
+// record screen uses the #31 API and does not read, migrate, or upload these drafts.

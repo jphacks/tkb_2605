@@ -1,13 +1,46 @@
-import { useState } from "react";
-import { Link } from "react-router";
+import { useEffect, useRef, useState } from "react";
+import { createSearchParams, Link, useNavigate } from "react-router";
 import { Avatar } from "../components/Avatar.tsx";
 import { Icon } from "../components/Icon.tsx";
 import { ApiTimeline } from "../components/ApiTimeline.tsx";
 import { currentUser } from "../features/social/seed.ts";
+import { startWorkout, StartWorkoutUncertainError } from "../features/workouts/startWorkout.ts";
+import { workoutSessionVersion } from "../features/workouts/session.ts";
 import { paths } from "../routes.ts";
 
 export default function Home() {
+  const navigate = useNavigate();
   const [feed, setFeed] = useState<"following" | "followers" | "notifications">("following");
+  const [starting, setStarting] = useState(false);
+  const [startError, setStartError] = useState("");
+  const [uncertain, setUncertain] = useState(false);
+  const locked = useRef(false);
+  const mounted = useRef(true);
+  useEffect(() => {
+    mounted.current = true;
+    return () => { mounted.current = false; };
+  }, []);
+
+  async function start() {
+    if (locked.current) return;
+    locked.current = true;
+    setStarting(true);
+    setStartError("");
+    const version = workoutSessionVersion();
+    const active = () => mounted.current && version === workoutSessionVersion();
+    try {
+      const result = await startWorkout();
+      if (active()) await navigate({ pathname: paths.exercises, search: "?" + createSearchParams({ workoutId: result.workout.workout_id }) }, { state: { workoutWarning: result.storageWarning } });
+    } catch (reason) {
+      if (active()) {
+        setStartError(reason instanceof Error ? reason.message : "トレーニングを開始できませんでした。");
+        setUncertain(reason instanceof StartWorkoutUncertainError);
+      }
+    } finally {
+      locked.current = false;
+      if (active()) setStarting(false);
+    }
+  }
 
   return <>
     <div className="home-top">
@@ -31,14 +64,16 @@ export default function Home() {
             <path className="body-fill" d="M85 0h470l25 64H60Z" />
             <path d="M85 0 60 64M555 0l25 64M320 0v58" />
           </svg>
-          <div className="chest-actions">
-            <Link to={paths.exercises} className="training-button training-start" aria-label="トレーニング開始"><Icon name="dumbbell" size={18} /><strong><span>トレーニング</span><span>開始</span></strong></Link>
+          <div className="chest-actions" aria-busy={starting}>
+            <button type="button" onClick={() => void start()} disabled={starting || uncertain} className="training-button training-start" aria-label="トレーニング開始"><Icon name="dumbbell" size={18} /><strong><span>トレーニング</span><span>開始</span></strong></button>
             <Link to={paths.recommendations} className="training-button training-recommended" aria-label="おすすめトレーニング"><Icon name="sparkles" size={18} /><strong><span>おすすめ</span><span>トレーニング</span></strong></Link>
           </div>
         </div>
       </div>
     </section>
     </div>
+    {starting && <p className="feed-note" role="status">トレーニングを確認しています…</p>}
+    {startError && <p className="feed-note feed-error" role="alert">{startError}</p>}
     <section className="timeline-section" aria-labelledby="timeline-heading">
       <div className="timeline-heading"><h2 id="timeline-heading"><span>TIMELINE</span></h2><span className="timeline-live"><span />{feed === "notifications" ? "通知" : "トレーニングの投稿"}</span></div>
       <div className="feed-tabs" role="group" aria-label="タイムラインの表示切り替え">
