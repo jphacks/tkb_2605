@@ -1,0 +1,8 @@
+[Unit]
+Description=Workout app: deploy the latest main from GHCR when it changes
+After=docker.service network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/srv/workout/app/ops/auto-deploy.sh
