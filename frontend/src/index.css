@@ -125,6 +125,9 @@ svg { flex-shrink: 0; }
 .post-content { display: block; margin-top: 8px; }
 a.post-content:hover { color: #426b43; }
 .post-text { font-size: 14px; line-height: 1.9; letter-spacing: .015em; white-space: pre-wrap; overflow-wrap: anywhere; }
+.post-card.notification-card { padding-top: 12px; padding-bottom: 12px; }
+.notification-card .post-content { margin-top: 4px; }
+.notification-card .post-text { line-height: 1.6; }
 .post-image { width: 100%; aspect-ratio: 16 / 10; max-height: 390px; object-fit: contain; border-radius: 12px; margin-top: 13px; border: 1px solid #ebeee6; background: #f3f4ee; }
 .post-actions { display: flex; align-items: center; gap: 35px; margin-top: 13px; }
 .post-action { display: inline-flex; align-items: center; gap: 8px; min-height: 32px; padding: 3px 3px; background: transparent; color: #a1aa99; font-size: 10px; border-radius: 7px; min-width: 40px; }
