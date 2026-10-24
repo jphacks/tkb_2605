@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, NavLink, Outlet } from "react-router";
-import { currentUser, homePreview } from "../features/social/seed.ts";
+import { currentUser } from "../features/social/seed.ts";
 import { PendingNavigationContext } from "../features/home/navigation.ts";
 import { PendingLink } from "./PendingLink.tsx";
 import { paths } from "../routes.ts";
@@ -8,9 +8,7 @@ import { Avatar } from "./Avatar.tsx";
 import { Icon } from "./Icon.tsx";
 
 export default function AppShell({ onExitPreview }: { onExitPreview: () => void }) {
-  const { posts, notifications } = homePreview;
   const [notice, setNotice] = useState("");
-  const unread = notifications.filter((notification) => !notification.read).length;
   return <PendingNavigationContext.Provider value={setNotice}><div className="app-shell">
     <a className="skip-link" href="#main-content">メインコンテンツへ</a>
     <aside className="sidebar">
@@ -18,12 +16,12 @@ export default function AppShell({ onExitPreview }: { onExitPreview: () => void 
       <nav className="desktop-nav" aria-label="メインナビゲーション">
         <NavLink to="/" end><Icon name="home" />ホーム<span className="nav-active-dot" /></NavLink>
         <PendingLink to={paths.chats}><Icon name="message" />チャット</PendingLink>
-        <PendingLink to="/notifications"><Icon name="bell" />通知{unread > 0 && <span className="notification-count">{unread}</span>}</PendingLink>
+        <PendingLink to="/notifications"><Icon name="bell" />通知</PendingLink>
         <PendingLink to={`/profile/${currentUser.id}`}><Icon name="user" />プロフィール</PendingLink>
         <PendingLink to="/settings"><Icon name="settings" />設定</PendingLink>
       </nav>
       <PendingLink to="/compose" className="sidebar-compose primary-button"><Icon name="plus" size={20} />投稿する</PendingLink>
-      <div className="sidebar-bottom"><span className="small-label">ONE MORE REP. ONE MORE STEP.</span><PendingLink className="account-link" to={`/profile/${currentUser.id}`}><Avatar user={currentUser} size="small" linked={false} /><span><strong>{currentUser.name}</strong><small>@{currentUser.handle}</small></span><Icon name="chevron-right" size={17} /></PendingLink></div>
+      <div className="sidebar-bottom"><span className="small-label">ONE MORE REP. ONE MORE STEP.</span><PendingLink className="account-link" to={`/profile/${currentUser.id}`}><Avatar user={currentUser} size="small" linked={false} /><span><strong>{currentUser.name}</strong><small>プロフィール表示例</small></span><Icon name="chevron-right" size={17} /></PendingLink></div>
     </aside>
     <main id="main-content" className="main-column">
       {import.meta.env.DEV && <button className="preview-exit" type="button" onClick={onExitPreview}>プレビューを終了</button>}
@@ -33,8 +31,7 @@ export default function AppShell({ onExitPreview }: { onExitPreview: () => void 
       <div className="community-label"><span /> YOUR DAILY TRAINING CLUB</div>
       <section className="summary-card">
         <div className="summary-cover"><span>KEEP<br />MOVING.</span><Icon name="sparkles" size={40} /></div>
-        <div className="summary-body"><Avatar user={currentUser} size="large" /><PendingLink className="summary-name" to={`/profile/${currentUser.id}`}>{currentUser.name}</PendingLink><span className="muted">@{currentUser.handle}</span><p>{currentUser.bio}</p>
-          <div className="summary-stats"><span><strong>{posts.filter((post) => post.authorId === currentUser.id && !post.parentId).length}</strong>投稿</span><span><strong>{currentUser.followingIds.length}</strong>フォロー</span><span><strong>{currentUser.followerIds.length}</strong>フォロワー</span></div>
+        <div className="summary-body"><Avatar user={currentUser} size="large" /><PendingLink className="summary-name" to={`/profile/${currentUser.id}`}>{currentUser.name}</PendingLink><span className="muted">プロフィール表示例</span><p>{currentUser.bio}</p>
         </div>
       </section>
       <section className="tip-card"><span className="eyebrow"><Icon name="leaf" size={16} /> SMALL STEP, BIG CHANGE</span><h2>昨日の自分に、<br />ひとつプラス。</h2><p>短い時間でも大丈夫。<br />あなたのペースで、続けよう。</p><PendingLink to={paths.recommendations}>今日のメニューを探す<Icon name="arrow-right" size={17} /></PendingLink></section>
@@ -45,7 +42,7 @@ export default function AppShell({ onExitPreview }: { onExitPreview: () => void 
       <NavLink to="/" end><Icon name="home" /><span>ホーム</span></NavLink>
       <PendingLink to={paths.exercises}><Icon name="dumbbell" /><span>トレーニング</span></PendingLink>
       <PendingLink to={paths.chats}><Icon name="message" /><span>チャット</span></PendingLink>
-      <PendingLink to="/notifications"><span className="mobile-icon"><Icon name="bell" />{unread > 0 && <b className="mobile-badge">{unread}</b>}</span><span>通知</span></PendingLink>
+      <PendingLink to="/notifications"><span className="mobile-icon"><Icon name="bell" /></span><span>通知</span></PendingLink>
       <PendingLink to={`/profile/${currentUser.id}`}><Icon name="user" /><span>マイページ</span></PendingLink>
     </nav>
     <div className="home-notice" role="status" aria-atomic="true">{notice && <><span>{notice}</span><button className="icon-button" type="button" aria-label="お知らせを閉じる" onClick={() => setNotice("")}><Icon name="close" size={18} /></button></>}</div>
