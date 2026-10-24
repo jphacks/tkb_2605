@@ -40,7 +40,7 @@ export default function Home() {
             <path d="M85 0 60 64M555 0l25 64M320 0v58" />
           </svg>
           <div className="chest-actions">
-            <Link to={paths.exercises} className="training-button training-start" aria-label="トレーニングを始める"><Icon name="dumbbell" size={18} /><strong><span>トレーニング</span><span>を始める</span></strong></Link>
+            <Link to={paths.exercises} className="training-button training-start" aria-label="トレーニング開始"><Icon name="dumbbell" size={18} /><strong><span>トレーニング</span><span>開始</span></strong></Link>
             <Link to={paths.recommendations} className="training-button training-recommended" aria-label="おすすめトレーニング"><Icon name="sparkles" size={18} /><strong><span>おすすめ</span><span>トレーニング</span></strong></Link>
           </div>
         </div>
