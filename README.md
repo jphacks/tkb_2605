@@ -17,7 +17,7 @@ cd tkb_2605
 docker compose up --build
 ```
 
-- http://localhost:5173 を開く。「Backend Connected」「Database Ready」が出れば成功。
+- http://localhost:5173 を開くとホーム画面が表示される。接続状態は http://localhost:5173/status で確認でき、「Backend Connected」「Database Ready」が出れば成功。
 - 初回はイメージのビルドとnpmのインストールで数分かかる。DBのmigrateは起動時に自動で走る。
 - React（`frontend/src`）とDjango（`backend/`）のコードは保存すると自動で反映される。
 
@@ -35,6 +35,26 @@ docker compose up --build
 | **DBを空にする** | `docker compose down -v` ⚠ SQLiteのデータが全部消える（node_modulesも消えるので次回起動は遅い） |
 
 DBは `sqlite-data` というDockerのボリュームに保存されるので、`docker compose down` や再起動では消えない。消えるのは `-v` を付けた時だけ。
+
+### ホーム画面
+
+ユーザアイコンを頭、2つのトレーニングボタンを胸元に配置し、首・肩のラインの下にタイムラインを表示する。PCはサイドメニュー、スマートフォンは画面下部のナビゲーションを使用する。
+
+| URL | 画面・操作 |
+|---|---|
+| `/` | フォロー中／フォロワーの投稿、画像、いいね、通知への導線 |
+| `/training` | 部位別の種目選択、メニューの確定 |
+| `/training/recommended` | おすすめメニューの選択、確定 |
+| `/compose` | 投稿作成（500文字、画像1枚・2MBまで） |
+| `/posts/:postId` | 投稿詳細、返信 |
+| `/profile/:userId` | プロフィール、投稿一覧、フォロー切り替え |
+| `/settings` | 自分の表示名・自己紹介の編集 |
+| `/notifications` | 通知一覧、一括既読 |
+| `/status` | 開発環境のAPI・DB接続確認 |
+
+現段階のソーシャル機能はフロントエンドのデモ実装。初期の投稿・通知・ユーザーはサンプルで、自分のユーザーIDは `me`。投稿・返信・いいね・フォロー・プロフィール変更・通知の既読状態はブラウザの `localStorage`（キー `workout.social.v1`）へ保存する。別の端末やユーザーとの共有、認証、投稿API、通知のリアルタイム配信は未接続。保存できない場合は画面に警告を表示し、そのタブ内では操作を継続できる。トレーニング画面は選択・メニュー確定までで、実施中の計測・記録は含まない。
+
+主な動作確認：ホームの各ボタンから遷移 → 投稿・返信 → リロード後の保存確認 → ユーザアイコンからプロフィール → 表示名の編集 → 通知の既読。静的チェックは `docker compose exec -T frontend npm run lint` と `docker compose exec -T frontend npm run build`。`docker compose exec -T frontend npm run test:social` で保存・復元、入力検証、フォローの整合性、保存失敗からの復旧を含む6件の自動テストを実行できる。
 
 ### よくあるエラー
 
