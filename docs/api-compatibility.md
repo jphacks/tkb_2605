@@ -21,6 +21,23 @@ mainは固定のサンプル応答を返すスタブで、投稿の永続化・�
 
 ホームの「フォロー中・フォロワー・通知」タブは維持する。関係・通知のHTTP契約が未定義のため、投稿2タブは分類が準備中である旨とともに同じ投稿一覧を表示し、通知タブは準備中表示とする。タブ切り替えでは投稿一覧を再生成せず、取得済み投稿・次のoffset・いいね状態を保持する。サンプルデータや仮の未読件数は表示しない。
 
+### 投稿・いいねテーブルとの対応
+
+[Issue #6](https://github.com/jphacks/tkb_2605/issues/6) と `feature/table_posts` の [モデル・migration（1be5c27）](https://github.com/jphacks/tkb_2605/tree/1be5c27/backend/posts) を確認した。確認時点のmain `aed893c` にはこのテーブル変更は未統合で、当該ブランチでも投稿APIのviews・URLはmainと同じ固定応答である。
+
+| DBの定義 | フロントとの対応 |
+|---|---|
+| `Posts.post_id`: UUID主キー、DB側で採番 | APIでは文字列のまま扱う。数値化・フロント採番を行わず、一覧の識別・投稿リンク・いいねURLへ同じIDを渡す。既存モックの `"12"` も引き続き扱う |
+| `Posts.user_id`: 100文字までの文字列 | 投稿者IDとして保持する。認証済みの現在ユーザーIDと推定しない |
+| `post_type`・`content`・自動設定の`posted_at`・nullableな`workout_id` | 既存APIの3種類の投稿、本文、日時、任意の記録IDに対応 |
+| `Like.id`: 自動採番、`Like.post_id`: 投稿への外部キー（CASCADE）、`Like.user_id`: 文字列 | いいねは投稿IDをURLで指定する。Like行のIDやuser_idをフロントから送るAPIには変更しない |
+
+`user_name`・`like_count`・`is_liked` は投稿テーブルの列ではなくAPI表示用の情報。フロントはIssue #10の応答から取得し、DBの生の投稿行・いいね行をそのままAPI応答として扱わない。テーブル追加だけでAPIの永続化・トグルが完成したとは扱わない。
+
+[Issue #35](https://github.com/jphacks/tkb_2605/issues/35) の投稿保存・フォロー中投稿のページング・投稿存在確認、[Issue #36](https://github.com/jphacks/tkb_2605/issues/36) のいいね済み確認・件数集計・ユーザー別保存はバックエンドの作業項目。これらに対する新しいURLや追加リクエスト項目は未定義。現在のGETの`limit`/`offset`・応答の`next_offset`と、本文なしPUTのいいね処理を維持する。
+
+UUIDの投稿IDで一覧・ページング・作成・いいねを検証するテスト、およびAPI表示用情報が欠けたDB行を誤って受理しないテストを追加している。
+
 ## 記録API（現在のモック仕様）
 
 [Issue #31](https://github.com/jphacks/tkb_2605/issues/31)（2026-10-24 18:20 JST更新）と [main `aed893c`](https://github.com/jphacks/tkb_2605/tree/aed893c) の実装を基準にする。`/note/` を付けず、末尾スラッシュ付きURLを使う。

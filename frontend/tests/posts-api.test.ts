@@ -122,3 +122,45 @@ test("abort is preserved and an uncertain POST result is reported distinctly", a
   globalThis.fetch = async () => { throw new TypeError("Offline"); };
   await assert.rejects(createPost({ post_type: 1, content: "記録" }), /送信結果を確認できません/);
 });
+
+test("UUID post IDs survive paged reads, creation and the bodyless like request unchanged", async () => {
+  // Posts.post_id is a UUIDField; Like.post_id references that same post.
+  const firstId = "c8683daa-b897-407d-b276-9d48a105de68";
+  const secondId = "a2f08b16-950d-44b3-81c8-757837f78edb";
+  const first: ApiPost = { ...fixture, post_id: firstId, user_id: "user-3", like_count: 0, is_liked: false };
+  const second: ApiPost = { ...first, post_id: secondId };
+  respond({ results: [first], next_offset: 37 });
+  const page = await fetchPosts({ limit: 1 });
+  assert.equal(page.results[0].post_id, firstId);
+  assert.equal(page.results[0].user_id, "user-3");
+  respond({ results: [second], next_offset: null });
+  assert.deepEqual((await fetchPosts({ limit: 1, offset: page.next_offset! })).results, [second]);
+  assert.equal(requests.at(-1)!.url, "/api/posts/?limit=1&offset=37");
+
+  respond({ ...second, like_count: 0, is_liked: false }, 201);
+  assert.equal((await createPost({ post_type: 1, content: "記録" })).post_id, secondId);
+  assert.deepEqual(JSON.parse(String(requests.at(-1)!.init?.body)), { post_type: 1, content: "記録" });
+
+  for (const result of [{ post_id: firstId, like_count: 1, is_liked: true }, { post_id: firstId, like_count: 0, is_liked: false }]) {
+    respond(result);
+    assert.deepEqual(await togglePostLike(firstId), result);
+    assert.equal(requests.at(-1)!.url, "/api/posts/" + firstId + "/like/");
+    assert.equal(requests.at(-1)!.init?.method, "PUT");
+    assert.equal(requests.at(-1)!.init?.body, undefined);
+  }
+});
+
+test("database rows do not replace the enriched post API or aggregate like response", async () => {
+  const postId = "c8683daa-b897-407d-b276-9d48a105de68";
+  // user_name and the two like fields are API data, not columns of Posts.
+  const row = { post_id: postId, user_id: "user-3", post_type: 1, content: "記録", posted_at: fixture.posted_at, workout_id: null };
+  respond({ results: [row], next_offset: null });
+  await assert.rejects(fetchPosts(), /応答形式/);
+  respond(row, 201);
+  await assert.rejects(createPost({ post_type: 1, content: "記録" }), /応答形式/);
+  // Like's own auto-increment ID is not the post ID or a like count.
+  respond({ id: 8, post_id: postId, user_id: "user-3" });
+  await assert.rejects(togglePostLike(postId), /応答形式/);
+  respond({ post_id: "another-post", like_count: 1, is_liked: true });
+  await assert.rejects(togglePostLike(postId), /応答形式/);
+});
