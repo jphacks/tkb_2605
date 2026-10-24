@@ -1,10 +1,12 @@
+import { useState } from "react";
 import { Link, useSearchParams } from "react-router";
 import Page from "../components/Page.tsx";
 import { paths, workoutExercisePath } from "../routes.ts";
 
 export default function Recommendations() {
   const [searchParams] = useSearchParams();
-  const workoutId = searchParams.get("workoutId") || "preview";
+  const [newWorkoutId] = useState(() => crypto.randomUUID());
+  const workoutId = searchParams.get("workoutId") || newWorkoutId;
 
   return (
     <Page title="初心者向けおすすめ" description="器具・部位から初心者向けの種目を探す画面です。">
