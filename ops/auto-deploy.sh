@@ -28,8 +28,8 @@ LAST=$(cat "$LAST_FILE" 2>/dev/null || echo "$CURRENT")
 [ "$TARGET" = "$LAST" ] && exit 0
 [ "$TARGET" = "$CURRENT" ] && { echo "$TARGET" > "$LAST_FILE"; exit 0; }
 for svc in web backend; do
-  if ! docker manifest inspect "ghcr.io/reindeer39/kintore-app-$svc:$TARGET" >/dev/null 2>&1; then
-    echo "waiting for ghcr.io/reindeer39/kintore-app-$svc:$TARGET (CI or Publish images not finished)"
+  if ! docker manifest inspect "ghcr.io/jphacks/tkb_2605-$svc:$TARGET" >/dev/null 2>&1; then
+    echo "waiting for ghcr.io/jphacks/tkb_2605-$svc:$TARGET (CI or Publish images not finished)"
     exit 0
   fi
 done

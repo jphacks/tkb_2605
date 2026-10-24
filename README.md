@@ -52,7 +52,7 @@ DBは `sqlite-data` というDockerのボリュームに保存されるので、
    - `compose`：開発用 `docker compose up --build` が起動し、Vite経由で `/api/health/` が返る
    - `prod`：本番用イメージをビルドし、nginx経由でSPAと `/api/health/` が返る
 3. CIが全部緑になり、レビューで1人以上のApproveを得たら **Squash merge**（マージ後ブランチは自動で消える）
-4. `main` のCIが通ると、本番用イメージがGHCRにpushされる（`ghcr.io/reindeer39/kintore-app-{web,backend}:<commit SHA>`）
+4. `main` のCIが通ると、本番用イメージがGHCRにpushされる（`ghcr.io/jphacks/tkb_2605-{web,backend}:<commit SHA>`）
 5. 本番VMが5分ごとに `main` を確認し、新しいイメージがあれば自動でデプロイする（バックアップ→migrate→起動→health確認。失敗したら前の版に戻す）
 
 依存パッケージの更新はDependabotが毎週月曜にまとめてPRを作る（メジャーアップデートは来ないので、必要なら自分でブランチを切る）。

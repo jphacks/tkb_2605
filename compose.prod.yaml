@@ -3,7 +3,7 @@
 name: workout
 services:
   web:
-    image: ghcr.io/reindeer39/kintore-app-web:${IMAGE_TAG:?set IMAGE_TAG}
+    image: ghcr.io/jphacks/tkb_2605-web:${IMAGE_TAG:?set IMAGE_TAG}
     restart: unless-stopped
     depends_on:
       backend:
@@ -12,7 +12,7 @@ services:
     # no published ports: only cloudflared (same network) reaches it
 
   backend:
-    image: ghcr.io/reindeer39/kintore-app-backend:${IMAGE_TAG:?set IMAGE_TAG}
+    image: ghcr.io/jphacks/tkb_2605-backend:${IMAGE_TAG:?set IMAGE_TAG}
     restart: unless-stopped
     environment:
       DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY:?set DJANGO_SECRET_KEY}
