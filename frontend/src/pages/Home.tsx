@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router";
 import { fetchHealth, type Health } from "../api/health.ts";
+import Page from "../components/Page.tsx";
+import { paths } from "../routes.ts";
 
 type State = { kind: "loading" } | { kind: "done"; health: Health } | { kind: "error"; message: string };
 
@@ -16,7 +19,7 @@ function Badge({ ok, okText, ngText }: { ok: boolean; okText: string; ngText: st
   );
 }
 
-export default function Landing() {
+export default function Home() {
   const [state, setState] = useState<State>({ kind: "loading" });
 
   useEffect(() => {
@@ -30,9 +33,12 @@ export default function Landing() {
   }, []);
 
   return (
-    <main className="mx-auto flex min-h-screen max-w-xl flex-col justify-center gap-6 px-4">
-      <h1 className="text-3xl font-bold">Workout App</h1>
-      <p className="text-gray-600">React + Vite / Django REST Framework / SQLite</p>
+    <Page title="ホーム・タイムライン" description="メンバーの投稿やトレーニングの概要を表示する画面です。">
+      <div className="flex flex-wrap gap-3">
+        <Link to={paths.exercises} className="rounded-lg bg-emerald-700 px-4 py-3 font-medium text-white">トレーニングを開始</Link>
+        <Link to={paths.recommendations} className="rounded-lg border border-gray-300 px-4 py-3">初心者向けおすすめ</Link>
+        <Link to={paths.chats} className="rounded-lg border border-gray-300 px-4 py-3">チャット一覧</Link>
+      </div>
       <section className="rounded-xl border border-gray-200 p-4">
         <h2 className="mb-3 font-semibold">System status</h2>
         {state.kind === "loading" && <p className="text-gray-500">Checking…</p>}
@@ -49,6 +55,6 @@ export default function Landing() {
           </div>
         )}
       </section>
-    </main>
+    </Page>
   );
 }
