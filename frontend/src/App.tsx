@@ -10,6 +10,8 @@ import NotFound from "./pages/NotFound.tsx";
 import Recommendations from "./pages/Recommendations.tsx";
 import WorkoutRecord from "./pages/WorkoutRecord.tsx";
 import WorkoutResults from "./pages/WorkoutResults.tsx";
+import Profile from "./pages/Profile.tsx";
+import ProfileEditPlaceholder from "./pages/ProfileEditPlaceholder.tsx";
 import { paths } from "./routes.ts";
 
 export default function App() {
@@ -29,6 +31,8 @@ export default function App() {
           <Route path={paths.exercises} element={<Exercises />} />
           <Route path={paths.workoutExercise} element={<WorkoutRecord />} />
           <Route path={paths.workoutResults} element={<WorkoutResults />} />
+          <Route path={paths.profile} element={<Profile />} />
+          <Route path={paths.profileEdit} element={<ProfileEditPlaceholder />} />
         </Route>
       </Route>
       <Route path="*" element={<NotFound />} />

@@ -8,6 +8,8 @@ export const paths = {
   exercises: "/exercises",
   workoutExercise: "/workouts/:workoutId/exercises/:exerciseId",
   workoutResults: "/workouts/:workoutId/results",
+  profile: "/profile/:userId",
+  profileEdit: "/profile/me/edit",
 } as const;
 
 export function workoutExercisePath(workoutId: string, exerciseId: string) {
@@ -16,4 +18,8 @@ export function workoutExercisePath(workoutId: string, exerciseId: string) {
 
 export function workoutResultsPath(workoutId: string) {
   return generatePath(paths.workoutResults, { workoutId });
+}
+
+export function profilePath(userId: string) {
+  return generatePath(paths.profile, { userId: encodeURIComponent(userId) });
 }
