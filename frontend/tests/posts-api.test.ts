@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import { createPost, fetchPosts, togglePostLike, type ApiPost } from "../src/api/posts.ts";
 
 const originalFetch = globalThis.fetch;
+const originalDocument = Object.getOwnPropertyDescriptor(globalThis, "document");
 const fixture: ApiPost = { post_id: "12", user_id: "3", user_name: "たろう", post_type: 1, content: "記録", posted_at: "2026-10-24T15:00:00+09:00", workout_id: null, like_count: 5, is_liked: true };
 let requests: { url: string; init?: RequestInit }[];
 function respond(body: unknown, status = 200) {
@@ -12,14 +13,19 @@ function respond(body: unknown, status = 200) {
   };
 }
 beforeEach(() => { requests = []; });
-afterEach(() => { globalThis.fetch = originalFetch; });
+afterEach(() => {
+  globalThis.fetch = originalFetch;
+  if (originalDocument) Object.defineProperty(globalThis, "document", originalDocument);
+  else Reflect.deleteProperty(globalThis, "document");
+});
 
-test("list accepts the documented 201 and forwards pagination and abort signal", async () => {
-  respond({ results: [fixture], next_offset: 40 }, 201);
+for (const status of [200, 201]) test(`list accepts HTTP ${status} and forwards pagination and abort signal`, async () => {
+  respond({ results: [fixture], next_offset: 40 }, status);
   const signal = new AbortController().signal;
   const result = await fetchPosts({ limit: 20, offset: 20, signal });
   assert.equal(result.next_offset, 40);
   assert.equal(requests[0].url, "/api/posts/?limit=20&offset=20");
+  assert.equal(requests[0].init?.method, "GET");
   assert.equal(requests[0].init?.signal, signal);
   assert.equal(requests[0].init?.credentials, "same-origin");
 });
@@ -35,21 +41,40 @@ test("end of history is null and invalid paging is rejected before a request", a
 test("like sends a bodyless PUT and uses the returned authoritative state", async () => {
   respond({ post_id: "a/b", like_count: 6, is_liked: false });
   assert.deepEqual(await togglePostLike("a/b"), { post_id: "a/b", like_count: 6, is_liked: false });
-  assert.equal(requests[0].url, "/api/posts/a%2Fb/like");
+  assert.equal(requests[0].url, "/api/posts/a%2Fb/like/");
   assert.equal(requests[0].init?.method, "PUT");
   assert.equal(requests[0].init?.body, undefined);
+  assert.equal(requests[0].init?.credentials, "same-origin");
+  assert.equal(new Headers(requests[0].init?.headers).has("Content-Type"), false);
 });
 
-test("text, workout, and start-notification requests follow the issue contract", async () => {
-  respond(fixture);
+for (const status of [200, 201]) test(`text, workout, and start-notification requests accept HTTP ${status} and follow the issue contract`, async () => {
+  respond(fixture, status);
   await createPost({ post_type: 1, content: "記録" });
+  assert.equal(requests[0].url, "/api/posts/");
+  assert.equal(requests[0].init?.method, "POST");
+  assert.equal(requests[0].init?.credentials, "same-origin");
+  assert.equal(new Headers(requests[0].init?.headers).get("Content-Type"), "application/json");
   assert.deepEqual(JSON.parse(String(requests.at(-1)!.init?.body)), { post_type: 1, content: "記録" });
-  respond({ ...fixture, post_type: 2, workout_id: "42" });
+  respond({ ...fixture, post_type: 2, workout_id: "42" }, status);
   await createPost({ post_type: 2, content: "自己ベスト", workout_id: "42" });
   assert.deepEqual(JSON.parse(String(requests.at(-1)!.init?.body)), { post_type: 2, content: "自己ベスト", workout_id: "42" });
-  respond({ ...fixture, post_type: 3, content: "" });
+  respond({ ...fixture, post_type: 3, content: "" }, status);
   await createPost({ post_type: 3 });
   assert.deepEqual(JSON.parse(String(requests.at(-1)!.init?.body)), { post_type: 3 });
+});
+
+test("writes forward the Django CSRF cookie while list requests do not", async () => {
+  Object.defineProperty(globalThis, "document", { configurable: true, value: { cookie: "other=value; csrftoken=csrf%2Dtoken" } });
+  respond({ post_id: fixture.post_id, like_count: 6, is_liked: false });
+  await togglePostLike(fixture.post_id);
+  assert.equal(new Headers(requests.at(-1)!.init?.headers).get("X-CSRFToken"), "csrf-token");
+  respond(fixture, 201);
+  await createPost({ post_type: 1, content: "記録" });
+  assert.equal(new Headers(requests.at(-1)!.init?.headers).get("X-CSRFToken"), "csrf-token");
+  respond({ results: [fixture], next_offset: null });
+  await fetchPosts();
+  assert.equal(new Headers(requests.at(-1)!.init?.headers).has("X-CSRFToken"), false);
 });
 
 test("server errors and malformed payloads never masquerade as success", async () => {
@@ -61,6 +86,8 @@ test("server errors and malformed payloads never masquerade as success", async (
   await assert.rejects(fetchPosts(), /応答形式/);
   respond({ post_id: "other", like_count: 1, is_liked: true });
   await assert.rejects(togglePostLike("12"), /応答形式/);
+  respond(fixture, 201);
+  await assert.rejects(createPost({ post_type: 2, content: "記録", workout_id: "42" }), /応答形式/);
 });
 
 test("empty post inputs are rejected without transmitting a request", async () => {

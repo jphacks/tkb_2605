@@ -59,7 +59,7 @@ export async function fetchPosts({ limit = 20, offset = 0, signal }: { limit?: n
 
 export async function togglePostLike(postId: string): Promise<LikeResult> {
   if (!postId) throw new Error("投稿を選択してください。");
-  const value = await request("/api/posts/" + encodeURIComponent(postId) + "/like", { method: "PUT", headers: headers(true) });
+  const value = await request("/api/posts/" + encodeURIComponent(postId) + "/like/", { method: "PUT", headers: headers(true) });
   if (!validLike(value) || value.post_id !== postId) throw new Error("いいねの応答形式を確認できませんでした。");
   return value;
 }
