@@ -2,10 +2,8 @@ import { useState } from "react";
 import { createSearchParams, useLocation, useNavigate, useParams } from "react-router";
 import { paths, workoutResultsPath } from "../routes.ts";
 import { blankSet, parseSets, readDraft, saveDraft, type SetInput } from "../features/record/draft.ts";
+import { recordExerciseName, recordReturnTo, type EntryState } from "../features/record/entry.ts";
 import "./WorkoutRecord.css";
-
-type EntryState = { exerciseName?: unknown; returnTo?: unknown };
-const knownNames: Record<string, string> = { preview: "プッシュアップ", "push-up": "プッシュアップ", "bench-press": "ベンチプレス", squat: "スクワット", lunge: "ランジ", "dumbbell-row": "ダンベルロー", "lat-pulldown": "ラットプルダウン", "shoulder-press": "ショルダープレス", crunch: "クランチ" };
 
 function initialDraft(workoutId: string, exerciseId: string) {
   try {
@@ -16,13 +14,13 @@ function initialDraft(workoutId: string, exerciseId: string) {
   }
 }
 
-function RecordEditor({ workoutId, exerciseId, entry }: { workoutId: string; exerciseId: string; entry: EntryState | null }) {
+function RecordEditor({ workoutId, exerciseId, search, entry }: { workoutId: string; exerciseId: string; search: string; entry: EntryState | null }) {
   const navigate = useNavigate();
   const [initial] = useState(() => initialDraft(workoutId, exerciseId));
   const [sets, setSets] = useState(initial.sets);
   const [error, setError] = useState(initial.error);
-  const exerciseName = typeof entry?.exerciseName === "string" && entry.exerciseName.trim() ? entry.exerciseName.trim() : initial.name ?? knownNames[exerciseId] ?? "選択した種目";
-  const returnTo = entry?.returnTo === "recommendations" ? "recommendations" : "exercises";
+  const exerciseName = recordExerciseName(exerciseId, entry?.exerciseName, initial.name);
+  const returnTo = recordReturnTo(search, entry?.returnTo);
 
   function edit(change: (items: SetInput[]) => SetInput[]) {
     setSets(change); setError("");
@@ -59,5 +57,5 @@ export default function WorkoutRecord() {
   const { workoutId, exerciseId } = useParams<"workoutId" | "exerciseId">();
   const location = useLocation();
   if (!workoutId || !exerciseId) return null;
-  return <RecordEditor key={workoutId + "/" + exerciseId} workoutId={workoutId} exerciseId={exerciseId} entry={location.state as EntryState | null} />;
+  return <RecordEditor key={workoutId + "/" + exerciseId} workoutId={workoutId} exerciseId={exerciseId} search={location.search} entry={location.state as EntryState | null} />;
 }
