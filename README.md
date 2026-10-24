@@ -12,8 +12,8 @@
 必要なもの：Git と Docker Desktop（Windows は WSL2 バックエンド）。Node や Python をPCに入れる必要はない。
 
 ```bash
-git clone https://github.com/reindeer39/kintore-app.git
-cd kintore-app
+git clone https://github.com/jphacks/tkb_2605.git
+cd tkb_2605
 docker compose up --build
 ```
 
