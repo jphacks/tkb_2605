@@ -30,14 +30,14 @@ export default function Home() {
       <h2 id="training-heading" className="visually-hidden">トレーニングを選ぶ</h2>
       <div className="body-navigation">
         <svg className="body-lines upper-body" viewBox="0 0 640 100" preserveAspectRatio="none" fill="none" aria-hidden="true">
-          <path className="body-fill" d="M296 40v30c-28 12-73 13-140 19-35 3-57 6-71 11h470c-14-5-36-8-71-11-67-6-112-7-140-19V40Z" />
-          <path d="M296 40v30c-28 12-73 13-140 19-35 3-57 6-71 11M344 40v30c28 12 73 13 140 19 35 3 57 6 71 11M296 74l24 18 24-18M320 92v8" />
+          <path className="body-fill" d="M296 52v30c-28 8-73 9-140 12-35 2-57 3-71 6h470c-14-3-36-4-71-6-67-3-112-4-140-12V52Z" />
+          <path d="M296 52v30c-28 8-73 9-140 12-35 2-57 3-71 6M344 52v30c28 8 73 9 140 12 35 2 57 3 71 6M296 84l24 12 24-12M320 96v4" />
         </svg>
         <div className="head-avatar"><Avatar user={currentUser} size="large" /></div>
         <div className="chest-region">
           <svg className="body-lines" viewBox="0 0 640 64" preserveAspectRatio="none" fill="none" aria-hidden="true">
             <path className="body-fill" d="M85 0h470l25 64H60Z" />
-            <path d="M85 0 60 64M555 0l25 64M320 0v58M116 2c52-2 126-2 192 0v53c-55 8-137 7-192-2ZM524 2c-52-2-126-2-192 0v53c55 8 137 7 192-2Z" />
+            <path d="M85 0 60 64M555 0l25 64M320 0v58" />
           </svg>
           <div className="chest-actions">
             <Link to={paths.exercises} className="training-button training-start" aria-label="トレーニングを始める"><Icon name="dumbbell" size={18} /><strong><span>トレーニング</span><span>を始める</span></strong></Link>
