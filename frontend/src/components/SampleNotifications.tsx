@@ -11,7 +11,7 @@ export function SampleNotifications() {
     return <article className="post-card notification-card" key={notice.id}>
       <Avatar user={actor} />
       <div className="post-main">
-        <div className="post-meta"><Icon name={notice.type === "like" ? "heart" : notice.type === "follow" ? "user" : "message"} size={16} /><Link className="post-author" to={"/profile/" + actor.id}>{actor.name}</Link>{!notice.read && <span className="unread-dot" aria-label="未読の表示例" />}</div>
+        <div className="post-meta"><Icon name={notice.type === "like" ? "arm" : notice.type === "follow" ? "user" : "message"} size={16} /><Link className="post-author" to={"/profile/" + actor.id}>{actor.name}</Link>{!notice.read && <span className="unread-dot" aria-label="未読の表示例" />}</div>
         <Link className="post-content" to={notice.postId ? "/posts/" + notice.postId + (notice.type === "reply" ? "#reply" : "") : "/profile/" + actor.id}><p className="post-text">{text}</p></Link>
         <time className="notification-time" dateTime={notice.createdAt}>{new Date(notice.createdAt).toLocaleString("ja-JP", { month: "numeric", day: "numeric", hour: "2-digit", minute: "2-digit" })}</time>
       </div>
