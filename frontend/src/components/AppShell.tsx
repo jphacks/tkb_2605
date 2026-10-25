@@ -1,20 +1,21 @@
 import NotificationLink from "../features/notifications/NotificationLink.tsx";
 import AccountControls from "./AccountControls.tsx";
 import { Link, NavLink, Outlet } from "react-router";
-import { usePreviewProfile } from "../features/profile/usePreviewProfile.ts";
+import { useCurrentProfile } from "../features/profile/useCurrentProfile.ts";
 import { paths } from "../routes.ts";
 import { Avatar } from "./Avatar.tsx";
 import ComposeLink from "./ComposeLink.tsx";
 import { Icon } from "./Icon.tsx";
 
 export default function AppShell() {
-  const currentUser = usePreviewProfile();
+  const currentUser = useCurrentProfile();
   return <div className="app-shell">
     <a className="skip-link" href="#main-content">メインコンテンツへ</a>
     <aside className="sidebar">
       <Link to="/" className="brand" aria-label="WORKOUT ホーム"><span className="brand-symbol"><Icon name="dumbbell" size={24} /></span><span>WORKOUT<span className="brand-caption">MOVE. SHARE. GROW.</span></span></Link>
       <nav className="desktop-nav" aria-label="メインナビゲーション">
         <NavLink to="/" end><Icon name="home" />ホーム<span className="nav-active-dot" /></NavLink>
+        <Link to={paths.masmates}><Icon name="user" />マスメイト</Link>
         <Link to={paths.chats}><Icon name="message" />チャット</Link>
         <NotificationLink showLabel />
         <Link to={`/profile/${currentUser.id}`}><Icon name="user" />プロフィール</Link>

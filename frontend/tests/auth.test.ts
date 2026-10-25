@@ -3,8 +3,7 @@ import { after, beforeEach, test } from "node:test";
 import { fetchCurrentUser, registerUser, type AuthUser } from "../src/api/auth.ts";
 import { apiFetch } from "../src/api/http.ts";
 import { getAuthState, refreshSession, signIn, signOut } from "../src/features/auth/session.ts";
-import { getPreviewProfile, savePreviewProfile } from "../src/features/profile/preview.ts";
-import { arePreviewMasmates, becomePreviewMasmates } from "../src/features/profile/masmates.ts";
+import { getCurrentProfile, acceptProfile } from "../src/features/profile/currentProfile.ts";
 import { createPost } from "../src/api/posts.ts";
 import { createWorkout } from "../src/api/workouts.ts";
 
@@ -18,6 +17,7 @@ let handle: (url: string, init: RequestInit) => Response | Promise<Response>;
 const json = (body: unknown, status = 200) => Response.json(body, { status });
 function server(url: string, init: RequestInit): Response {
   if (url === "/api/auth/csrf/") return json({ csrf_token: token });
+  if (url === "/api/users/me/profile/") return serverUser ? json({ ...serverUser, bio: "", avatar_color: "#f0d9d1", is_masmate: false }) : json({}, 403);
   if (url === "/api/users/me/") return serverUser ? json(serverUser) : json({}, 403);
   if (url === "/api/auth/login/") {
     assert.equal(new Headers(init.headers).get("X-CSRFToken"), token);
@@ -53,10 +53,9 @@ test("login rotates CSRF, sends credentials only to auth, and prepares every wri
   assert.equal(write.body, "{}");
 });
 
-test("account switching clears profile edits, relationships, and old requests", async () => {
+test("account switching clears profile state and old requests", async () => {
   await signIn({ email: first.email, password: "test-only" });
-  savePreviewProfile({ name: first.user_name, bio: "Private draft", color: "#f3dfcc" });
-  becomePreviewMasmates(first.user_id, second.user_id);
+  acceptProfile({ ...first, bio: "Private draft", avatar_color: "#f3dfcc", is_masmate: false });
   let release!: (response: Response) => void;
   handle = (url, init) => url === "/api/slow/" ? new Promise((resolve) => { release = resolve; }) : server(url, init);
   const stale = apiFetch("/api/slow/");
@@ -66,9 +65,8 @@ test("account switching clears profile edits, relationships, and old requests", 
   await rejected;
   assert.equal(getAuthState().status, "anonymous");
   await signIn({ email: second.email, password: "test-only" });
-  assert.equal(getPreviewProfile().id, second.user_id);
-  assert.equal(getPreviewProfile().bio, "");
-  assert.equal(arePreviewMasmates(first.user_id, second.user_id), false);
+  assert.equal(getCurrentProfile().id, second.user_id);
+  assert.equal(getCurrentProfile().bio, "");
 });
 
 test("403 checks the session without replaying a write or logging out on CSRF failure", async () => {

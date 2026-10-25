@@ -6,6 +6,7 @@ export const paths = {
   home: "/",
   compose: "/compose",
   chats: "/chats",
+  masmates: "/masmates",
   recommendations: "/recommendations",
   exercises: "/exercises",
   workoutExercise: "/workouts/:workoutId/exercises/:exerciseId",

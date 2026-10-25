@@ -7,8 +7,8 @@ export default function Settings() {
   return <section className="profile-page profile-unavailable">
     <h1>アカウント</h1>
     <dl className="account-details"><dt>名前</dt><dd>{user?.user_name}</dd><dt>メールアドレス</dt><dd>{user?.email}</dd></dl>
-    <p>名前・メールアドレス・パスワードの変更は現在準備中です。</p>
-    <Link className="profile-action" to={paths.profileEdit}>プロフィールの表示を編集</Link>
+    <p>メールアドレス・パスワードの変更は現在準備中です。</p>
+    <Link className="profile-action" to={paths.profileEdit}>プロフィールを編集</Link>
     <p><Link to={paths.home}>ホームに戻る</Link></p>
   </section>;
 }
