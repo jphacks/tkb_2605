@@ -68,7 +68,7 @@ DBの保存内容を復元し、選択種目・入力セットの一致を検証
 
 ## 種目マスターと他画面
 
-種目マスターはフロント所有の [JSONファイル](../frontend/src/features/exercises/serverCatalogData.json)。16種目・6部位・5器具・15おすすめ対応、種目名検索、部位・器具のAND絞り込みを維持する。`seed_exercises`コマンドで同じUUID・名称・関連をDBへ投入・更新する。起動時の自動実行は行わない。詳細は [種目マスター](exercise-master.md) を参照。
+種目マスターはフロント所有の [JSONファイル](../frontend/src/features/exercises/serverCatalogData.json)。115種目・7部位・51器具区分・15おすすめ対応、種目名検索、部位・器具のAND絞り込みを維持する。`seed_exercises`コマンドで同じUUID・名称・関連をDBへ投入・更新する。起動時の自動実行は行わない。詳細は [種目マスター](exercise-master.md) を参照。
 
 結果画面は [PR #27](https://github.com/jphacks/tkb_2605/pull/27) のUIを参照したGET接続版で、共有先は統合済みの [PR #30](https://github.com/jphacks/tkb_2605/pull/30) の投稿ダイアログ。投稿は既存の `post_type: 2`・`workout_id` の形式で送るが、現行スタブは `post_type: 1` を返すため成功として扱わない。認証ガード、ホームの投稿取得・ページングを維持する。投稿作成応答のユーザーIDもログイン中のIDと一致する必要がある。
 

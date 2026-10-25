@@ -1,3 +1,4 @@
+import NotificationLink from "../features/notifications/NotificationLink.tsx";
 import AccountControls from "./AccountControls.tsx";
 import { Link, NavLink, Outlet } from "react-router";
 import { usePreviewProfile } from "../features/profile/usePreviewProfile.ts";
@@ -15,7 +16,7 @@ export default function AppShell() {
       <nav className="desktop-nav" aria-label="メインナビゲーション">
         <NavLink to="/" end><Icon name="home" />ホーム<span className="nav-active-dot" /></NavLink>
         <Link to={paths.chats}><Icon name="message" />チャット</Link>
-        <Link to="/notifications"><Icon name="bell" />通知</Link>
+        <NotificationLink showLabel />
         <Link to={`/profile/${currentUser.id}`}><Icon name="user" />プロフィール</Link>
         <Link to="/settings"><Icon name="settings" />設定</Link>
       </nav>

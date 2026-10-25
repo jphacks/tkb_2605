@@ -1,0 +1,25 @@
+.exercise-visual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 88px;
+  height: 88px;
+  padding: 4px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fff;
+}
+
+.exercise-visual-crop { display: block; position: relative; overflow: hidden; }
+.exercise-visual-crop img { position: absolute; display: block; max-width: none; }
+.exercise-visual-fallback { color: var(--muted); font-size: 11px; }
+.exercise-equipment { display: flex; flex-wrap: wrap; align-items: center; gap: 3px 10px; margin-top: 4px; color: var(--muted); font-size: 11px; line-height: 1.4; }
+.exercise-equipment-item { display: inline-flex; align-items: center; gap: 3px; }
+.exercise-equipment-item img { width: 28px; height: 21px; object-fit: contain; }
+
+@media (max-width: 480px) {
+  .exercise-visual { width: 72px; height: 72px; }
+  .exercise-equipment { gap: 3px 6px; font-size: 10px; }
+}

@@ -1,3 +1,4 @@
+import NotificationLink from "../features/notifications/NotificationLink.tsx";
 import NotificationList from "../features/notifications/NotificationList.tsx";
 import { useNotifications } from "../features/notifications/context.ts";
 import { useEffect, useRef, useState } from "react";
@@ -51,7 +52,7 @@ export default function Home() {
       <h1><span>HOME</span></h1>
       <div className="home-header-actions">
         <Link className="icon-button home-settings" to="/settings" aria-label="設定を開く"><Icon name="settings" size={18} /></Link>
-        <Link className="icon-button home-notification" to="/notifications" aria-label="通知を見る"><Icon name="bell" size={18} /></Link>
+        <NotificationLink className="icon-button home-notification" />
       </div>
     </header>
     <section className="training-hero" aria-labelledby="training-heading">

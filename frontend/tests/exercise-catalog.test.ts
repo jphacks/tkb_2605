@@ -18,8 +18,8 @@ function fixture() {
 
 test("the checked-in master has unique UUIDs and explicitly maps every recommendation", () => {
   const catalog = parseServerCatalog(masterFile);
-  assert.equal(catalog.exercises.length, 16);
-  assert.equal(new Set(catalog.exercises.map((exercise) => exercise.exercise_id)).size, 16);
+  assert.equal(catalog.exercises.length, 115);
+  assert.equal(new Set(catalog.exercises.map((exercise) => exercise.exercise_id)).size, 115);
   for (const exercise of catalog.exercises) assert.match(exercise.exercise_id, /^[\da-f]{8}-[\da-f]{4}-[\da-f]{4}-[\da-f]{4}-[\da-f]{12}$/i);
   for (const key of recommendationKeys) {
     const exercise = resolveRecommendation(catalog, key);
