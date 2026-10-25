@@ -39,9 +39,9 @@ test("updates, reordering and notifications disappearing/reappearing do not repe
   assert.deepEqual(store.getSnapshot().newIds, []);
   items = [item(3), ...items]; await store.refresh();
   items = []; await store.refresh();
-  assert.deepEqual(store.getSnapshot().items, []);
-  assert.deepEqual(store.getSnapshot().newIds, []);
-  assert.equal(store.getSnapshot().banner, false);
+  assert.deepEqual(store.getSnapshot().items.map((value) => value.notification_id), [3, 2, 1]);
+  assert.deepEqual(store.getSnapshot().newIds, [3]);
+  assert.equal(store.getSnapshot().banner, true);
 });
 
 test("errors retain previously fetched data and new state, and recover on the next refresh", async () => {
@@ -128,4 +128,19 @@ test("poller starts paused when hidden and cannot reschedule after cleanup durin
   });
   assert.equal(calls, 0); visible = true; wake(); assert.equal(calls, 1);
   stop(); pending.resolve(); await tick(); assert.equal(timers, 0);
+});
+
+test("consumed deltas accumulate across empty polls and cap the retained inbox at 100", async () => {
+  let items = [item(1)];
+  const store = createNotificationStore({ fetchNotifications: async () => items, sendWorkoutNotification: async () => {} });
+  await store.refresh(); items = []; await store.refresh();
+  assert.deepEqual(store.getSnapshot().items.map((value) => value.notification_id), [1]);
+  items = [item(2)]; await store.refresh();
+  assert.deepEqual(store.getSnapshot().items.map((value) => value.notification_id), [2, 1]);
+  assert.deepEqual(store.getSnapshot().newIds, [2]);
+  items = Array.from({ length: 100 }, (_, i) => item(i + 3)); await store.refresh();
+  assert.equal(store.getSnapshot().items.length, 100);
+  assert.equal(store.getSnapshot().items[0].notification_id, 102);
+  assert.ok(!store.getSnapshot().newIds.includes(2));
+  store.reset(); assert.deepEqual(store.getSnapshot().items, []);
 });

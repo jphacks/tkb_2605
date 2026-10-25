@@ -30,9 +30,12 @@ export function createNotificationStore(api = { fetchNotifications, sendWorkoutN
       if (controller.signal.aborted || version !== epoch) return;
       const fresh = state.initialized ? items.filter((item) => !seen.has(item.notification_id)).map((item) => item.notification_id) : [];
       items.forEach((item) => seen.add(item.notification_id));
-      const present = new Set(items.map((item) => item.notification_id));
+      // GET consumes the server cursor: each response is a delta, including [].
+      const merged = [...new Map([...state.items, ...items].map((item) => [item.notification_id, item])).values()]
+        .sort((a, b) => Date.parse(b.notified_at) - Date.parse(a.notified_at) || b.notification_id - a.notification_id).slice(0, 100);
+      const present = new Set(merged.map((item) => item.notification_id));
       const newIds = [...new Set([...state.newIds, ...fresh])].filter((id) => present.has(id));
-      update({ items, newIds, initialized: true, error: "", banner: newIds.length > 0 && (state.banner || fresh.length > 0) });
+      update({ items: merged, newIds, initialized: true, error: "", banner: newIds.length > 0 && (state.banner || fresh.length > 0) });
     }).catch((error: unknown) => {
       if (!controller.signal.aborted && version === epoch) update({ error: error instanceof Error ? error.message : "通知を取得できませんでした。" });
     }).finally(() => {

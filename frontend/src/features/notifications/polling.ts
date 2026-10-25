@@ -1,4 +1,4 @@
-export const NOTIFICATION_POLL_MS = 15_000;
+export const NOTIFICATION_POLL_MS = 1_000;
 type PollHost = {
   available(): boolean;
   onWake(callback: () => void): () => void;
