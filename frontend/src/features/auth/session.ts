@@ -90,9 +90,3 @@ export async function signOut() {
   } finally { changing = false; }
 }
 onAuthenticationFailure(refreshSession);
-
-export function safeReturnPath(value: unknown): string {
-  if (typeof value !== "string" || !value.startsWith("/") || value.startsWith("//") || (value.includes("\\") || [...value].some((character) => character.charCodeAt(0) < 32))) return "/";
-  const pathname = value.split(/[?#]/)[0];
-  return pathname === "/login" || pathname === "/register" ? "/" : value;
-}

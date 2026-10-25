@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { after, beforeEach, test } from "node:test";
 import { fetchCurrentUser, registerUser, type AuthUser } from "../src/api/auth.ts";
 import { apiFetch } from "../src/api/http.ts";
-import { getAuthState, refreshSession, safeReturnPath, signIn, signOut } from "../src/features/auth/session.ts";
+import { getAuthState, refreshSession, signIn, signOut } from "../src/features/auth/session.ts";
 import { getPreviewProfile, savePreviewProfile } from "../src/features/profile/preview.ts";
 import { arePreviewMasmates, becomePreviewMasmates } from "../src/features/profile/masmates.ts";
 import { createPost } from "../src/api/posts.ts";
@@ -121,9 +121,4 @@ test("invalid identity and another user's mutation responses are rejected", asyn
   await assert.rejects(createWorkout(), /応答形式/);
   handle = () => json({ post_id: "p", user_id: "22", user_name: "other", post_type: 1, content: "x", posted_at: "2026-10-25T00:00:00Z", workout_id: null, like_count: 0, is_liked: false }, 201);
   await assert.rejects(createPost({ post_type: 1, content: "x" }), /応答形式/);
-});
-
-test("login return paths preserve local query/hash and reject external redirects", () => {
-  assert.equal(safeReturnPath("/exercises?workoutId=a#choice"), "/exercises?workoutId=a#choice");
-  for (const input of [null, "https://other.test", "//other.test", "/\\other.test", "/login?next=x", "/register", "/\nother"]) assert.equal(safeReturnPath(input), "/");
 });

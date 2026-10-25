@@ -1,16 +1,14 @@
 import { useRef, useState, type FormEvent } from "react";
-import { Navigate, useLocation } from "react-router";
+import { Navigate } from "react-router";
 import { registerUser } from "../api/auth.ts";
 import { useAuth } from "../features/auth/useAuth.ts";
-import { refreshSession, safeReturnPath, signIn } from "../features/auth/session.ts";
+import { refreshSession, signIn } from "../features/auth/session.ts";
+import { paths } from "../routes.ts";
 import { Icon } from "../components/Icon.tsx";
 import "./Login.css";
 
 export default function Login() {
   const auth = useAuth();
-  const location = useLocation();
-  const state = location.state as { from?: unknown } | null;
-  const from = safeReturnPath(state?.from);
   const [register, setRegister] = useState(false);
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
@@ -40,7 +38,7 @@ export default function Login() {
       setPassword(""); setConfirmation(""); setBusy(false); lock.current = false;
     }
   }
-  if (auth.status === "authenticated") return <Navigate to={from} replace />;
+  if (auth.status === "authenticated") return <Navigate to={paths.home} replace />;
   if (auth.status === "loading") return <main className="auth-status" role="status">ログイン状態を確認しています…</main>;
   if (auth.status === "error") return <main className="auth-status"><p role="alert">{auth.error}</p><button className="primary-button" onClick={() => void refreshSession()}>再試行</button></main>;
 
