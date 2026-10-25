@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     "core",
     "posts.apps.PostsConfig",
     "users.apps.UsersConfig",
+    "notifications.apps.NotificationsConfig",
     "note.apps.NoteConfig",
 ]
 

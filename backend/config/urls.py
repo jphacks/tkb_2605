@@ -7,4 +7,5 @@ urlpatterns = [
     path("api/", include("posts.urls")),
     path("api/", include("note.urls")),
     path("api/", include("users.urls")),
+    path("api/", include("notifications.urls")),
 ]
