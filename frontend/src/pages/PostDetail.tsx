@@ -1,10 +1,19 @@
 import { useEffect, useRef, useState } from "react";
-import { Link, useParams } from "react-router";
+import { Link, useNavigate, useParams } from "react-router";
 import { fetchPost, addPostLike, type ApiPost } from "../api/posts.ts";
 import { Icon } from "../components/Icon.tsx";
 import "../features/notifications/notifications.css";
 
 function Detail({ postId }: { postId: string }) {
+  const navigate = useNavigate();
+  function goBack() {
+    // BrowserRouter's index counts entries within this app, unlike history.length.
+    if (typeof window.history.state?.idx === "number" && window.history.state.idx > 0) {
+      void navigate(-1);
+    } else {
+      void navigate("/", { replace: true });
+    }
+  }
   const [post, setPost] = useState<ApiPost | null>(null);
   const [error, setError] = useState("");
   const [likeError, setLikeError] = useState("");
@@ -33,8 +42,8 @@ function Detail({ postId }: { postId: string }) {
     } finally { pending.current = false; if (mounted.current) setBusy(false); }
   }
   return <section className="notifications-page post-detail-page">
-    <header className="notifications-header"><Link className="notifications-back" to="/notifications" aria-label="通知へ戻る"><Icon name="arrow-left" /></Link><div><h1>投稿</h1><p>POST</p></div><Link className="post-detail-home" to="/">ホーム</Link></header>
-    {error ? <div className="notifications-error"><p role="alert">{error}</p><button className="secondary-button" onClick={() => setAttempt((value) => value + 1)}>再試行</button><Link to="/notifications">通知へ戻る</Link></div> : !post ? <p className="feed-status" role="status">投稿を読み込んでいます…</p> : <article className="post-card">
+    <header className="notifications-header"><button type="button" className="notifications-back" onClick={goBack} aria-label="前の画面へ戻る"><Icon name="arrow-left" /></button><div><h1>投稿</h1><p>POST</p></div><Link className="post-detail-home" to="/">ホーム</Link></header>
+    {error ? <div className="notifications-error"><p role="alert">{error}</p><button className="secondary-button" onClick={() => setAttempt((value) => value + 1)}>再試行</button><button type="button" className="secondary-button" onClick={goBack}>前の画面へ戻る</button></div> : !post ? <p className="feed-status" role="status">投稿を読み込んでいます…</p> : <article className="post-card">
       <Link className="avatar-link" to={"/profile/" + encodeURIComponent(post.user_id)} aria-label={post.user_name + "のプロフィールを開く"}><span className="avatar avatar-medium api-avatar"><Icon name="user" size={25} /></span></Link>
       <div className="post-main">
         <div className="post-meta"><Link className="post-author" to={"/profile/" + encodeURIComponent(post.user_id)}>{post.user_name}</Link><time dateTime={post.posted_at}>{new Date(post.posted_at).toLocaleString("ja-JP")}</time></div>
