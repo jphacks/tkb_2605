@@ -11,7 +11,7 @@ export default function Page({ title, description, children }: Props) {
     <section className="space-y-6">
       <header className="space-y-2">
         <h1 className="text-2xl font-bold">{title}</h1>
-        <p className="text-gray-600">{description}</p>
+        <p className="text-muted">{description}</p>
       </header>
       {children}
     </section>
