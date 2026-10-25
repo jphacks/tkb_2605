@@ -153,6 +153,12 @@
   font-size: 12px;
 }
 
+.compose-limit {
+  margin-top: 8px;
+  color: var(--compose-muted);
+  font-size: 12px;
+}
+
 .compose-workout-menus,
 .compose-workout-sets {
   padding: 0;

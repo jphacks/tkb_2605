@@ -121,12 +121,10 @@ class NoteRepositoryTests(TestCase):
                 self.save_sets()
         self.assertEqual(list(self.entry.sets.all()), original)
 
-    def test_all_operations_are_scoped_to_owner(self):
+    def test_writes_are_scoped_to_owner(self):
         operations = [
             (Workout.DoesNotExist, repositories.add_workout_exercise,
              (self.other_user.pk, self.workout.pk, self.exercise.pk)),
-            (Workout.DoesNotExist, repositories.get_workout_detail,
-             (self.other_user.pk, self.workout.pk)),
             (Workout.DoesNotExist, repositories.complete_workout,
              (self.other_user.pk, self.workout.pk)),
             (WorkoutExercise.DoesNotExist, repositories.create_workout_sets,
@@ -139,6 +137,17 @@ class NoteRepositoryTests(TestCase):
         self.workout.refresh_from_db()
         self.assertFalse(self.workout.is_completed)
         self.assertFalse(self.entry.sets.exists())
+
+    def test_detail_is_readable_by_another_user(self):
+        self.save_sets()
+        detail = repositories.get_workout_detail(self.other_user.pk, self.workout.pk)
+        self.assertEqual(detail.pk, self.workout.pk)
+        self.assertEqual(detail.user_id, self.user.pk)
+        self.assertEqual(
+            [(row.set_number, row.reps, row.weight)
+             for row in detail.exercises.get(pk=self.entry.pk).sets.all()],
+            [(1, 10, Decimal("20.0")), (2, 9, Decimal("18.0"))],
+        )
 
     def test_missing_records_raise(self):
         for operation in [
