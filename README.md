@@ -97,7 +97,7 @@ URLは `frontend/src/routes.ts`、画面の割り当ては `frontend/src/App.tsx
 | 種目ごとの記録 | `/workouts/:workoutId/exercises/:exerciseId` |
 | 結果 | `/workouts/:workoutId/results` |
 
-ログイン以外の上記画面は共通の認証ガードを通す。メールアドレスで登録・ログインでき、起動・再読み込み時はGET /api/users/me/でセッションを復元する。未ログインなら/loginへ移動し、成功後は元のパス・検索条件・ハッシュに戻る。確認中は画面を待機させ、通信障害は再試行できる。DEVプレビューによる認証回避は廃止した。詳細は[認証機能の開発](docs/auth-development.md)を参照。
+ログイン以外の上記画面は共通の認証ガードを通す。メールアドレスで登録・ログインでき、起動・再読み込み時はGET /api/users/me/でセッションを復元する。未ログインなら/loginへ移動し、成功後は必ずホーム（/）を表示する。確認中は画面を待機させ、通信障害は再試行できる。DEVプレビューによる認証回避は廃止した。詳細は[認証機能の開発](docs/auth-development.md)を参照。
 
 記録はAPI応答のIDを使用し、`workoutExerciseId` クエリで応答内の種目を特定する。選択した種目IDと応答が一致することを検証する。「別の種目」では同じ `workoutId` を引き継ぎ、`from` クエリに応じて種目選択・おすすめへ戻る。「終了」はセットPOST後にPATCHし、結果をGETする。完了後はGETでも終了状態を確認し、再編集を許可しない。詳細は [記録画面](frontend/RECORD_SCREEN.md) を参照。
 
