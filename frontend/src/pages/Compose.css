@@ -137,7 +137,6 @@
 }
 
 .compose-attachment {
-  display: inline-block;
   margin-top: 16px;
   padding: 6px 12px;
   border: 1px solid var(--compose-border);
@@ -145,6 +144,31 @@
   background: var(--compose-accent-soft);
   color: var(--compose-accent);
   font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
+.compose-workout-notice {
+  margin-top: 8px;
+  color: var(--compose-muted);
+  font-size: 12px;
+}
+
+.compose-workout-menus,
+.compose-workout-sets {
+  padding: 0;
+  list-style: none;
+}
+
+.compose-workout-menus {
+  display: grid;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.compose-workout-sets {
+  margin-top: 4px;
+  color: var(--compose-muted);
+  font-variant-numeric: tabular-nums;
 }
 
 .compose-error {

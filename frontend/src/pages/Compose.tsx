@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { useLocation, useNavigate, useSearchParams } from "react-router";
 import { createPost, type CreatePost } from "../api/posts.ts";
+import { WORKOUT_MOCK_NOTICE } from "../api/workouts.ts";
 import type { ComposeLocationState } from "../features/posts/navigation.ts";
 import { paths } from "../routes.ts";
 import "./Compose.css";
@@ -11,6 +12,7 @@ export default function Compose() {
   const [searchParams] = useSearchParams();
   const state = location.state as ComposeLocationState | null;
   const workoutId = searchParams.get("workoutId");
+  const workout = state?.workout?.workout_id === workoutId ? state.workout : null;
   const [content, setContent] = useState(state?.initialContent ?? "");
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -115,7 +117,22 @@ export default function Compose() {
               aria-invalid={error ? true : undefined}
               aria-describedby={error ? "compose-error" : undefined}
             />
-            {workoutId && <p className="compose-attachment">トレーニング記録を添付</p>}
+            {workoutId && <aside className="compose-attachment" aria-label="共有するメニュー">
+              <p>トレーニング記録を添付</p>
+              <p className="compose-workout-notice">{WORKOUT_MOCK_NOTICE}</p>
+              {workout && <ul className="compose-workout-menus">
+                {workout.exercises.filter((exercise) => exercise.sets.length > 0).map((exercise) => (
+                  <li key={exercise.workout_exercise_id}>
+                    <p>{exercise.display_name}（{exercise.sets.length}セット）</p>
+                    <ul className="compose-workout-sets">
+                      {exercise.sets.map((set) => <li key={set.workout_set_id}>
+                        セット{set.set_number}：{set.weight} kg × {set.reps} 回
+                      </li>)}
+                    </ul>
+                  </li>
+                ))}
+              </ul>}
+            </aside>}
             {error && <p id="compose-error" className="compose-error" role="alert">{error}</p>}
           </div>
         </div>
