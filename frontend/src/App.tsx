@@ -12,6 +12,8 @@ import NotFound from "./pages/NotFound.tsx";
 import Recommendations from "./pages/Recommendations.tsx";
 import WorkoutRecord from "./pages/WorkoutRecord.tsx";
 import WorkoutResults from "./pages/WorkoutResults.tsx";
+import Profile from "./pages/Profile.tsx";
+import ProfileEditPlaceholder from "./pages/ProfileEditPlaceholder.tsx";
 import { clearWorkoutSession } from "./features/workouts/session.ts";
 import { paths } from "./routes.ts";
 
@@ -37,7 +39,8 @@ export default function App() {
           <Route path="/posts/:postId" element={<HomeDestination title="投稿詳細・返信" />} />
           <Route path="/notifications" element={<HomeDestination title="通知" />} />
           <Route path="/settings" element={<HomeDestination title="設定" />} />
-          <Route path="/profile/*" element={<HomeDestination title="プロフィール" />} />
+          <Route path={paths.profile} element={<Profile />} />
+          <Route path={paths.profileEdit} element={<ProfileEditPlaceholder />} />
           <Route path={paths.chats} element={<Chats />} />
           <Route path={paths.recommendations} element={<Recommendations />} />
           <Route path={paths.exercises} element={<Exercises />} />
