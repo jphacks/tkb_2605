@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { useLocation, useNavigate, useSearchParams } from "react-router";
-import { createPost, type CreatePostInput } from "../api/posts.ts";
+import { createPost, type CreatePost } from "../api/posts.ts";
 import type { ComposeLocationState } from "../features/posts/navigation.ts";
 import { paths } from "../routes.ts";
 import "./Compose.css";
@@ -51,7 +51,7 @@ export default function Compose() {
     requestRef.current = controller;
     setSubmitting(true);
     setError(null);
-    const input: CreatePostInput = workoutId
+    const input: CreatePost = workoutId
       ? { post_type: 2, content: message, workout_id: workoutId }
       : { post_type: 1, content: message };
 
