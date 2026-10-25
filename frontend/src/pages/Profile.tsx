@@ -22,7 +22,7 @@ function ProfileContent({ userId, name }: { userId: string; name: string | null 
       <BodyFrame head={<Avatar user={user} size="large" linked={false} />}>
         <div className="profile-identity"><h2 title={user.name}>{user.name}</h2><span>{own ? "YOUR PROFILE" : "ID: " + userId}</span></div>
         {own ? <Link className="profile-action" to={paths.profileEdit}>プロフィールを編集</Link>
-          : <button type="button" className="profile-action" disabled={added} onClick={() => { setAdded(true); setNotice("表示例としてマスメイトに追加しました。相手には送信されません。"); }}>{added ? "マスメイト" : "マスメイトに追加"}</button>}
+          : <button type="button" className="profile-action" disabled={added} onClick={() => { setAdded(true); setNotice("表示例としてマスメイトになりました。相手には送信されません。"); }}>{added ? "マスメイト" : "マスメイトになる"}</button>}
       </BodyFrame>
     </section>
     <div className="profile-bio"><p>{own ? user.bio || "自己紹介を追加してみましょう。" : "自己紹介・アイコンはユーザー情報APIの接続後に表示されます。"}</p></div>
