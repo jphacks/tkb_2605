@@ -72,15 +72,16 @@ export async function fetchPosts({ limit = 20, offset = 0, signal, userId }: { l
   return value as PostsPage;
 }
 
-export async function togglePostLike(postId: string): Promise<LikeResult> {
+export async function addPostLike(postId: string): Promise<LikeResult> {
   if (!postId) throw new Error("投稿を選択してください。");
   const value = await request("/api/posts/" + encodeURIComponent(postId) + "/like/", { method: "PUT", headers: headers(true) });
-  if (!validLike(value) || value.post_id !== postId) throw new Error("いいねの応答形式を確認できませんでした。");
+  if (!validLike(value) || value.post_id !== postId || !value.is_liked) throw new Error("いいねの応答形式を確認できませんでした。");
   return value;
 }
 
 export async function createPost(input: CreatePost, signal?: AbortSignal): Promise<ApiPost> {
-  if (input.post_type !== 3 && !input.content.trim()) throw new Error("投稿内容を入力してください。");
+  if (input.post_type === 1 && !input.content.trim()) throw new Error("投稿内容を入力してください。");
+  if (input.post_type !== 3 && [...input.content.trim()].length > 500) throw new Error("投稿内容は500文字以内で入力してください。");
   if (input.post_type === 2 && !input.workout_id.trim()) throw new Error("ワークアウトを選択してください。");
   const value = await request("/api/posts/", { method: "POST", headers: headers(true, true), body: JSON.stringify(input), signal });
   if (!validPost(value) || (authenticatedUserId() !== null && value.user_id !== authenticatedUserId()) || value.post_type !== input.post_type) throw new Error("作成した投稿の応答形式を確認できませんでした。");

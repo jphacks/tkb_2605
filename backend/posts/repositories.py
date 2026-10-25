@@ -1,5 +1,9 @@
 from .models import Posts, Like
-from django.db.models import QuerySet
+from django.db import transaction
+from django.contrib.auth import get_user_model
+from django.db.models import QuerySet, CharField
+from django.db.models.functions import Cast
+from notifications.models import Notification
 
 
 # 投稿の作成
@@ -53,11 +57,15 @@ def get_all_new_posts(limit: int, offset: int) -> QuerySet[Posts]:
     )
 
 # いいねする
+@transaction.atomic
 def like_post(user_id: str, post_id: str) -> Like:
-    like, _ = Like.objects.get_or_create(
-        user_id=user_id,
-        post_id_id=post_id,
-    )
+    # Serialize additions to one post; repeated PUTs remain idempotent, as in PR #60.
+    post = Posts.objects.select_for_update().get(pk=post_id)
+    like, created = Like.objects.get_or_create(user_id=user_id, post_id=post)
+    if created and post.user_id != user_id:
+        owner = get_user_model().objects.annotate(public_id=Cast("pk", CharField())).filter(public_id=post.user_id, is_active=True).first()
+        if owner is not None:
+            Notification.objects.get_or_create(notification_type="post_liked", notifier_id=user_id, recipient=owner, post=post)
     return like
 
 # いいね数のカウント

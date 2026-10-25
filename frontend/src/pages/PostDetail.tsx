@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router";
-import { fetchPost, togglePostLike, type ApiPost } from "../api/posts.ts";
+import { fetchPost, addPostLike, type ApiPost } from "../api/posts.ts";
 import { Icon } from "../components/Icon.tsx";
 import "../features/notifications/notifications.css";
 
@@ -23,10 +23,10 @@ function Detail({ postId }: { postId: string }) {
     return () => { mounted.current = false; controller.abort(); };
   }, [postId, attempt]);
   async function like() {
-    if (!post || pending.current) return;
+    if (!post || post.is_liked || pending.current) return;
     pending.current = true; setBusy(true);
     try {
-      const result = await togglePostLike(postId);
+      const result = await addPostLike(postId);
       if (mounted.current) setPost((value) => value ? { ...value, ...result } : value);
     } catch (cause) {
       if (mounted.current) setLikeError((cause instanceof Error ? cause.message : "いいねを更新できませんでした。") + " 状態が変わっている可能性があるため、投稿を再取得して確認してください。");
@@ -39,7 +39,7 @@ function Detail({ postId }: { postId: string }) {
       <div className="post-main">
         <div className="post-meta"><Link className="post-author" to={"/profile/" + encodeURIComponent(post.user_id)}>{post.user_name}</Link><time dateTime={post.posted_at}>{new Date(post.posted_at).toLocaleString("ja-JP")}</time></div>
         <p className="post-text">{post.content || (post.post_type === 3 ? "トレーニングを始めました" : "トレーニングの記録")}</p>
-        <div className="post-actions"><button type="button" className={"post-action" + (post.is_liked ? " liked" : "")} disabled={busy || !!likeError} aria-pressed={post.is_liked} aria-label={post.is_liked ? "いいねを取り消す" : "いいねする"} onClick={() => void like()}><Icon name="arm" size={18} /><span>{post.like_count}</span></button><span className="post-category">{post.post_type === 2 ? "トレーニング記録" : post.post_type === 3 ? "トレーニング開始" : "投稿"}</span></div>
+        <div className="post-actions"><button type="button" className={"post-action" + (post.is_liked ? " liked" : "")} disabled={post.is_liked || busy || !!likeError} aria-pressed={post.is_liked} aria-label={post.is_liked ? "いいね済み" : "いいねする"} onClick={() => void like()}><Icon name="arm" size={18} /><span>{post.like_count}</span></button><span className="post-category">{post.post_type === 2 ? "トレーニング記録" : post.post_type === 3 ? "トレーニング開始" : "投稿"}</span></div>
         {likeError && <div className="notifications-error"><p role="alert">{likeError}</p><button className="secondary-button" onClick={() => setAttempt((value) => value + 1)}>投稿を再取得</button></div>}
         <p className="post-detail-note" id="reply">返信機能は準備中です。</p>
       </div>

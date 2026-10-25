@@ -15,6 +15,8 @@ export default function Compose() {
   const workoutId = searchParams.get("workoutId");
   const workout = state?.workout?.workout_id === workoutId ? state.workout : null;
   const [content, setContent] = useState(state?.initialContent ?? "");
+  const contentLength = [...content.trim()].length;
+  const canSubmit = (!!content.trim() || !!workoutId) && contentLength <= 500;
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const dialogRef = useRef<HTMLDialogElement>(null);
@@ -48,7 +50,7 @@ export default function Compose() {
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const message = content.trim();
-    if (!message || requestRef.current) return;
+    if (!canSubmit || requestRef.current) return;
 
     const controller = new AbortController();
     requestRef.current = controller;
@@ -94,7 +96,7 @@ export default function Compose() {
             閉じる
           </button>
           <h1 id="compose-heading" className="compose-heading">投稿を作成</h1>
-          <button type="submit" className="compose-submit" disabled={!content.trim() || submitting}>
+          <button type="submit" className="compose-submit" disabled={!canSubmit || submitting}>
             {submitting ? "投稿中…" : "投稿"}
           </button>
         </header>
@@ -111,13 +113,15 @@ export default function Compose() {
               ref={textareaRef}
               id="compose-message"
               name="content"
+              maxLength={1000}
               placeholder="いまどうしてる？"
               value={content}
               onChange={(event) => setContent(event.target.value)}
               readOnly={submitting}
-              aria-invalid={error ? true : undefined}
-              aria-describedby={error ? "compose-error" : undefined}
+              aria-invalid={error || contentLength > 500 ? true : undefined}
+              aria-describedby={error ? "compose-limit compose-error" : "compose-limit"}
             />
+            <p id="compose-limit" className="compose-status">{contentLength} / 500文字{workoutId ? "（本文は省略できます）" : ""}</p>
             {workoutId && <aside className="compose-attachment" aria-label="共有するメニュー">
               <p>トレーニング記録を添付</p>
               {workout && <ul className="compose-workout-menus">
