@@ -3,7 +3,8 @@ import { workoutSessionVersion } from "./session.ts";
 
 let inFlight: { version: number; promise: Promise<Workout> } | null = null;
 
-// Coalesce concurrent clicks only; each later explicit start creates a new server record.
+// Coalesce concurrent clicks only. Fixed mock IDs are never persisted or used to
+// discover an active workout, and each later start explicitly calls the API.
 export async function startWorkout(): Promise<Workout> {
   const version = workoutSessionVersion();
   if (inFlight?.version === version) return inFlight.promise;
