@@ -1,9 +1,12 @@
+import NotificationLink from "../features/notifications/NotificationLink.tsx";
+import NotificationList from "../features/notifications/NotificationList.tsx";
+import { useNotifications } from "../features/notifications/context.ts";
 import { useEffect, useRef, useState } from "react";
 import { createSearchParams, Link, useNavigate } from "react-router";
 import { Avatar } from "../components/Avatar.tsx";
 import { Icon } from "../components/Icon.tsx";
 import { ApiTimeline } from "../components/ApiTimeline.tsx";
-import { usePreviewProfile } from "../features/profile/usePreviewProfile.ts";
+import { useCurrentProfile } from "../features/profile/useCurrentProfile.ts";
 import { startWorkout } from "../features/workouts/startWorkout.ts";
 import { workoutSessionVersion } from "../features/workouts/session.ts";
 import { paths } from "../routes.ts";
@@ -11,12 +14,13 @@ import BodyFrame from "../components/BodyFrame.tsx";
 
 export default function Home() {
   const navigate = useNavigate();
-  const [feed, setFeed] = useState<"following" | "followers" | "notifications">("following");
+  const { newIds, send } = useNotifications();
+  const [feed, setFeed] = useState<"masmates" | "notifications">("masmates");
   const [starting, setStarting] = useState(false);
   const [startError, setStartError] = useState("");
   const locked = useRef(false);
   const mounted = useRef(true);
-  const currentUser = usePreviewProfile();
+  const currentUser = useCurrentProfile();
   useEffect(() => {
     mounted.current = true;
     return () => { mounted.current = false; };
@@ -30,7 +34,7 @@ export default function Home() {
     const version = workoutSessionVersion();
     const active = () => mounted.current && version === workoutSessionVersion();
     try {
-      const result = await startWorkout();
+      const result = await startWorkout({ onStarted: send });
       if (active()) await navigate({ pathname: paths.exercises, search: "?" + createSearchParams({ workoutId: result.workout_id }) });
     } catch (reason) {
       if (active()) {
@@ -47,8 +51,9 @@ export default function Home() {
     <header className="home-header">
       <h1><span>HOME</span></h1>
       <div className="home-header-actions">
+        <Link className="icon-button" to={paths.masmates} aria-label="マスメイトを探す"><Icon name="user" size={18} /></Link>
         <Link className="icon-button home-settings" to="/settings" aria-label="設定を開く"><Icon name="settings" size={18} /></Link>
-        <Link className="icon-button home-notification" to="/notifications" aria-label="通知を見る"><Icon name="bell" size={18} /></Link>
+        <NotificationLink className="icon-button home-notification" />
       </div>
     </header>
     <section className="training-hero" aria-labelledby="training-heading">
@@ -64,15 +69,13 @@ export default function Home() {
     <section className="timeline-section" aria-labelledby="timeline-heading">
       <div className="timeline-heading"><h2 id="timeline-heading"><span>TIMELINE</span></h2><span className="timeline-live"><span />{feed === "notifications" ? "通知" : "トレーニングの投稿"}</span></div>
       <div className="feed-tabs" role="group" aria-label="タイムラインの表示切り替え">
-        <button type="button" className={feed === "following" ? "active" : ""} aria-pressed={feed === "following"} onClick={() => setFeed("following")}>フォロー中</button>
-        <button type="button" className={feed === "followers" ? "active" : ""} aria-pressed={feed === "followers"} onClick={() => setFeed("followers")}>フォロワー</button>
-        <button type="button" className={feed === "notifications" ? "active" : ""} aria-pressed={feed === "notifications"} onClick={() => setFeed("notifications")}>通知</button>
+        <button type="button" className={feed === "masmates" ? "active" : ""} aria-pressed={feed === "masmates"} onClick={() => setFeed("masmates")}>マスメイト</button>
+        <button type="button" className={feed === "notifications" ? "active" : ""} aria-pressed={feed === "notifications"} onClick={() => setFeed("notifications")} aria-label={newIds.length ? "通知、新着" + newIds.length + "件" : "通知"}><Icon name="bell" size={20} />{newIds.length > 0 && <span className="notification-badge">{newIds.length}</span>}</button>
       </div>
       <div hidden={feed === "notifications"}>
-        <p className="feed-note">フォロー・フォロワー別の表示は準備中です。現在は投稿一覧を表示しています。</p>
         <ApiTimeline />
       </div>
-      {feed === "notifications" && <p className="feed-note" role="status">通知は準備中です。</p>}
+      {feed === "notifications" && <NotificationList />}
     </section>
   </div>;
 }

@@ -73,3 +73,15 @@
   .profile-post-main > p { font-size: 13px; }
 }
 }
+
+.people-search { display:flex; gap:10px; padding:20px; }
+.people-search label { flex:1; min-width:0; }
+.people-search input { width:100%; padding:11px; border:1px solid var(--line); border-radius:10px; font-size:16px; }
+.people-list { list-style:none; margin:0; padding:0; }
+.person-card { display:flex; gap:14px; align-items:center; padding:20px; border-bottom:1px solid var(--line); flex-wrap:wrap; }
+.person-info { flex:1; min-width:120px; overflow-wrap:anywhere; }
+.person-info > a { font-weight:700; }
+.person-info p { white-space:pre-wrap; margin:6px 0 0; color:var(--muted); font-size:13px; }
+.profile-topbar { flex-wrap:wrap; height:auto; min-height:52px; padding-block:6px; }
+.profile-topbar > a { flex-shrink:0; }
+.profile-topbar > a:last-child { width:auto; padding:0 8px; border-radius:8px; font-size:12px; }

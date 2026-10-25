@@ -2,9 +2,11 @@ import { generatePath } from "react-router";
 
 export const paths = {
   login: "/login",
+  notifications: "/notifications",
   home: "/",
   compose: "/compose",
   chats: "/chats",
+  masmates: "/masmates",
   recommendations: "/recommendations",
   exercises: "/exercises",
   workoutExercise: "/workouts/:workoutId/exercises/:exerciseId",
