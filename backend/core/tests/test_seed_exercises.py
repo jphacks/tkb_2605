@@ -60,7 +60,7 @@ class SeedExerciseTests(TestCase):
     def test_updates_catalog_entries_without_deleting_other_data_or_records(self):
         self.seed()
         user = get_user_model().objects.create_user(
-            email="seed-user@example.test", password=None, user_name="seed-user"
+            email="seed-user@example.com", password=None, user_name="seed-user"
         )
         workout = Workout.objects.create(user=user)
         entry = WorkoutExercise.objects.create(

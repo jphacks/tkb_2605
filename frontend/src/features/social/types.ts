@@ -3,4 +3,5 @@ export type User = {
   name: string;
   bio: string;
   avatar: "mint";
+  color?: string;
 };

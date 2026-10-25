@@ -15,11 +15,10 @@ class NoteRepositoryTests(TestCase):
     @classmethod
     def setUpTestData(cls):
         cls.user = get_user_model().objects.create_user(
-            email="repository-user@example.test", password=None,
-            user_name="repository-user",
+            email="repository-user@example.com", password=None, user_name="repository-user"
         )
         cls.other_user = get_user_model().objects.create_user(
-            email="other-user@example.test", password=None, user_name="other-user"
+            email="other-user@example.com", password=None, user_name="other-user"
         )
         cls.exercise = Exercise.objects.create(display_name="Bench press")
 
