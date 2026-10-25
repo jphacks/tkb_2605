@@ -32,6 +32,7 @@ docker compose up --build
 | npmパッケージ追加 | `docker compose exec frontend npm install <pkg>`（`package.json` と `package-lock.json` をコミット） |
 | Pythonパッケージ追加 | `backend/requirements.txt` にバージョン固定で追記 → `docker compose up --build` |
 | migrationを作る | `docker compose exec backend python manage.py makemigrations` |
+| 種目マスター投入・更新 | `docker compose exec -T backend python manage.py seed_exercises - < frontend/src/features/exercises/serverCatalogData.json` |
 | 管理ユーザー作成 | `docker compose exec backend python manage.py createsuperuser`（http://localhost:8000/admin/） |
 | テスト | `docker compose exec backend python manage.py test` |
 | **DBを空にする** | `docker compose down -v` ⚠ SQLiteのデータが全部消える（node_modulesも消えるので次回起動は遅い） |
@@ -47,10 +48,10 @@ DBは `sqlite-data` というDockerのボリュームに保存されるので、
 | `/` | 投稿一覧APIの常時取得、追加読み込み、いいね、トレーニング開始 |
 | `/exercises` | マスターの種目名検索・部位/器具絞り込み、種目追加API |
 | `/recommendations` | 5メニュー・各3候補から選択し、同じ種目追加APIへ接続 |
-| `/workouts/:workoutId/exercises/:exerciseId` | GETのサンプル表示、全セット送信、別の種目／終了 |
-| `/workouts/:workoutId/results` | GETのサンプルによる「今日のメニュー」、投稿画面への共有、閉じる |
+| `/workouts/:workoutId/exercises/:exerciseId` | 保存済みセット表示、全セット保存、別の種目／終了 |
+| `/workouts/:workoutId/results` | DBの記録による「今日のメニュー」、閉じる（共有は未実装） |
 
-記録フローは更新後の [Issue #31](https://github.com/jphacks/tkb_2605/issues/31) とmain `aed893c`の5操作へ接続する。URLは `/api/workouts/`・`/api/workout-exercises/` 配下で、`/note/` は付かない。現在は入力を反映しない固定サンプルAPIであり、保存・再開・認証・終了状態の永続化はない。種目マスターはフロントのJSONを維持し、名称検索と部位/器具のAND絞り込みをローカルで行う。独立したマスター取得APIは設けない。
+記録フローは [Issue #31](https://github.com/jphacks/tkb_2605/issues/31) の5操作をDBへ接続する。URLは `/api/workouts/`・`/api/workout-exercises/` 配下で、`/note/` は付かない。開始・種目追加・セット保存・取得・終了を永続化し、所有者を確認する。Djangoセッション認証と書き込み時のCSRFが必須で、プレビューだけでは利用できない。開発確認はmigration適用後、上記コマンドで種目を投入し、同一ホストの`/admin/`でログインする。専用ログインAPI・フロント認証統合は未実装。seedは初回・マスター変更時に手動実行する。種目マスターはフロントのJSONを維持し、名称検索と部位/器具のAND絞り込みをローカルで行う。独立したマスター取得APIは設けない。
 
 投稿作成・投稿詳細／返信・プロフィール・設定・通知には既存URLで遷移し、未実装画面は準備中表示を維持する。結果画面はPR #27のUIを参照したGET接続版を採用する。「共有」はPR #30の投稿ダイアログを開き、記録IDと取得済みメニューを渡す。添付内容にもサンプルである旨を表示し、閉じると結果画面に戻る。投稿APIは固定応答のため、記録付き投稿の作成成功はバックエンド対応後に確認する。既存のログインガードは維持する。
 
@@ -62,13 +63,14 @@ DBは `sqlite-data` というDockerのボリュームに保存されるので、
 
 フロントの契約・状態管理・マスターテスト: `docker compose exec -T frontend npm test`。
 
-主な動作確認：投稿の取得・ページング・再試行、開始 → 種目追加 → 全セット送信 → 別の種目／終了 → 固定サンプル取得、通信失敗後の手動再試行、連打・離脱後の遷移防止。PC／スマートフォンで各画面の収まりも確認する。静的チェックは `docker compose exec -T frontend npm run lint` と `docker compose exec -T frontend npm run build`。実モックAPIへの接続成功をDB保存成功とは扱わない。
+主な動作確認：投稿の取得・ページング・再試行、ログイン後の開始 → 種目追加 → 全セット保存 → 別の種目／終了 → DB記録取得、通信失敗後の手動再試行、連打・離脱後の遷移防止。記録APIは `docker compose exec -T backend python manage.py test core.tests` で検証する。PC／スマートフォンで各画面の収まりも確認する。静的チェックは `docker compose exec -T frontend npm run lint` と `docker compose exec -T frontend npm run build`。
 
 ### よくあるエラー
 
 - **保存しても画面が変わらない（Windows）**：`.env` を作って `CHOKIDAR_USEPOLLING=true` を書き、`docker compose up` し直す。Djangoが反映されない場合はリポジトリをWSLのファイルシステム（`\\wsl$\...`）側に置く。
 - **port is already allocated**：5173か8000を他のアプリが使っている。そのアプリを止めるか、`compose.yaml` の左側のポート番号を変える。
 - **「Backend Unreachable」**：`docker compose logs backend` を見る。たいていは Python の構文エラーかmigrationの失敗。
+- **`dependency failed to start: container ... is unhealthy`**：ビルドではなくバックエンドの起動・ヘルスチェックの失敗。`docker compose logs --tail=100 backend` で原因を確認する。コード更新後に `ImportError` が残っている場合は `docker compose exec backend python manage.py check` を実行し、成功するなら `docker compose restart backend` → `docker compose up -d --wait` で復旧する。チェックが失敗する場合は表示されたコード・設定のエラーを先に直す。`docker compose down -v` はDBを削除するため復旧目的では使わない。
 - **`npm ci` で失敗する**：`package-lock.json` が `package.json` と合っていない。`docker compose exec frontend npm install` で作り直してコミットする。
 
 ## フロントエンドのルーティング
