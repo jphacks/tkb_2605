@@ -10,7 +10,7 @@ self.addEventListener("push", (event) => {
   } catch { /* Empty or malformed payloads still produce a visible generic notification. */ }
   event.waitUntil((async () => {
     await self.registration.showNotification("WORKOUT", {
-      body: "新しい筋トレ通知が届きました。タップして確認できます。",
+      body: "新しい通知が届きました。タップして確認できます。",
       icon: "/icons/push-192.png", badge: "/icons/push-badge.png",
       tag: id ? `workout-${id}` : "workout", renotify: false,
       data: { url: "/notifications" },

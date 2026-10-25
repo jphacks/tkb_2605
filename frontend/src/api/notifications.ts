@@ -4,6 +4,9 @@ export type WorkoutNotification = {
   notifier_id: number;
   notifier_name: string;
   notified_at: string;
+  notification_type?: "workout_started" | "post_liked";
+  post_id?: string;
+  post_excerpt?: string;
 };
 
 function validNotification(value: unknown): value is WorkoutNotification {
@@ -14,7 +17,10 @@ function validNotification(value: unknown): value is WorkoutNotification {
     && typeof item.notifier_name === "string" && !!item.notifier_name.trim()
     && typeof item.notified_at === "string"
     && /^\d{4}-\d{2}-\d{2}T.*(?:Z|[+-]\d{2}:\d{2})$/.test(item.notified_at)
-    && Number.isFinite(Date.parse(item.notified_at));
+    && Number.isFinite(Date.parse(item.notified_at))
+    && (item.notification_type === undefined || item.notification_type === "workout_started" || item.notification_type === "post_liked")
+    && (item.notification_type !== "post_liked" || (typeof item.post_id === "string" && !!item.post_id.trim()))
+    && (item.post_excerpt === undefined || typeof item.post_excerpt === "string");
 }
 
 async function request(method: "GET" | "POST", signal?: AbortSignal, limit = 20): Promise<Response> {

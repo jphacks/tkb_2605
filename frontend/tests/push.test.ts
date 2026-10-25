@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { afterEach, test } from "node:test";
-import { applicationKey, disablePush, enablePush, fetchPushConfig, releaseDevicePush, savePushSubscription } from "../src/features/notifications/push.ts";
+import { applicationKey, enablePush, fetchPushConfig, releaseDevicePush, savePushSubscription } from "../src/features/notifications/push.ts";
 
 const originalFetch = globalThis.fetch;
 const navigatorDescriptor = Object.getOwnPropertyDescriptor(globalThis, "navigator");
@@ -85,21 +85,7 @@ test("failed sync preserves an existing endpoint so the user can explicitly revo
   assert.equal(revoked, false);
 });
 
-test("disable revokes locally even if server cleanup fails, reporting partial completion", async () => {
-  let revoked = false;
-  const endpoint = subscription(async () => { revoked = true; return true; });
-  globalThis.fetch = async (_url, init) => {
-    assert.equal(revoked, true); assert.equal(init?.method, "DELETE");
-    assert.deepEqual(JSON.parse(String(init?.body)), { endpoint: endpoint.endpoint });
-    return new Response(null, { status: 503 });
-  };
-  assert.equal(await disablePush(endpoint, config), false);
-  assert.equal(await disablePush(endpoint, null), false);
-});
 
-test("failed local revocation is not shown as successful removal", async () => {
-  await assert.rejects(disablePush(subscription(async () => false), config), /解除できません/);
-});
 
 test("logout invalidates an enrollment still waiting on notification permission", async () => {
   let grant!: (value: NotificationPermission) => void;
@@ -133,10 +119,6 @@ test("rollback failure explicitly tells the user that browser revocation is inco
   await assert.rejects(enablePush(registration(null, subscription(async () => false)).value, config, Promise.resolve("granted")), /端末側の解除も完了しません/);
 });
 
-test("successful device removal accepts empty 204 response", async () => {
-  globalThis.fetch = async () => new Response(null, { status: 204 });
-  assert.equal(await disablePush(subscription(), config), true);
-});
 
 test("a merely accepted subscription is not shown as registered", async () => {
   globalThis.fetch = async () => new Response(null, { status: 202 });

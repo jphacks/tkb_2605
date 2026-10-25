@@ -13,8 +13,8 @@ import { paths } from "../routes.ts";
 
 export default function Home() {
   const navigate = useNavigate();
-  const { newIds } = useNotifications();
-  const [feed, setFeed] = useState<"following" | "followers" | "notifications">("following");
+  const { newIds, send } = useNotifications();
+  const [feed, setFeed] = useState<"masmates" | "notifications">("masmates");
   const [starting, setStarting] = useState(false);
   const [startError, setStartError] = useState("");
   const locked = useRef(false);
@@ -32,7 +32,7 @@ export default function Home() {
     const version = workoutSessionVersion();
     const active = () => mounted.current && version === workoutSessionVersion();
     try {
-      const result = await startWorkout();
+      const result = await startWorkout({ onStarted: send });
       if (active()) await navigate({ pathname: paths.exercises, search: "?" + createSearchParams({ workoutId: result.workout_id }) });
     } catch (reason) {
       if (active()) {
@@ -79,12 +79,10 @@ export default function Home() {
     <section className="timeline-section" aria-labelledby="timeline-heading">
       <div className="timeline-heading"><h2 id="timeline-heading"><span>TIMELINE</span></h2><span className="timeline-live"><span />{feed === "notifications" ? "通知" : "トレーニングの投稿"}</span></div>
       <div className="feed-tabs" role="group" aria-label="タイムラインの表示切り替え">
-        <button type="button" className={feed === "following" ? "active" : ""} aria-pressed={feed === "following"} onClick={() => setFeed("following")}>フォロー中</button>
-        <button type="button" className={feed === "followers" ? "active" : ""} aria-pressed={feed === "followers"} onClick={() => setFeed("followers")}>フォロワー</button>
-        <button type="button" className={feed === "notifications" ? "active" : ""} aria-pressed={feed === "notifications"} onClick={() => setFeed("notifications")}>通知{newIds.length > 0 && <span className="notification-badge">{newIds.length}</span>}</button>
+        <button type="button" className={feed === "masmates" ? "active" : ""} aria-pressed={feed === "masmates"} onClick={() => setFeed("masmates")}>マスメイト</button>
+        <button type="button" className={feed === "notifications" ? "active" : ""} aria-pressed={feed === "notifications"} onClick={() => setFeed("notifications")} aria-label={newIds.length ? "通知、新着" + newIds.length + "件" : "通知"}><Icon name="bell" size={20} />{newIds.length > 0 && <span className="notification-badge">{newIds.length}</span>}</button>
       </div>
       <div hidden={feed === "notifications"}>
-        <p className="feed-note">フォロー・フォロワー別の表示は準備中です。現在は投稿一覧を表示しています。</p>
         <ApiTimeline />
       </div>
       {feed === "notifications" && <NotificationList />}

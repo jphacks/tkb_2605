@@ -4,10 +4,12 @@ import { addWorkoutExercise } from "../../api/workouts.ts";
 import { paths, workoutExercisePath } from "../../routes.ts";
 import type { SelectionScreen } from "../record/entry.ts";
 import { workoutSessionVersion } from "./session.ts";
+import { useNotifications } from "../notifications/context.ts";
 import { startWorkout } from "./startWorkout.ts";
 
 export function useWorkoutSelection(from: SelectionScreen) {
   const navigate = useNavigate();
+  const { send } = useNotifications();
   const [searchParams] = useSearchParams();
   const workoutId = searchParams.get("workoutId") ?? "";
   const [error, setError] = useState("");
@@ -28,7 +30,7 @@ export function useWorkoutSelection(from: SelectionScreen) {
     try {
       if (!exerciseId.trim()) throw new Error("種目を選択してください。");
       if (!id) {
-        const started = await startWorkout();
+        const started = await startWorkout({ onStarted: send });
         id = started.workout_id;
         if (!active()) return;
         await navigate({ pathname: paths[from], search: "?" + createSearchParams({ workoutId: id }) }, { replace: true });

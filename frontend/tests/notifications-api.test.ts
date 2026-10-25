@@ -92,3 +92,14 @@ test("caller cancellation propagates to GET and POST without turning into an emp
     await assert.rejects(pending, { name: "AbortError" });
   }
 });
+
+test("both allowed notification types retain their target, and incomplete likes are rejected", async () => {
+  const like = { ...sample, notification_id: 2, notification_type: "post_liked", post_id: "post-uuid", post_excerpt: "今日の記録" };
+  response([sample, like]);
+  const items = await fetchNotifications();
+  assert.equal(items.length, 2);
+  assert.equal(items.find((item) => item.notification_id === 2)?.post_id, "post-uuid");
+  for (const invalid of [{...like,post_id:undefined},{...like,notification_type:"follow"},{...like,post_excerpt:42}]) {
+    response([invalid]); await assert.rejects(fetchNotifications(), /応答形式/);
+  }
+});

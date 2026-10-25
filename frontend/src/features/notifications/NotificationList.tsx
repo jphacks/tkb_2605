@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Link } from "react-router";
 import { Icon } from "../../components/Icon.tsx";
 import { profilePath } from "../../routes.ts";
@@ -9,15 +8,11 @@ const timeFormat = new Intl.DateTimeFormat("ja-JP", { hour: "2-digit", minute: "
 
 export default function NotificationList() {
   const { items, newIds, initialized, refreshing, error, refresh, clearNew } = useNotifications();
-  const [onlyNew, setOnlyNew] = useState(false);
-  const visible = onlyNew ? items.filter((item) => newIds.includes(item.notification_id)) : items;
+  const visible = items;
   const days = [...new Set(visible.map((item) => dayFormat.format(new Date(item.notified_at))))];
   return <div className="notifications-list">
     <div className="notifications-toolbar">
-      <div role="group" aria-label="通知の絞り込み" className="notifications-filters">
-        <button type="button" aria-pressed={!onlyNew} onClick={() => setOnlyNew(false)}>すべて</button>
-        <button type="button" aria-pressed={onlyNew} onClick={() => setOnlyNew(true)}>新着{newIds.length > 0 && <span className="notification-badge">{newIds.length}</span>}</button>
-      </div>
+      <h2>通知</h2>
       <button type="button" className="notifications-refresh" disabled={refreshing} onClick={() => void refresh()}>{refreshing ? "更新中…" : "更新"}</button>
     </div>
     <p className="notifications-note">表示中は15秒ごとに更新します。新着は、この利用中に新しく取得した通知です。</p>
@@ -27,14 +22,14 @@ export default function NotificationList() {
     {days.map((day) => <section key={day} className="notifications-day" aria-label={day}>
       <h2>{day}<span>JST</span></h2>
       <ul>{visible.filter((item) => dayFormat.format(new Date(item.notified_at)) === day).map((item) => <li key={item.notification_id} className={newIds.includes(item.notification_id) ? "notification-item notification-new" : "notification-item"}>
-        <span className="notification-kind"><Icon name="dumbbell" /></span>
+        <span className="notification-kind"><Icon name={item.notification_type === "post_liked" ? "arm" : "dumbbell"} /></span>
         <div className="notification-content">
-          <div className="notification-meta"><span>筋トレ通知</span><time dateTime={item.notified_at}>{timeFormat.format(new Date(item.notified_at))}</time>{newIds.includes(item.notification_id) && <strong>新着</strong>}</div>
-          <p><Link to={profilePath(String(item.notifier_id))}>{item.notifier_name}</Link>さんから筋トレの通知が届きました。</p>
+          <div className="notification-meta"><span>{item.notification_type === "post_liked" ? "いいね" : "トレーニング開始"}</span><time dateTime={item.notified_at}>{timeFormat.format(new Date(item.notified_at))}</time>{newIds.includes(item.notification_id) && <strong>新着</strong>}</div>
+          <p><Link to={profilePath(String(item.notifier_id))} state={{ profile: { id: String(item.notifier_id), name: item.notifier_name } }}>{item.notifier_name}</Link>さんが{item.notification_type === "post_liked" ? <><Link to={"/posts/" + encodeURIComponent(item.post_id!)}>{item.post_excerpt ? "「" + item.post_excerpt + "」" : "あなたの投稿"}</Link>にいいねしました。</> : "トレーニングを開始しました。"}</p>
         </div>
       </li>)}</ul>
     </section>)}
-    {initialized && !error && !visible.length && <div className="notifications-empty"><Icon name="bell" size={30} /><h2>{onlyNew ? "新着の通知はありません" : "通知はまだありません"}</h2><p>{onlyNew ? "新しく通知を取得すると、ここに表示します。" : "届いた筋トレ通知をここに表示します。"}</p></div>}
+    {initialized && !error && !visible.length && <div className="notifications-empty"><Icon name="bell" size={30} /><h2>通知はまだありません</h2><p>トレーニング開始と、あなたの投稿へのいいねをお知らせします。</p></div>}
     {initialized && <p className="notifications-note">最新100件まで表示します。</p>}
   </div>;
 }

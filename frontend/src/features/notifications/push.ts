@@ -1,6 +1,7 @@
 // Proposed backend contract: docs/web-push.md. This module never implements delivery.
 export type PushConfig = { public_key: string; csrf_token: string };
 let sessionGeneration = 0;
+export const devicePushSessionVersion = () => sessionGeneration;
 
 export function applicationKey(value: string): Uint8Array<ArrayBuffer> {
   if (!/^[A-Za-z0-9_-]+={0,2}$/.test(value)) throw new Error("通知サーバーの公開鍵が不正です。");
@@ -41,7 +42,7 @@ export function savePushSubscription(subscription: PushSubscription, config: Pus
     const expected = applicationKey(config.public_key);
     const current = new Uint8Array(currentKey);
     if (current.length !== expected.length || current.some((byte, index) => byte !== expected[index])) {
-      throw new Error("通知サーバーの鍵が更新されています。この端末の通知を解除してから、もう一度有効にしてください。");
+      throw new Error("通知サーバーの鍵が更新されています。端末のサイト設定で通知の許可をリセットしてから、もう一度許可してください。");
     }
   }
   return pushRequest("subscriptions", "POST", config.csrf_token, subscription.toJSON());
@@ -92,14 +93,6 @@ export async function enablePush(registration: ServiceWorkerRegistration, config
     throw error;
   }
   return subscription;
-}
-
-export async function disablePush(subscription: PushSubscription, config: PushConfig | null): Promise<boolean> {
-  // Stop delivery to this browser even when the server is offline. Its stale endpoint returns 410.
-  if (!await subscription.unsubscribe()) throw new Error("ブラウザー側の通知を解除できませんでした。再試行してください。");
-  if (!config) return false;
-  try { await deletePushSubscription(subscription.endpoint, config); return true; }
-  catch { return false; }
 }
 
 // Call before clearing login state. Do not unsubscribe on tab close: background push needs it.
