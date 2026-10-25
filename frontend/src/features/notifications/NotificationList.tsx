@@ -13,7 +13,7 @@ export default function NotificationList() {
   return <div className="notifications-list">
     <div className="notifications-toolbar">
       <h2>通知</h2>
-      <button type="button" className="notifications-refresh" disabled={refreshing} onClick={() => void refresh()}>{refreshing ? "更新中…" : "更新"}</button>
+      <button type="button" className="notifications-refresh" onClick={() => void refresh()}>更新</button>
     </div>
     <p className="notifications-note">表示中は1秒ごとに新着を確認します。取得した通知は、この画面を閉じるまで保持します。</p>
     {newIds.length > 0 && <button type="button" className="notifications-clear" onClick={clearNew}>新着の表示をクリア</button>}
