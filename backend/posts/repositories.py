@@ -31,6 +31,7 @@ def get_new_posts(posts: QuerySet[Posts], limit: int, offset: int) -> QuerySet[P
 def get_followers_new_posts(user_id: str, limit: int, offset: int) -> QuerySet[Posts]:
     # ここはフォロワーを取得するように後で変更する
     follwers = []
+    # followers = get_followers(user_id)
     followers_posts = get_posts_by_userids(follwers)
     return get_new_posts(followers_posts, limit, offset)
 
