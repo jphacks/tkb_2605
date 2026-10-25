@@ -1,6 +1,7 @@
 import { Link } from "react-router";
 import { Icon } from "../components/Icon.tsx";
 import NotificationList from "../features/notifications/NotificationList.tsx";
+import PushSettings from "../features/notifications/PushSettings.tsx";
 import { useNotifications } from "../features/notifications/context.ts";
 import { paths } from "../routes.ts";
 
@@ -19,6 +20,7 @@ export default function Notifications() {
       <p role="status">{sendFeedback}</p>
       {sendError && <p className="notifications-error" role="alert">{sendError}</p>}
     </section>
+    <PushSettings />
     <NotificationList />
   </section>;
 }

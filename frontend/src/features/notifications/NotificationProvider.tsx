@@ -19,6 +19,10 @@ export default function NotificationProvider({ enabled, children }: { enabled: b
   const [store] = useState(createNotificationStore);
   useEffect(() => {
     if (!enabled) return;
+    const receivePush = (event: MessageEvent) => {
+      if (event.data?.type === "workout-push-received") void store.refresh();
+    };
+    navigator.serviceWorker?.addEventListener("message", receivePush);
     const stop = startNotificationPolling(store.refresh, {
       available: () => document.visibilityState === "visible" && navigator.onLine,
       onWake(callback) {
@@ -35,7 +39,7 @@ export default function NotificationProvider({ enabled, children }: { enabled: b
       },
       schedule(callback, delay) { const timer = window.setTimeout(callback, delay); return () => window.clearTimeout(timer); },
     });
-    return () => { stop(); store.reset(); };
+    return () => { stop(); navigator.serviceWorker?.removeEventListener("message", receivePush); store.reset(); };
   }, [enabled, store]);
   return <NotificationContext.Provider value={store}>{children}{enabled && <NotificationArrival />}</NotificationContext.Provider>;
 }

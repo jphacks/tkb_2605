@@ -38,8 +38,17 @@
 .notification-arrival p { flex-basis: 100%; }
 .notification-arrival a, .notification-arrival button { display: inline-flex; align-items: center; min-height: 44px; padding: 6px 0; color: var(--brand); background: transparent; text-decoration: underline; }
 .notification-arrival button { margin-left: auto; color: var(--muted); }
+.push-settings { padding: 20px; border-bottom: 1px solid var(--line); background: var(--canvas); }
+.push-heading { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.push-heading h2 { font-size: 15px; font-weight: 700; }
+.push-heading span { flex-shrink: 0; border: 1px solid var(--brand-border); color: var(--brand); border-radius: 20px; padding: 3px 10px; font-size: 11px; }
+.push-settings p { margin-block: 8px; font-size: 12px; line-height: 1.8; overflow-wrap: anywhere; }
+.push-action, .push-error button { min-height: 44px; border: 1px solid var(--brand-border); border-radius: 9px; padding: 8px 14px; color: var(--brand); font-size: 12px; font-weight: 650; background: #fff; }
+.push-action:disabled, .push-error button:disabled { opacity: .55; cursor: not-allowed; }
+.push-error { margin-top: 10px; color: var(--error); }
+.push-settings .push-help { color: var(--muted); font-size: 11px; }
 @media (max-width: 480px) {
-  .notifications-header, .notification-send { padding: 16px; }
+  .notifications-header, .notification-send, .push-settings { padding: 16px; }
   .notifications-toolbar, .notifications-note, .notifications-day h2 { padding-inline: 16px; }
   .notification-item { padding: 16px; gap: 10px; }
   .notification-content p { font-size: 13px; }
