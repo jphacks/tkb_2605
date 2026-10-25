@@ -1,3 +1,4 @@
+import { apiFetch, authenticatedUserId } from "./http.ts";
 // Contract: https://github.com/jphacks/tkb_2605/issues/10
 export type ApiPost = {
   post_id: string; user_id: string; user_name: string; post_type: 1 | 2 | 3;
@@ -34,7 +35,7 @@ function headers(write: boolean, json = false): Headers {
 
 async function request(url: string, init: RequestInit): Promise<unknown> {
   let response: Response;
-  try { response = await fetch(url, { ...init, credentials: "same-origin" }); }
+  try { response = await apiFetch(url, { ...init, credentials: "same-origin" }); }
   catch (error) {
     if (error instanceof Error && error.name === "AbortError") throw error;
     throw new Error(init.method === "POST" ? "送信結果を確認できません。タイムラインを確認してから再試行してください。" : "通信できませんでした。接続を確認して再試行してください。", { cause: error });
@@ -81,6 +82,6 @@ export async function createPost(input: CreatePost, signal?: AbortSignal): Promi
   if (input.post_type !== 3 && !input.content.trim()) throw new Error("投稿内容を入力してください。");
   if (input.post_type === 2 && !input.workout_id.trim()) throw new Error("ワークアウトを選択してください。");
   const value = await request("/api/posts/", { method: "POST", headers: headers(true, true), body: JSON.stringify(input), signal });
-  if (!validPost(value) || value.post_type !== input.post_type) throw new Error("作成した投稿の応答形式を確認できませんでした。");
+  if (!validPost(value) || (authenticatedUserId() !== null && value.user_id !== authenticatedUserId()) || value.post_type !== input.post_type) throw new Error("作成した投稿の応答形式を確認できませんでした。");
   return value;
 }

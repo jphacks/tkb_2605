@@ -21,12 +21,15 @@ afterEach(() => {
 
 for (const status of [200, 201]) test(`list accepts HTTP ${status} and forwards pagination and abort signal`, async () => {
   respond({ results: [fixture], next_offset: 40 }, status);
-  const signal = new AbortController().signal;
+  const controller = new AbortController();
+  const signal = controller.signal;
   const result = await fetchPosts({ limit: 20, offset: 20, signal });
   assert.equal(result.next_offset, 40);
   assert.equal(requests[0].url, "/api/posts/?limit=20&offset=20");
   assert.equal(requests[0].init?.method, "GET");
-  assert.equal(requests[0].init?.signal, signal);
+  assert.equal(requests[0].init?.signal?.aborted, false);
+  controller.abort();
+  assert.equal(requests[0].init?.signal?.aborted, true);
   assert.equal(requests[0].init?.credentials, "same-origin");
 });
 
@@ -127,7 +130,7 @@ test("compose forwards its abort signal and preserves cancellation", async () =>
   respond(fixture, 201);
   const controller = new AbortController();
   await createPost({ post_type: 1, content: "記録" }, controller.signal);
-  assert.equal(requests[0].init?.signal, controller.signal);
+  assert.equal(requests[0].init?.signal?.aborted, false);
 
   const aborted = new DOMException("Aborted", "AbortError");
   globalThis.fetch = async (_input, init) => new Promise<Response>((_resolve, reject) => {

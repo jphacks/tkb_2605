@@ -1,10 +1,10 @@
+import { useNotifications } from "../notifications/context.ts";
 import { useEffect, useRef, useState } from "react";
 import { createSearchParams, useNavigate, useSearchParams } from "react-router";
 import { addWorkoutExercise } from "../../api/workouts.ts";
 import { paths, workoutExercisePath } from "../../routes.ts";
 import type { SelectionScreen } from "../record/entry.ts";
 import { workoutSessionVersion } from "./session.ts";
-import { useNotifications } from "../notifications/context.ts";
 import { startWorkout } from "./startWorkout.ts";
 
 export function useWorkoutSelection(from: SelectionScreen) {

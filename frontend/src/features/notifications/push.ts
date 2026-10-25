@@ -1,3 +1,4 @@
+import { apiFetch } from "../../api/http.ts";
 // Proposed backend contract: docs/web-push.md. This module never implements delivery.
 export type PushConfig = { public_key: string; csrf_token: string };
 let sessionGeneration = 0;
@@ -13,11 +14,11 @@ export function applicationKey(value: string): Uint8Array<ArrayBuffer> {
 async function pushRequest(path: string, method: "GET" | "POST" | "DELETE", token?: string, body?: unknown) {
   let response: Response;
   try {
-    response = await fetch(`/api/push/${path}/`, {
+    response = await apiFetch(`/api/push/${path}/`, {
       method, credentials: "same-origin", cache: "no-store", signal: AbortSignal.timeout(10_000),
       headers: { Accept: "application/json", ...(body ? { "Content-Type": "application/json" } : {}), ...(token ? { "X-CSRFToken": token } : {}) },
       body: body ? JSON.stringify(body) : undefined,
-    });
+    }, false);
   } catch { throw new Error("通知サーバーに接続できませんでした。通信を確認して再試行してください。"); }
   if (response.status === 200 || (method !== "GET" && response.status === 204)) return response;
   if ([401, 403].includes(response.status)) throw new Error("プッシュ通知の設定にはログインが必要です。ログイン状態を確認してください。");
@@ -98,7 +99,7 @@ export async function enablePush(registration: ServiceWorkerRegistration, config
 // Call before clearing login state. Do not unsubscribe on tab close: background push needs it.
 export async function releaseDevicePush() {
   sessionGeneration += 1;
-  if (!pushSupported()) return;
+  if (typeof window === "undefined" || !pushSupported()) return;
   const registration = await navigator.serviceWorker.getRegistration("/");
   const subscription = await registration?.pushManager.getSubscription();
   if (!subscription) return;

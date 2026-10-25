@@ -1,8 +1,8 @@
+import NotificationLink from "../features/notifications/NotificationLink.tsx";
+import NotificationList from "../features/notifications/NotificationList.tsx";
+import { useNotifications } from "../features/notifications/context.ts";
 import { useEffect, useRef, useState } from "react";
 import { createSearchParams, Link, useNavigate } from "react-router";
-import NotificationList from "../features/notifications/NotificationList.tsx";
-import NotificationLink from "../features/notifications/NotificationLink.tsx";
-import { useNotifications } from "../features/notifications/context.ts";
 import { Avatar } from "../components/Avatar.tsx";
 import { Icon } from "../components/Icon.tsx";
 import { ApiTimeline } from "../components/ApiTimeline.tsx";

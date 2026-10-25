@@ -21,7 +21,7 @@ cd tkb_2605
 docker compose up --build
 ```
 
-- http://localhost:5173 を開き、ログイン画面の「画面をプレビュー」からホームへ進む。API・DB接続は http://localhost:5173/api/health/ が `{"status":"ok","database":"ok"}` を返すことを確認する。
+- http://localhost:5173 を開き、ログイン画面から新規登録またはログインしてホームへ進む。API・DB接続は http://localhost:5173/api/health/ が `{"status":"ok","database":"ok"}` を返すことを確認する。
 - 初回はイメージのビルドとnpmのインストールで数分かかる。DBのmigrateは起動時に自動で走る。
 - React（`frontend/src`）とDjango（`backend/`）のコードは保存すると自動で反映される。
 
@@ -53,15 +53,15 @@ DBは `sqlite-data` というDockerのボリュームに保存されるので、
 | `/workouts/:workoutId/exercises/:exerciseId` | 保存済みセット表示、全セット保存、別の種目／終了 |
 | `/workouts/:workoutId/results` | DBの記録による「今日のメニュー」、閉じる（共有は未実装） |
 
-記録フローは [Issue #31](https://github.com/jphacks/tkb_2605/issues/31) の5操作をDBへ接続する。URLは `/api/workouts/`・`/api/workout-exercises/` 配下で、`/note/` は付かない。開始・種目追加・セット保存・取得・終了を永続化し、所有者を確認する。Djangoセッション認証と書き込み時のCSRFが必須で、プレビューだけでは利用できない。開発確認はmigration適用後、上記コマンドで種目を投入し、同一ホストの`/admin/`でログインする。専用ログインAPI・フロント認証統合は未実装。seedは初回・マスター変更時に手動実行する。種目マスターはフロントのJSONを維持し、名称検索と部位/器具のAND絞り込みをローカルで行う。独立したマスター取得APIは設けない。
+記録フローは [Issue #31](https://github.com/jphacks/tkb_2605/issues/31) の5操作をDBへ接続する。URLは `/api/workouts/`・`/api/workout-exercises/` 配下で、`/note/` は付かない。開始・種目追加・セット保存・取得・終了を永続化し、所有者を確認する。Djangoセッション認証と書き込み時のCSRFをフロントから接続済み。開発確認はmigration適用後、上記コマンドで種目を投入し、`/login`で登録・ログインする。seedは初回・マスター変更時に手動実行する。種目マスターはフロントのJSONを維持し、名称検索と部位/器具のAND絞り込みをローカルで行う。独立したマスター取得APIは設けない。
 
 投稿作成・投稿詳細／返信・プロフィール・設定・通知には既存URLで遷移し、未実装画面は準備中表示を維持する。記録・結果画面はDB版APIに接続し、保存済みのセットと終了状態を表示する（[DB版記録API](docs/workout-api.md)）。「共有」はPR #30の投稿ダイアログを開き、記録IDと取得済みメニューを渡す。添付内容は保存済みの記録で、閉じると結果画面に戻る。投稿APIは固定応答のため、記録付き投稿の作成成功はバックエンド対応後に確認する。既存のログインガードは維持する。
 
 タイムラインは開発環境でも常に Issue #10 の投稿APIから取得し、初回は `GET /api/posts/?limit=20&offset=0` を呼ぶ。「もっと見る」では `limit=20` を維持し、応答の `next_offset` をそのまま次の `offset` に使う。`next_offset: null` が履歴の終端であり、取得結果が空でも次のoffsetがあれば追加取得できる。取得に失敗した場合は表示済みの投稿とoffsetを維持し、同じ位置から再試行する。重複した `post_id` は同じページ内・ページ間ともに除去し、表示済み投稿のいいね状態を保持する。
 
-いいねはボディなしの `PUT /api/posts/{post_id}/like/` でトグルを要求し、応答の `like_count` と `is_liked` を表示する。mainは固定応答のため、永続化・実トグルの確認はバックエンド実装後に行う。通信失敗時はエラーを表示し、いいねの状態が不明な場合は再読み込みを案内する。認証・CSRFの詳細はAPI側との接続時に確認が必要。
+いいねはボディなしの `PUT /api/posts/{post_id}/like/` でトグルを要求し、応答の `like_count` と `is_liked` を表示する。mainは固定応答のため、永続化・実トグルの確認はバックエンド実装後に行う。通信失敗時はエラーを表示し、いいねの状態が不明な場合は再読み込みを案内する。投稿・いいねも共通のセッションCookieとCSRF処理を使用する。
 
-「フォロー中・フォロワー・通知」のタブは表示する。フォロー関係のAPIは未定義のため、投稿2タブは分類が準備中であることを明記して同じ投稿一覧APIの結果を表示し、通知タブはフロント未接続のため準備中表示にする。タブを切り替えても取得済み投稿・次のoffset・いいね状態を保持する。サンプル投稿・通知やサンプル/APIの切り替えは使用しない。自分の頭部アイコンとサイドバーのプロフィールは、認証・ユーザー情報APIの定義まで表示用のプレースホルダーを使用する。
+ホームは「マスメイト」とベルの2タブ。開始成功時の通知送信・GET履歴・新着表示は[通知仕様](docs/notifications.md)、端末購読は[Web Push](docs/web-push.md)を参照。ログイン中だけ通知を取得し、ログアウト・アカウント変更で通知と入力状態を破棄する。ホーム・プロフィールには認証APIのIDと名前を使用する。通知・プッシュのバックエンドが未実装でも、トレーニングの記録は続行できる。
 
 ### 筋トレ開始通知API（バックエンドのみ）
 
@@ -99,11 +99,11 @@ URLは `frontend/src/routes.ts`、画面の割り当ては `frontend/src/App.tsx
 | 種目ごとの記録 | `/workouts/:workoutId/exercises/:exerciseId` |
 | 結果 | `/workouts/:workoutId/results` |
 
-ログイン以外の上記画面は共通のガードを通す。認証APIは未実装のため、現在は開発環境の「画面をプレビュー」からのみ確認できる。本番ビルドにはプレビュー入口を表示せず、保護されたURLは `/login` に戻す。プレビュー状態はメモリ内のみで、再読み込みすると解除される。直接開いたURLのパス・検索条件・ハッシュはログイン画面を経由して引き継ぐ。
+ログイン以外の上記画面は共通の認証ガードを通す。メールアドレスで登録・ログインでき、起動・再読み込み時はGET /api/users/me/でセッションを復元する。未ログインなら/loginへ移動し、成功後は必ずホーム（/）を表示する。確認中は画面を待機させ、通信障害は再試行できる。DEVプレビューによる認証回避は廃止した。詳細は[認証機能の開発](docs/auth-development.md)を参照。
 
 記録はAPI応答のIDを使用し、`workoutExerciseId` クエリで応答内の種目を特定する。選択した種目IDと応答が一致することを検証する。「別の種目」では同じ `workoutId` を引き継ぎ、`from` クエリに応じて種目選択・おすすめへ戻る。「終了」はセットPOST後にPATCHし、結果をGETする。完了後はGETでも終了状態を確認し、再編集を許可しない。詳細は [記録画面](frontend/RECORD_SCREEN.md) を参照。
 
-記録IDを認証済みユーザーと混同せず、記録フローではlocalStorage/sessionStorageを使わない。旧 `workout.active.v1:`・`workout.operation.v1:`・`workout.draft.v1:` の値は読み込み・変更・送信しない。入力はメモリだけに保持し、再読込ではAPIの保存済みデータを再取得する。認証画面との連携、投稿・共有の永続化、チャット詳細は未実装である。
+記録IDを認証済みユーザーと混同せず、記録フローではlocalStorage/sessionStorageを使わない。旧 `workout.active.v1:`・`workout.operation.v1:`・`workout.draft.v1:` の値は読み込み・変更・送信しない。入力はメモリだけに保持し、再読込ではAPIの保存済みデータを再取得する。投稿・共有の永続化、プロフィール更新、マスメイト保存、チャット詳細はバックエンド対応が必要である。
 
 ## 開発の流れ（GitHub Flow）
 
@@ -169,6 +169,16 @@ VMへの入り方：Tailscaleで共有を受けて `ssh <自分のユーザー�
 
 ### dbのユーザモデルの切り替え
 新しいユーザーモデルのコードを取り込む前に実施してください。
+
+この手順は旧ユーザーがなく、`note.0001_initial` が未適用のDBを対象とします。旧コードで `docker compose exec -T backend python manage.py showmigrations` と、`docker compose exec -T backend python manage.py shell -c "from django.contrib.auth import get_user_model; print(get_user_model().objects.count())"` を実行して確認してください。
+
+既存ユーザーはこの手順では新テーブルへ移されません。また、`note.0001_initial` が適用済みの場合は依存先が `auth.User` から `users.User` に変わるため、adminだけ戻しても移行履歴が不整合になります。該当する場合はここから進めず、ユーザー・記録・外部キーを保存する個別の移行が必要です。`note zero` や `--fake` で回避しないでください。
+
+操作前にSQLiteのバックアップを取得してください。開発環境では次の例でDBボリューム内に保存できます（同名のバックアップがあれば停止します）。
+
+```bash
+docker compose exec -T backend python -c "import sqlite3,pathlib; p=pathlib.Path('/data/before-user-model.sqlite3'); assert not p.exists(), 'Backup already exists'; s=sqlite3.connect('/data/db.sqlite3'); d=sqlite3.connect(p); s.backup(d); d.close(); s.close()"
+```
 
 #### 1. 旧コードで管理画面のマイグレーションを戻す
 

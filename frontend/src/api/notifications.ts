@@ -1,3 +1,4 @@
+import { apiFetch } from "./http.ts";
 // Contract: https://github.com/jphacks/tkb_2605/issues/42
 export type WorkoutNotification = {
   notification_id: number;
@@ -34,7 +35,7 @@ async function request(method: "GET" | "POST", signal?: AbortSignal, limit = 20)
   const timeout = AbortSignal.timeout(10_000);
   let response: Response;
   try {
-    response = await fetch(method === "GET" ? `/api/notify/?limit=${limit}` : "/api/notify/", {
+    response = await apiFetch(method === "GET" ? `/api/notify/?limit=${limit}` : "/api/notify/", {
       method, headers, credentials: "same-origin", cache: "no-store",
       signal: signal ? AbortSignal.any([signal, timeout]) : timeout,
     });

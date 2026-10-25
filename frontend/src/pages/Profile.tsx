@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Link, useLocation, useParams } from "react-router";
-import { paths } from "../routes.ts";
+import { Link, Navigate, useLocation, useParams } from "react-router";
+import { paths, profilePath } from "../routes.ts";
 import { Avatar } from "../components/Avatar.tsx";
 import { Icon } from "../components/Icon.tsx";
 import BodyFrame from "../components/BodyFrame.tsx";
@@ -12,8 +12,8 @@ import { usePreviewMasmates } from "../features/profile/usePreviewMasmates.ts";
 import "../features/profile/profile.css";
 
 function ProfileContent({ userId, name }: { userId: string; name: string | null }) {
-  const own = userId === "me";
   const preview = usePreviewProfile();
+  const own = userId === preview.id;
   const [author, setAuthor] = useState(name);
   const isMasmate = usePreviewMasmates(preview.id, userId);
   const [notice, setNotice] = useState("");
@@ -27,17 +27,19 @@ function ProfileContent({ userId, name }: { userId: string; name: string | null 
           : <button type="button" className="profile-action" disabled={isMasmate} onClick={() => { becomePreviewMasmates(preview.id, userId); setNotice("表示例としてマスメイトになりました。相手には送信されません。"); }}>{isMasmate ? "マスメイト" : "マスメイトになる"}</button>}
       </BodyFrame>
     </section>
-    <div className="profile-bio"><p>{own ? user.bio || "自己紹介を追加してみましょう。" : "自己紹介・アイコンはユーザー情報APIの接続後に表示されます。"}</p></div>
-    <p className="profile-sample-notice">{own ? "ダミープロフィールです。編集内容はこのタブ内だけに反映され、再読み込みで戻ります。" : "マスメイトはどちらか一方の操作で成立し、承認や解除はありません。現在はダミーのため、このタブ内でのみ保持され、再読み込みで戻ります。"}</p>
+    <div className="profile-bio"><p>{own ? user.bio || "自己紹介はまだありません。" : "自己紹介・アイコンはユーザー情報APIの接続後に表示されます。"}</p></div>
+    <p className="profile-sample-notice">{own ? "名前はログイン中の登録情報です。自己紹介・アイコンの編集はこのタブ内の表示に反映され、再読み込み・ログアウトで戻ります。" : "マスメイトはどちらか一方の操作で成立し、承認や解除はありません。現在はダミーのため、このタブ内でのみ保持され、再読み込みで戻ります。"}</p>
     {notice && <p className="profile-feedback" role="status">{notice}</p>}
     <section className="profile-timeline" aria-labelledby="profile-timeline-title">
       <header className="profile-timeline-heading"><h2 id="profile-timeline-title">TIMELINE</h2><span>{own ? "あなたの投稿" : user.name + "の投稿"}</span></header>
-      {own ? <div className="profile-empty"><Icon name="message" size={28} /><p>認証接続後に、あなたの投稿が表示されます。</p></div> : <ApiTimeline key={userId} userId={userId} onAuthor={setAuthor} />}
+      <ApiTimeline key={userId} userId={userId} onAuthor={own ? undefined : setAuthor} />
     </section>
   </section>;
 }
 export default function Profile() {
   const { userId = "" } = useParams<"userId">();
   const { state } = useLocation();
+  const currentUser = usePreviewProfile();
+  if (userId === "me") return <Navigate to={profilePath(currentUser.id)} replace />;
   return <ProfileContent key={userId} userId={userId} name={profileNameFromState(userId, state)} />;
 }

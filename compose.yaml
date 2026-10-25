@@ -11,6 +11,8 @@ services:
     environment:
       DJANGO_DEBUG: "1"
       SQLITE_PATH: /data/db.sqlite3
+      # Vite forwards to backend:8000 while browsers send the frontend Origin.
+      DJANGO_CSRF_TRUSTED_ORIGINS: ${DJANGO_CSRF_TRUSTED_ORIGINS:-http://localhost:5173,http://127.0.0.1:5173}
     volumes:
       - ./backend:/app
       - sqlite-data:/data

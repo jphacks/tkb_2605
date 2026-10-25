@@ -6,7 +6,7 @@ test("dummy edits preserve identity and reject invalid fields without modifying 
   savePreviewProfile({ name: "試験ユーザー", bio: "週3回", color: "#f3dfcc" });
   assert.equal(getPreviewProfile().id, "me"); assert.equal(getPreviewProfile().name, "試験ユーザー");
   const previous = getPreviewProfile();
-  for (const value of [{ name: " ", bio: "", color: "#f3dfcc" }, {name:"長".repeat(41),bio:"",color:"#f3dfcc"}, {name:"名前",bio:"長".repeat(161),color:"#f3dfcc"}]) assert.throws(() => savePreviewProfile(value));
+  for (const value of [{ name: " ", bio: "", color: "#f3dfcc" }, {name:"長".repeat(51),bio:"",color:"#f3dfcc"}, {name:"名前",bio:"長".repeat(161),color:"#f3dfcc"}]) assert.throws(() => savePreviewProfile(value));
   assert.equal(getPreviewProfile(), previous);
 });
 test("navigation identity must match the target route and is never used for authentication", () => {

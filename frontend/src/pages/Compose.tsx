@@ -1,3 +1,4 @@
+import { useAuth } from "../features/auth/useAuth.ts";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { useLocation, useNavigate, useSearchParams } from "react-router";
 import { createPost, type CreatePost } from "../api/posts.ts";
@@ -6,6 +7,7 @@ import { paths } from "../routes.ts";
 import "./Compose.css";
 
 export default function Compose() {
+  const { user } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -103,7 +105,7 @@ export default function Compose() {
               <circle cx="12" cy="8" r="4" /><path d="M5 21v-2a7 7 0 0 1 14 0v2" />
             </svg>
           </div>
-          <div className="compose-editor">
+          <div className="compose-editor"><p className="compose-label">{user?.user_name}</p>
             <label htmlFor="compose-message" className="compose-label">メッセージ</label>
             <textarea
               ref={textareaRef}
