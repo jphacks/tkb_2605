@@ -70,8 +70,10 @@ DBの保存内容を復元し、選択種目・入力セットの一致を検証
 
 種目マスターはフロント所有の [JSONファイル](../frontend/src/features/exercises/serverCatalogData.json)。115種目・7部位・51器具区分・15おすすめ対応、種目名検索、部位・器具のAND絞り込みを維持する。`seed_exercises`コマンドで同じUUID・名称・関連をDBへ投入・更新する。起動時の自動実行は行わない。詳細は [種目マスター](exercise-master.md) を参照。
 
-結果画面は [PR #27](https://github.com/jphacks/tkb_2605/pull/27) のUIを参照したGET接続版で、共有先は統合済みの [PR #30](https://github.com/jphacks/tkb_2605/pull/30) の投稿ダイアログ。投稿は既存の `post_type: 2`・`workout_id` の形式で送るが、現行スタブは `post_type: 1` を返すため成功として扱わない。認証ガード、ホームの投稿取得・ページングを維持する。投稿作成応答のユーザーIDもログイン中のIDと一致する必要がある。
+結果画面は [PR #27](https://github.com/jphacks/tkb_2605/pull/27) のUIを参照したGET接続版で、共有先は統合済みの [PR #30](https://github.com/jphacks/tkb_2605/pull/30) の投稿ダイアログ。投稿は既存の `post_type: 2`・`workout_id` の形式で送り、投稿APIは認証ユーザーの記録であることを確認して保存する。認証ガード、ホームの投稿取得・ページングを維持する。投稿作成応答のユーザーIDもログイン中のIDと一致する必要がある。
 
 ## 検証
 
 `frontend`で`npm test`・`npm run lint`・`npm run build`。バックエンドは`python manage.py test core.tests`でURL、DB保存・再取得・終了、入力エラー、所有者制限、セッション認証・CSRFを検証する。
+
+投稿作成・一覧・詳細・いいねの実DB処理と通知の確定契約は[いいね通知API](like-notifications-api.md)を参照。マスメイトによるTL絞り込みは今回の追加に含めない。
