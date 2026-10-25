@@ -14,8 +14,13 @@ from note.models import Exercise, Workout, WorkoutExercise, WorkoutSet
 class NoteRepositoryTests(TestCase):
     @classmethod
     def setUpTestData(cls):
-        cls.user = get_user_model().objects.create_user(username="repository-user")
-        cls.other_user = get_user_model().objects.create_user(username="other-user")
+        cls.user = get_user_model().objects.create_user(
+            email="repository-user@example.test", password=None,
+            user_name="repository-user",
+        )
+        cls.other_user = get_user_model().objects.create_user(
+            email="other-user@example.test", password=None, user_name="other-user"
+        )
         cls.exercise = Exercise.objects.create(display_name="Bench press")
 
     def setUp(self):

@@ -87,7 +87,7 @@ URLは `frontend/src/routes.ts`、画面の割り当ては `frontend/src/App.tsx
 | 種目ごとの記録 | `/workouts/:workoutId/exercises/:exerciseId` |
 | 結果 | `/workouts/:workoutId/results` |
 
-ログイン以外の上記画面は共通のガードを通す。認証APIは未実装のため、現在は開発環境の「画面をプレビュー」からのみ確認できる。本番ビルドにはプレビュー入口を表示せず、保護されたURLは `/login` に戻す。プレビュー状態はメモリ内のみで、再読み込みすると解除される。直接開いたURLのパス・検索条件・ハッシュはログイン画面を経由して引き継ぐ。
+ログイン以外の上記画面は共通のガードを通す。認証APIは実装済みですが、ログイン画面との接続は未実装のため、現在は開発環境の「画面をプレビュー」からのみ確認できます。APIの接続順序と開発時の確認方法は [認証機能の開発](docs/auth-development.md) を参照してください。本番ビルドにはプレビュー入口を表示せず、保護されたURLは `/login` に戻す。プレビュー状態はメモリ内のみで、再読み込みすると解除される。直接開いたURLのパス・検索条件・ハッシュはログイン画面を経由して引き継ぐ。
 
 記録はAPI応答のIDを使用し、`workoutExerciseId` クエリで応答内の種目を特定する。選択した種目IDと応答が一致することを検証する。「別の種目」では同じ `workoutId` を引き継ぎ、`from` クエリに応じて種目選択・おすすめへ戻る。「終了」はセットPOST後にPATCHし、結果をGETする。完了後はGETでも終了状態を確認し、再編集を許可しない。詳細は [記録画面](frontend/RECORD_SCREEN.md) を参照。
 
@@ -157,6 +157,16 @@ VMへの入り方：Tailscaleで共有を受けて `ssh <自分のユーザー�
 
 ### dbのユーザモデルの切り替え
 新しいユーザーモデルのコードを取り込む前に実施してください。
+
+この手順は旧ユーザーがなく、`note.0001_initial` が未適用のDBを対象とします。旧コードで `docker compose exec -T backend python manage.py showmigrations` と、`docker compose exec -T backend python manage.py shell -c "from django.contrib.auth import get_user_model; print(get_user_model().objects.count())"` を実行して確認してください。
+
+既存ユーザーはこの手順では新テーブルへ移されません。また、`note.0001_initial` が適用済みの場合は依存先が `auth.User` から `users.User` に変わるため、adminだけ戻しても移行履歴が不整合になります。該当する場合はここから進めず、ユーザー・記録・外部キーを保存する個別の移行が必要です。`note zero` や `--fake` で回避しないでください。
+
+操作前にSQLiteのバックアップを取得してください。開発環境では次の例でDBボリューム内に保存できます（同名のバックアップがあれば停止します）。
+
+```bash
+docker compose exec -T backend python -c "import sqlite3,pathlib; p=pathlib.Path('/data/before-user-model.sqlite3'); assert not p.exists(), 'Backup already exists'; s=sqlite3.connect('/data/db.sqlite3'); d=sqlite3.connect(p); s.backup(d); d.close(); s.close()"
+```
 
 #### 1. 旧コードで管理画面のマイグレーションを戻す
 

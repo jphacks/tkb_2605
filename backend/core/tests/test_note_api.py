@@ -10,8 +10,12 @@ from note.models import Exercise, Workout, WorkoutExercise, WorkoutSet
 class NoteAPITests(TestCase):
     @classmethod
     def setUpTestData(cls):
-        cls.user = get_user_model().objects.create_user(username="api-owner")
-        cls.other_user = get_user_model().objects.create_user(username="api-other")
+        cls.user = get_user_model().objects.create_user(
+            email="api-owner@example.test", password=None, user_name="api-owner"
+        )
+        cls.other_user = get_user_model().objects.create_user(
+            email="api-other@example.test", password=None, user_name="api-other"
+        )
         cls.exercise = Exercise.objects.create(display_name="Bench press")
 
     def setUp(self):
