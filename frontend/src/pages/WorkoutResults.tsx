@@ -1,26 +1,51 @@
-import { createSearchParams, Link, useLocation, useParams } from "react-router";
-import { getWorkoutMenus, previewWorkout, type WorkoutResultsState } from "../features/workouts/results.ts";
+import { useEffect, useState } from "react";
+import { Link, useParams } from "react-router";
+import { fetchWorkout, WORKOUT_MOCK_NOTICE, type WorkoutDetail } from "../api/workouts.ts";
 import { paths } from "../routes.ts";
 import "./WorkoutResults.css";
 
-export default function WorkoutResults() {
-  const { workoutId } = useParams<"workoutId">();
-  const location = useLocation();
-  const state = location.state as WorkoutResultsState | null;
-  const receivedWorkout = state?.workout && state.workout.workout_id === workoutId ? state.workout : null;
-  const isSample = !receivedWorkout && import.meta.env.DEV && workoutId === previewWorkout.workout_id;
-  const workout = receivedWorkout ?? (isSample ? previewWorkout : null);
-  const exercises = getWorkoutMenus(workout);
+type ResultsState =
+  | { status: "loading" }
+  | { status: "error"; message: string }
+  | { status: "success"; workout: WorkoutDetail };
+
+function WorkoutResultsContent({ workoutId }: { workoutId: string }) {
+  const [state, setState] = useState<ResultsState>({ status: "loading" });
+  const [attempt, setAttempt] = useState(0);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    fetchWorkout(workoutId, { signal: controller.signal }).then((workout) => {
+      if (controller.signal.aborted) return;
+      setState({ status: "success", workout });
+    }).catch((reason: unknown) => {
+      if (!controller.signal.aborted) setState({ status: "error", message: reason instanceof Error ? reason.message : "記録を取得できませんでした。" });
+    });
+    return () => controller.abort();
+  }, [workoutId, attempt]);
+
+  function retry() {
+    setState({ status: "loading" });
+    setAttempt((value) => value + 1);
+  }
+
+  const workout = state.status === "success" ? state.workout : null;
+  const exercises = workout?.exercises.filter((exercise) => exercise.sets.length > 0) ?? [];
 
   return (
     <section className="workout-results" aria-labelledby="workout-results-heading">
       <header className="workout-results-header">
         <h1 id="workout-results-heading">今日のメニュー</h1>
-        {isSample && <p>サンプルの記録を表示しています</p>}
+        <p>{WORKOUT_MOCK_NOTICE}</p>
       </header>
 
-      <div className="workout-results-content" tabIndex={0} role="region" aria-label="行ったメニュー">
-        {exercises.length > 0 ? (
+      <div className="workout-results-content" tabIndex={0} role="region" aria-label="行ったメニュー" aria-busy={state.status === "loading"}>
+        {state.status === "loading" && <p className="workout-results-empty" role="status">記録を読み込んでいます…</p>}
+        {state.status === "error" && <div className="workout-results-empty">
+          <p className="workout-results-error" role="alert">{state.message}</p>
+          <button type="button" className="workout-results-retry" onClick={retry}>再試行</button>
+        </div>}
+        {state.status === "success" && (exercises.length > 0 ? (
           <ol className="workout-results-list">
             {exercises.map((exercise) => (
               <li key={exercise.workout_exercise_id} className="workout-results-menu">
@@ -31,7 +56,8 @@ export default function WorkoutResults() {
                 <ol className="workout-results-sets" aria-label={`${exercise.display_name}のセット`}>
                   {exercise.sets.map((set) => (
                     <li key={set.workout_set_id}>
-                      {Number(set.weight).toLocaleString("ja-JP", { maximumFractionDigits: 1, useGrouping: false })} kg × {set.reps} 回
+                      <span className="workout-results-set-number">セット{set.set_number}</span>
+                      <span>{set.weight} kg × {set.reps} 回</span>
                     </li>
                   ))}
                 </ol>
@@ -40,22 +66,20 @@ export default function WorkoutResults() {
           </ol>
         ) : (
           <div className="workout-results-empty" role="status">
-            <p>表示できるメニューがありません</p>
-            <p>トレーニングを記録すると、ここにメニューが表示されます。</p>
+            <p>応答にメニューがありません</p>
           </div>
-        )}
+        ))}
       </div>
 
       <footer className="workout-results-actions">
-        <Link
-          to={{ pathname: paths.compose, search: workoutId ? `?${createSearchParams({ workoutId })}` : "" }}
-          state={{ workout } satisfies WorkoutResultsState}
-          className="workout-results-share"
-        >
-          共有
-        </Link>
+        <button type="button" className="workout-results-share" disabled title="サンプルのため共有できません">共有</button>
         <Link to={paths.home} className="workout-results-close">閉じる</Link>
       </footer>
     </section>
   );
+}
+
+export default function WorkoutResults() {
+  const { workoutId } = useParams<"workoutId">();
+  return <WorkoutResultsContent key={workoutId} workoutId={workoutId ?? ""} />;
 }

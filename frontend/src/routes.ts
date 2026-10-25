@@ -4,7 +4,6 @@ export const paths = {
   login: "/login",
   home: "/",
   chats: "/chats",
-  compose: "/compose",
   recommendations: "/recommendations",
   exercises: "/exercises",
   workoutExercise: "/workouts/:workoutId/exercises/:exerciseId",
@@ -12,9 +11,9 @@ export const paths = {
 } as const;
 
 export function workoutExercisePath(workoutId: string, exerciseId: string) {
-  return generatePath(paths.workoutExercise, { workoutId, exerciseId });
+  return generatePath(paths.workoutExercise, { workoutId: encodeURIComponent(workoutId), exerciseId: encodeURIComponent(exerciseId) });
 }
 
 export function workoutResultsPath(workoutId: string) {
-  return generatePath(paths.workoutResults, { workoutId });
+  return generatePath(paths.workoutResults, { workoutId: encodeURIComponent(workoutId) });
 }

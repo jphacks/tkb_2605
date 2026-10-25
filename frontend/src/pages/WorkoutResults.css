@@ -30,6 +30,7 @@
   margin-top: 8px;
   color: var(--workout-results-muted);
   font-size: 12px;
+  overflow-wrap: anywhere;
 }
 
 .workout-results-content {
@@ -55,6 +56,7 @@
 }
 
 .workout-results-menu {
+  min-width: 0;
   padding: 18px 20px;
   border: 1px solid var(--workout-results-border);
   border-radius: 12px;
@@ -91,9 +93,19 @@
 }
 
 .workout-results-sets li {
-  white-space: nowrap;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px;
+  max-width: 100%;
   font-size: 13px;
   font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+
+.workout-results-set-number {
+  color: var(--workout-results-muted);
+  font-size: 11px;
 }
 
 .workout-results-sets li:not(:last-child) {
@@ -105,12 +117,28 @@
   margin-block: auto;
   padding-block: 32px;
   text-align: center;
+  overflow-wrap: anywhere;
 }
 
 .workout-results-empty p + p {
   margin-top: 8px;
   color: var(--workout-results-muted);
   font-size: 12px;
+}
+
+.workout-results-error,
+.workout-results-header .workout-results-warning {
+  color: #96432e;
+}
+
+.workout-results-retry {
+  min-height: 44px;
+  margin-top: 12px;
+  padding: 8px 18px;
+  border: 1px solid var(--workout-results-border);
+  border-radius: 10px;
+  color: var(--workout-results-accent);
+  background: #fffdfb;
 }
 
 .workout-results-actions {
@@ -120,7 +148,8 @@
   gap: 12px;
 }
 
-.workout-results-actions a {
+.workout-results-actions a,
+.workout-results-actions button {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -140,7 +169,7 @@
   background: var(--workout-results-accent);
 }
 
-.workout-results-actions .workout-results-share:hover {
+.workout-results-actions .workout-results-share:not(:disabled):hover {
   background: var(--workout-results-accent-hover);
 }
 
@@ -155,7 +184,8 @@
 }
 
 .workout-results-content:focus-visible,
-.workout-results-actions a:focus-visible {
+.workout-results-actions a:focus-visible,
+.workout-results-retry:focus-visible {
   outline: 3px solid var(--workout-results-accent);
   outline-offset: 4px;
 }
