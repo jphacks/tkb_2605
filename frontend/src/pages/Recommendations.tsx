@@ -51,7 +51,7 @@ export default function Recommendations() {
         <option value="" disabled>おすすめメニューを選択</option>
         {menus.map((item, index) => <option key={item.part} value={index + 1}>おすすめメニュー{index + 1} {item.part}メニュー</option>)}
       </select>
-      <p className="recommendations-note">説明はサンプルです。画像は準備中です。</p>
+      <p className="recommendations-note">説明はサンプルです。</p>
       {catalogError && <p className="recommendations-error" role="alert">{catalogError}</p>}
       {error && <p className="recommendations-error" role="alert">{error}</p>}
       {busy && <p className="recommendations-note" role="status">トレーニングを確認しています…</p>}
