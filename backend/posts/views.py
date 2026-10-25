@@ -61,6 +61,5 @@ def get_user_posts(request: Request, user_id: str):
 
 @api_view(["PUT"])
 def like_post(request: Request, post_id: str):
-    status_code = status.HTTP_200_OK
-    return Response(LIKED_RESPONSE_EXAMPLE, status=status_code)
+    return Response(LIKED_RESPONSE_EXAMPLE, status=status.HTTP_200_OK)
 
