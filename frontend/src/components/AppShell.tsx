@@ -1,11 +1,12 @@
 import { Link, NavLink, Outlet } from "react-router";
-import { currentUser } from "../features/social/seed.ts";
+import { usePreviewProfile } from "../features/profile/usePreviewProfile.ts";
 import { paths } from "../routes.ts";
 import { Avatar } from "./Avatar.tsx";
 import ComposeLink from "./ComposeLink.tsx";
 import { Icon } from "./Icon.tsx";
 
 export default function AppShell({ onExitPreview }: { onExitPreview: () => void }) {
+  const currentUser = usePreviewProfile();
   return <div className="app-shell">
     <a className="skip-link" href="#main-content">メインコンテンツへ</a>
     <aside className="sidebar">

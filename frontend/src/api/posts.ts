@@ -57,13 +57,16 @@ async function request(url: string, init: RequestInit): Promise<unknown> {
   try { return await response.json(); } catch { throw new Error("投稿APIの応答形式を確認できませんでした。"); }
 }
 
-export async function fetchPosts({ limit = 20, offset = 0, signal }: { limit?: number; offset?: number; signal?: AbortSignal } = {}): Promise<PostsPage> {
+export async function fetchPosts({ limit = 20, offset = 0, signal, userId }: { limit?: number; offset?: number; signal?: AbortSignal; userId?: string } = {}): Promise<PostsPage> {
   if (!Number.isInteger(limit) || limit < 1 || limit > 100 || !nonNegativeInt(offset)) throw new Error("投稿の取得範囲が不正です。");
-  const value = await request("/api/posts/?" + new URLSearchParams({ limit: String(limit), offset: String(offset) }), { method: "GET", headers: headers(false), signal });
+  if (userId !== undefined && !userId.trim()) throw new Error("ユーザーを選択してください。");
+  const endpoint = userId === undefined ? "/api/posts/" : "/api/users/" + encodeURIComponent(userId) + "/posts/";
+  const value = await request(endpoint + "?" + new URLSearchParams({ limit: String(limit), offset: String(offset) }), { method: "GET", headers: headers(false), signal });
   if (!object(value) || !Array.isArray(value.results) || !value.results.every(validPost) ||
     !(value.next_offset === null || (nonNegativeInt(value.next_offset) && value.next_offset > offset))) {
     throw new Error("投稿一覧の応答形式を確認できませんでした。");
   }
+  if (userId !== undefined && value.results.some((post) => post.user_id !== userId)) throw new Error("対象ユーザーの投稿を確認できませんでした。");
   return value as PostsPage;
 }
 
