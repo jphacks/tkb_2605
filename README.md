@@ -236,3 +236,5 @@ docker compose exec backend python manage.py showmigrations users admin
 ※ すでに新しいコードを取り込んだ場合や、途中でエラーが出た場合は、
 そのまま進めず状況を確認してください。
 ※ DBファイルやDockerボリューム全体を削除する必要はありません。
+
+いいね通知の保存と投稿APIの実応答: [いいね通知API](docs/like-notifications-api.md)。

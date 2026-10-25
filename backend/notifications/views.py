@@ -1,5 +1,5 @@
 from django.db import transaction
-from django.db.models import Max
+from django.db.models import Max, Q
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.permissions import IsAuthenticated
@@ -27,9 +27,9 @@ def notifications(request):
             "latest_id"
         ]
         notifications = (
-            Notification.objects.exclude(notifier_id=request.user.pk)
+            Notification.objects.filter(Q(notification_type="workout_started") | Q(recipient=request.user)).exclude(notifier_id=request.user.pk)
             .filter(notification_id__gt=cursor.last_notification_id)
-            .select_related("notifier")[:query.validated_data["limit"]]
+            .select_related("notifier", "post")[:query.validated_data["limit"]]
         )
         data = NotificationSerializer(notifications, many=True).data
         if latest_id is not None and latest_id > cursor.last_notification_id:

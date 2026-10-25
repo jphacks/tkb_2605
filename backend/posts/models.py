@@ -1,6 +1,5 @@
 import uuid
-from django.db import models, migrations
-from django.conf import settings
+from django.db import models
 
 
 class Posts(models.Model):
@@ -12,7 +11,7 @@ class Posts(models.Model):
     )
     
     # あとでForeignKeyに変更する
-    user_id = user_id = models.CharField(max_length=100)
+    user_id = models.CharField(max_length=100)
     post_type = models.IntegerField()
     content = models.TextField()
     posted_at = models.DateTimeField(auto_now_add=True)
@@ -33,3 +32,5 @@ class Like(models.Model):
     
     # あとでForeignKeyに変更する
     user_id = models.CharField(max_length=100)
+    class Meta:
+        constraints = [models.UniqueConstraint(fields=["post_id", "user_id"], name="unique_post_like_user")]
