@@ -1,0 +1,37 @@
+/* UEC inverse color: RGB(139, 40, 23). Shared by CSS, SVG and Tailwind utilities. */
+@layer base {
+  :root {
+    --brand: #8b2817;
+    --brand-hover: #6e2013;
+    --brand-soft: #f8ebe7;
+    --brand-subtle: #f0d9d1;
+    --brand-subtle-hover: #e7c5b9;
+    --brand-border: #ead4cc;
+    --brand-line: #c59487;
+    --focus: #a94731;
+    --text: #35211b;
+    --muted: #795c55;
+    --canvas: #faf6f3;
+    --surface: #fffdfb;
+    --line: #eadfd9;
+    --error: #b42318;
+    --error-soft: #fff0ec;
+    --brand-shadow: rgb(139 40 23 / .12);
+    --brand-shadow-strong: rgb(139 40 23 / .22);
+  }
+}
+
+@theme inline {
+  --color-brand: var(--brand);
+  --color-brand-hover: var(--brand-hover);
+  --color-brand-soft: var(--brand-soft);
+  --color-brand-subtle: var(--brand-subtle);
+  --color-brand-border: var(--brand-border);
+  --color-focus: var(--focus);
+  --color-ink: var(--text);
+  --color-muted: var(--muted);
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface);
+  --color-line: var(--line);
+  --color-error: var(--error);
+}
