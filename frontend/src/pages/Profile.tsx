@@ -7,13 +7,15 @@ import BodyFrame from "../components/BodyFrame.tsx";
 import { ApiTimeline } from "../components/ApiTimeline.tsx";
 import { profileNameFromState } from "../features/profile/preview.ts";
 import { usePreviewProfile } from "../features/profile/usePreviewProfile.ts";
+import { becomePreviewMasmates } from "../features/profile/masmates.ts";
+import { usePreviewMasmates } from "../features/profile/usePreviewMasmates.ts";
 import "../features/profile/profile.css";
 
 function ProfileContent({ userId, name }: { userId: string; name: string | null }) {
   const own = userId === "me";
   const preview = usePreviewProfile();
   const [author, setAuthor] = useState(name);
-  const [added, setAdded] = useState(false);
+  const isMasmate = usePreviewMasmates(preview.id, userId);
   const [notice, setNotice] = useState("");
   const user = own ? preview : { id: userId, name: author ?? "ユーザー", bio: "", avatar: "mint" as const };
   return <section className="profile-page">
@@ -22,11 +24,11 @@ function ProfileContent({ userId, name }: { userId: string; name: string | null 
       <BodyFrame head={<Avatar user={user} size="large" linked={false} />}>
         <div className="profile-identity"><h2 title={user.name}>{user.name}</h2><span>{own ? "YOUR PROFILE" : "ID: " + userId}</span></div>
         {own ? <Link className="profile-action" to={paths.profileEdit}>プロフィールを編集</Link>
-          : <button type="button" className="profile-action" disabled={added} onClick={() => { setAdded(true); setNotice("表示例としてマスメイトになりました。相手には送信されません。"); }}>{added ? "マスメイト" : "マスメイトになる"}</button>}
+          : <button type="button" className="profile-action" disabled={isMasmate} onClick={() => { becomePreviewMasmates(preview.id, userId); setNotice("表示例としてマスメイトになりました。相手には送信されません。"); }}>{isMasmate ? "マスメイト" : "マスメイトになる"}</button>}
       </BodyFrame>
     </section>
     <div className="profile-bio"><p>{own ? user.bio || "自己紹介を追加してみましょう。" : "自己紹介・アイコンはユーザー情報APIの接続後に表示されます。"}</p></div>
-    <p className="profile-sample-notice">{own ? "ダミープロフィールです。編集内容はこのタブ内だけに反映され、再読み込みで戻ります。" : "投稿者のIDと名前を表示しています。マスメイトへの追加は表示用のダミーです。"}</p>
+    <p className="profile-sample-notice">{own ? "ダミープロフィールです。編集内容はこのタブ内だけに反映され、再読み込みで戻ります。" : "マスメイトはどちらか一方の操作で成立し、承認や解除はありません。現在はダミーのため、このタブ内でのみ保持され、再読み込みで戻ります。"}</p>
     {notice && <p className="profile-feedback" role="status">{notice}</p>}
     <section className="profile-timeline" aria-labelledby="profile-timeline-title">
       <header className="profile-timeline-heading"><h2 id="profile-timeline-title">TIMELINE</h2><span>{own ? "あなたの投稿" : user.name + "の投稿"}</span></header>
