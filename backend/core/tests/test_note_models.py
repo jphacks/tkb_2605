@@ -22,7 +22,9 @@ from note.models import (
 class NoteModelTests(TestCase):
     @classmethod
     def setUpTestData(cls):
-        cls.user = get_user_model().objects.create_user(username="record-user")
+        cls.user = get_user_model().objects.create_user(
+            email="record-user@example.com", password=None, user_name="record-user"
+        )
         cls.workout = Workout.objects.create(user=cls.user)
         cls.exercise = Exercise.objects.create(display_name="Bench press")
         cls.workout_exercise = WorkoutExercise.objects.create(
