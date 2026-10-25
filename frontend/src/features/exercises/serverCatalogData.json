@@ -1,0 +1,237 @@
+{
+  "exercises": [
+    {
+      "exercise_id": "47e21a2d-a97c-5dda-8d91-64f46f513a7b",
+      "display_name": "ベンチプレス",
+      "body_part_ids": [
+        "a673f34d-69e1-598c-85a6-9ece3ef8194d",
+        "58e4e00d-89b9-5ee7-991b-73ac726f97f8"
+      ],
+      "equipment_ids": [
+        "cec6385b-38d6-5871-94bb-03040d5db440",
+        "12beea06-f111-533e-a650-94a58c0e31ca"
+      ]
+    },
+    {
+      "exercise_id": "95fd687d-8605-5885-8fa1-4081796581f0",
+      "display_name": "プッシュアップ",
+      "body_part_ids": [
+        "a673f34d-69e1-598c-85a6-9ece3ef8194d",
+        "58e4e00d-89b9-5ee7-991b-73ac726f97f8"
+      ],
+      "equipment_ids": [
+        "ef8d062e-38fd-5937-835b-a98fd216a4bc"
+      ]
+    },
+    {
+      "exercise_id": "2c103480-78cb-5cf1-91ff-043e08f9c502",
+      "display_name": "スクワット",
+      "body_part_ids": [
+        "fba150f8-d3fe-5dae-baed-6d2b42921112"
+      ],
+      "equipment_ids": [
+        "ef8d062e-38fd-5937-835b-a98fd216a4bc"
+      ]
+    },
+    {
+      "exercise_id": "cc4331eb-01ac-5a82-990d-593532557a5a",
+      "display_name": "ダンベルロー",
+      "body_part_ids": [
+        "2ebf23eb-c325-5ffc-9419-4923d91b546d"
+      ],
+      "equipment_ids": [
+        "f2bc1504-6ee4-5bd4-b207-a5d48467bbf5",
+        "12beea06-f111-533e-a650-94a58c0e31ca"
+      ]
+    },
+    {
+      "exercise_id": "e70d9a0d-0ee0-5610-9f5d-2f1ebef011cc",
+      "display_name": "ショルダープレス",
+      "body_part_ids": [
+        "257e671e-abde-5172-8145-1a7e77648648",
+        "58e4e00d-89b9-5ee7-991b-73ac726f97f8"
+      ],
+      "equipment_ids": [
+        "f2bc1504-6ee4-5bd4-b207-a5d48467bbf5"
+      ]
+    },
+    {
+      "exercise_id": "1fe76cfe-6308-5bec-91d4-99ef94365625",
+      "display_name": "ラットプルダウン",
+      "body_part_ids": [
+        "2ebf23eb-c325-5ffc-9419-4923d91b546d"
+      ],
+      "equipment_ids": [
+        "e72cb41e-8aae-5e0b-b7ed-dceb573820ba"
+      ]
+    },
+    {
+      "exercise_id": "334d9cac-ea4c-5f9e-8ee6-cccc3f00be7e",
+      "display_name": "ランジ",
+      "body_part_ids": [
+        "fba150f8-d3fe-5dae-baed-6d2b42921112"
+      ],
+      "equipment_ids": [
+        "ef8d062e-38fd-5937-835b-a98fd216a4bc"
+      ]
+    },
+    {
+      "exercise_id": "f33edb3c-8711-5aa1-9a4e-19926fee635b",
+      "display_name": "クランチ",
+      "body_part_ids": [
+        "a1b3745c-26e3-5703-9634-e194bfee4a90"
+      ],
+      "equipment_ids": [
+        "ef8d062e-38fd-5937-835b-a98fd216a4bc"
+      ]
+    },
+    {
+      "exercise_id": "554d3a78-9596-5ef3-ac48-e870d46c655f",
+      "display_name": "ダンベルカール",
+      "body_part_ids": [
+        "58e4e00d-89b9-5ee7-991b-73ac726f97f8"
+      ],
+      "equipment_ids": [
+        "f2bc1504-6ee4-5bd4-b207-a5d48467bbf5"
+      ]
+    },
+    {
+      "exercise_id": "f3128f9e-478f-5712-8b27-6771e4c473e4",
+      "display_name": "ハンマーカール",
+      "body_part_ids": [
+        "58e4e00d-89b9-5ee7-991b-73ac726f97f8"
+      ],
+      "equipment_ids": [
+        "f2bc1504-6ee4-5bd4-b207-a5d48467bbf5"
+      ]
+    },
+    {
+      "exercise_id": "c005fa6d-eda8-52e4-ace2-ba6c91686e2e",
+      "display_name": "キックバック",
+      "body_part_ids": [
+        "58e4e00d-89b9-5ee7-991b-73ac726f97f8"
+      ],
+      "equipment_ids": [
+        "f2bc1504-6ee4-5bd4-b207-a5d48467bbf5",
+        "12beea06-f111-533e-a650-94a58c0e31ca"
+      ]
+    },
+    {
+      "exercise_id": "b4122f61-af21-5a2b-b6dd-ba5e1c7a2b7c",
+      "display_name": "カーフレイズ",
+      "body_part_ids": [
+        "fba150f8-d3fe-5dae-baed-6d2b42921112"
+      ],
+      "equipment_ids": [
+        "ef8d062e-38fd-5937-835b-a98fd216a4bc"
+      ]
+    },
+    {
+      "exercise_id": "67f4fd4b-fc63-564b-9f18-abe3936efab6",
+      "display_name": "レッグレイズ",
+      "body_part_ids": [
+        "a1b3745c-26e3-5703-9634-e194bfee4a90"
+      ],
+      "equipment_ids": [
+        "ef8d062e-38fd-5937-835b-a98fd216a4bc"
+      ]
+    },
+    {
+      "exercise_id": "fc38f5ff-6013-5c89-81a9-eae62802fae8",
+      "display_name": "バイシクルクランチ",
+      "body_part_ids": [
+        "a1b3745c-26e3-5703-9634-e194bfee4a90"
+      ],
+      "equipment_ids": [
+        "ef8d062e-38fd-5937-835b-a98fd216a4bc"
+      ]
+    },
+    {
+      "exercise_id": "4ec77c43-2e62-5ae1-8f50-d80ccdadd795",
+      "display_name": "チェストプレス",
+      "body_part_ids": [
+        "a673f34d-69e1-598c-85a6-9ece3ef8194d",
+        "58e4e00d-89b9-5ee7-991b-73ac726f97f8"
+      ],
+      "equipment_ids": [
+        "e72cb41e-8aae-5e0b-b7ed-dceb573820ba"
+      ]
+    },
+    {
+      "exercise_id": "5ba258bd-d61a-528c-89f9-0804d84f279e",
+      "display_name": "リバースフライ",
+      "body_part_ids": [
+        "2ebf23eb-c325-5ffc-9419-4923d91b546d",
+        "257e671e-abde-5172-8145-1a7e77648648"
+      ],
+      "equipment_ids": [
+        "f2bc1504-6ee4-5bd4-b207-a5d48467bbf5"
+      ]
+    }
+  ],
+  "body_parts": [
+    {
+      "body_part_id": "58e4e00d-89b9-5ee7-991b-73ac726f97f8",
+      "name": "腕"
+    },
+    {
+      "body_part_id": "fba150f8-d3fe-5dae-baed-6d2b42921112",
+      "name": "足"
+    },
+    {
+      "body_part_id": "a1b3745c-26e3-5703-9634-e194bfee4a90",
+      "name": "腹"
+    },
+    {
+      "body_part_id": "a673f34d-69e1-598c-85a6-9ece3ef8194d",
+      "name": "胸"
+    },
+    {
+      "body_part_id": "2ebf23eb-c325-5ffc-9419-4923d91b546d",
+      "name": "背中"
+    },
+    {
+      "body_part_id": "257e671e-abde-5172-8145-1a7e77648648",
+      "name": "肩"
+    }
+  ],
+  "equipment": [
+    {
+      "equipment_id": "ef8d062e-38fd-5937-835b-a98fd216a4bc",
+      "name": "自重"
+    },
+    {
+      "equipment_id": "f2bc1504-6ee4-5bd4-b207-a5d48467bbf5",
+      "name": "ダンベル"
+    },
+    {
+      "equipment_id": "cec6385b-38d6-5871-94bb-03040d5db440",
+      "name": "バーベル"
+    },
+    {
+      "equipment_id": "12beea06-f111-533e-a650-94a58c0e31ca",
+      "name": "ベンチ"
+    },
+    {
+      "equipment_id": "e72cb41e-8aae-5e0b-b7ed-dceb573820ba",
+      "name": "マシン"
+    }
+  ],
+  "recommendations": {
+    "bench-press": "47e21a2d-a97c-5dda-8d91-64f46f513a7b",
+    "push-up": "95fd687d-8605-5885-8fa1-4081796581f0",
+    "squat": "2c103480-78cb-5cf1-91ff-043e08f9c502",
+    "dumbbell-row": "cc4331eb-01ac-5a82-990d-593532557a5a",
+    "lat-pulldown": "1fe76cfe-6308-5bec-91d4-99ef94365625",
+    "lunge": "334d9cac-ea4c-5f9e-8ee6-cccc3f00be7e",
+    "crunch": "f33edb3c-8711-5aa1-9a4e-19926fee635b",
+    "dumbbell-curl": "554d3a78-9596-5ef3-ac48-e870d46c655f",
+    "hammer-curl": "f3128f9e-478f-5712-8b27-6771e4c473e4",
+    "kickback": "c005fa6d-eda8-52e4-ace2-ba6c91686e2e",
+    "calf-raise": "b4122f61-af21-5a2b-b6dd-ba5e1c7a2b7c",
+    "leg-raise": "67f4fd4b-fc63-564b-9f18-abe3936efab6",
+    "bicycle-crunch": "fc38f5ff-6013-5c89-81a9-eae62802fae8",
+    "chest-press": "4ec77c43-2e62-5ae1-8f50-d80ccdadd795",
+    "reverse-fly": "5ba258bd-d61a-528c-89f9-0804d84f279e"
+  }
+}
