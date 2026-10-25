@@ -2,6 +2,7 @@ import { Link, NavLink, Outlet } from "react-router";
 import { currentUser } from "../features/social/seed.ts";
 import { paths } from "../routes.ts";
 import { Avatar } from "./Avatar.tsx";
+import ComposeLink from "./ComposeLink.tsx";
 import { Icon } from "./Icon.tsx";
 
 export default function AppShell({ onExitPreview }: { onExitPreview: () => void }) {
@@ -16,7 +17,7 @@ export default function AppShell({ onExitPreview }: { onExitPreview: () => void 
         <Link to={`/profile/${currentUser.id}`}><Icon name="user" />プロフィール</Link>
         <Link to="/settings"><Icon name="settings" />設定</Link>
       </nav>
-      <Link to="/compose" className="sidebar-compose primary-button"><Icon name="plus" size={20} />投稿する</Link>
+      <ComposeLink className="sidebar-compose primary-button"><Icon name="plus" size={20} />投稿する</ComposeLink>
       <div className="sidebar-bottom"><span className="small-label">ONE MORE REP. ONE MORE STEP.</span><Link className="account-link" to={`/profile/${currentUser.id}`}><Avatar user={currentUser} size="small" linked={false} /><span><strong>{currentUser.name}</strong><small>プロフィール表示例</small></span><Icon name="chevron-right" size={17} /></Link></div>
     </aside>
     <main id="main-content" className="main-column">
@@ -33,6 +34,6 @@ export default function AppShell({ onExitPreview }: { onExitPreview: () => void 
       <section className="tip-card"><span className="eyebrow"><Icon name="leaf" size={16} /> SMALL STEP, BIG CHANGE</span><h2>昨日の自分に、<br />ひとつプラス。</h2><p>短い時間でも大丈夫。<br />あなたのペースで、続けよう。</p><Link to={paths.recommendations}>今日のメニューを探す<Icon name="arrow-right" size={17} /></Link></section>
       <p className="sidebar-footnote">日々の積み重ねを、仲間と一緒に。<br /><span>© WORKOUT</span></p>
     </aside>
-    <Link className="floating-compose" to="/compose" aria-label="投稿を作成"><Icon name="plus" size={28} /></Link>
+    <ComposeLink className="floating-compose" aria-label="投稿を作成"><Icon name="plus" size={28} /></ComposeLink>
   </div>;
 }

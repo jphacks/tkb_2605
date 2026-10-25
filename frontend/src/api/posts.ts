@@ -24,7 +24,7 @@ function headers(write: boolean, json = false): Headers {
   const result = new Headers({ Accept: "application/json" });
   if (json) result.set("Content-Type", "application/json");
   if (write && typeof document !== "undefined") {
-    const cookie = document.cookie.split("; ").find((part) => part.startsWith("csrftoken="));
+    const cookie = document.cookie.split(";").map((part) => part.trim()).find((part) => part.startsWith("csrftoken="));
     if (cookie) {
       try { result.set("X-CSRFToken", decodeURIComponent(cookie.slice("csrftoken=".length))); } catch { /* Let the server report an invalid session. */ }
     }
@@ -42,6 +42,16 @@ async function request(url: string, init: RequestInit): Promise<unknown> {
   if (!response.ok) {
     if (response.status === 401 || response.status === 403) throw new Error("投稿機能を利用するにはログイン状態の確認が必要です。");
     if (response.status === 404 || response.status === 501) throw new Error("投稿機能にまだ接続できません。時間をおいて再試行してください。");
+    if (response.status === 400) {
+      const body: unknown = await response.json().catch(() => null);
+      if (object(body)) {
+        for (const key of ["content", "workout_id", "non_field_errors", "detail"]) {
+          const value = body[key];
+          if (text(value)) throw new Error(value);
+          if (Array.isArray(value) && value.length > 0 && value.every(text)) throw new Error(value.join(" "));
+        }
+      }
+    }
     throw new Error("投稿APIでエラーが発生しました（" + response.status + "）。内容を確認して再試行してください。");
   }
   try { return await response.json(); } catch { throw new Error("投稿APIの応答形式を確認できませんでした。"); }
@@ -64,10 +74,10 @@ export async function togglePostLike(postId: string): Promise<LikeResult> {
   return value;
 }
 
-export async function createPost(input: CreatePost): Promise<ApiPost> {
+export async function createPost(input: CreatePost, signal?: AbortSignal): Promise<ApiPost> {
   if (input.post_type !== 3 && !input.content.trim()) throw new Error("投稿内容を入力してください。");
   if (input.post_type === 2 && !input.workout_id.trim()) throw new Error("ワークアウトを選択してください。");
-  const value = await request("/api/posts/", { method: "POST", headers: headers(true, true), body: JSON.stringify(input) });
+  const value = await request("/api/posts/", { method: "POST", headers: headers(true, true), body: JSON.stringify(input), signal });
   if (!validPost(value) || value.post_type !== input.post_type) throw new Error("作成した投稿の応答形式を確認できませんでした。");
   return value;
 }

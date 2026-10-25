@@ -123,6 +123,32 @@ test("abort is preserved and an uncertain POST result is reported distinctly", a
   await assert.rejects(createPost({ post_type: 1, content: "記録" }), /送信結果を確認できません/);
 });
 
+test("compose forwards its abort signal and preserves cancellation", async () => {
+  respond(fixture, 201);
+  const controller = new AbortController();
+  await createPost({ post_type: 1, content: "記録" }, controller.signal);
+  assert.equal(requests[0].init?.signal, controller.signal);
+
+  const aborted = new DOMException("Aborted", "AbortError");
+  globalThis.fetch = async (_input, init) => new Promise<Response>((_resolve, reject) => {
+    init?.signal?.addEventListener("abort", () => reject(aborted), { once: true });
+  });
+  const pending = createPost({ post_type: 1, content: "記録" }, controller.signal);
+  controller.abort();
+  await assert.rejects(pending, (error) => error === aborted);
+});
+
+test("compose receives field errors and keeps a fallback for invalid error bodies", async () => {
+  for (const body of [{ content: ["本文を確認してください。"] }, { workout_id: "記録を確認してください。" }, { detail: "入力を確認してください。" }]) {
+    respond(body, 400);
+    await assert.rejects(createPost({ post_type: 1, content: "記録" }), /確認してください。/);
+  }
+  for (const body of [null, { content: [123] }, {}]) {
+    respond(body, 400);
+    await assert.rejects(createPost({ post_type: 1, content: "記録" }), /投稿APIでエラーが発生しました（400）/);
+  }
+});
+
 test("UUID post IDs survive paged reads, creation and the bodyless like request unchanged", async () => {
   // Posts.post_id is a UUIDField; Like.post_id references that same post.
   const firstId = "c8683daa-b897-407d-b276-9d48a105de68";

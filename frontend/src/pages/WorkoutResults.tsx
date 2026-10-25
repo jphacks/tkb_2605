@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router";
+import { createSearchParams, Link, useLocation, useParams } from "react-router";
 import { fetchWorkout, WORKOUT_MOCK_NOTICE, type WorkoutDetail } from "../api/workouts.ts";
+import type { ComposeLocationState } from "../features/posts/navigation.ts";
 import { paths } from "../routes.ts";
 import "./WorkoutResults.css";
 
@@ -10,6 +11,7 @@ type ResultsState =
   | { status: "success"; workout: WorkoutDetail };
 
 function WorkoutResultsContent({ workoutId }: { workoutId: string }) {
+  const location = useLocation();
   const [state, setState] = useState<ResultsState>({ status: "loading" });
   const [attempt, setAttempt] = useState(0);
 
@@ -56,7 +58,6 @@ function WorkoutResultsContent({ workoutId }: { workoutId: string }) {
                 <ol className="workout-results-sets" aria-label={`${exercise.display_name}のセット`}>
                   {exercise.sets.map((set) => (
                     <li key={set.workout_set_id}>
-                      <span className="workout-results-set-number">セット{set.set_number}</span>
                       <span>{set.weight} kg × {set.reps} 回</span>
                     </li>
                   ))}
@@ -72,7 +73,17 @@ function WorkoutResultsContent({ workoutId }: { workoutId: string }) {
       </div>
 
       <footer className="workout-results-actions">
-        <button type="button" className="workout-results-share" disabled title="サンプルのため共有できません">共有</button>
+        {workout && exercises.length > 0 ? (
+          <Link
+            to={{ pathname: paths.compose, search: `?${createSearchParams({ workoutId: workout.workout_id })}` }}
+            state={{ backgroundLocation: location, workout } satisfies ComposeLocationState}
+            className="workout-results-share"
+          >
+            共有
+          </Link>
+        ) : (
+          <button type="button" className="workout-results-share" disabled>共有</button>
+        )}
         <Link to={paths.home} className="workout-results-close">閉じる</Link>
       </footer>
     </section>

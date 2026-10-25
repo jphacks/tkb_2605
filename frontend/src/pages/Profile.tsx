@@ -21,12 +21,12 @@ function ProfileContent({ user }: { user: ProfileSample }) {
     <section className="profile-body" aria-label={user.name + "のプロフィール"}>
       <div className="profile-head"><ProfileAvatar user={user} large /></div>
       <svg className="profile-outline profile-shoulders" viewBox="0 0 640 112" preserveAspectRatio="none" fill="none" aria-hidden="true">
-        <path fill="#f1f5eb" d="M294 61v25c-33 10-78 11-138 17-35 3-57 5-71 9h470c-14-4-36-6-71-9-60-6-105-7-138-17V61Z" />
+        <path fill="var(--brand-soft)" d="M294 61v25c-33 10-78 11-138 17-35 3-57 5-71 9h470c-14-4-36-6-71-9-60-6-105-7-138-17V61Z" />
         <path d="M294 61v25c-33 10-78 11-138 17-35 3-57 5-71 9M346 61v25c33 10 78 11 138 17 35 3 57 5 71 9M294 86l26 17 26-17M320 103v9" />
       </svg>
       <div className="profile-chest">
         <svg className="profile-outline" viewBox="0 0 640 90" preserveAspectRatio="none" fill="none" aria-hidden="true">
-          <path fill="#f1f5eb" d="M85 0h470l25 90H60Z" />
+          <path fill="var(--brand-soft)" d="M85 0h470l25 90H60Z" />
           <path d="M85 0 60 90M555 0l25 90M320 0v83M116 2c52-2 126-2 192 0v77c-55 8-137 7-192-2ZM524 2c-52-2-126-2-192 0v77c55 8 137 7 192-2Z" />
         </svg>
         <div className="profile-chest-content"><div className="profile-identity"><h2>{user.name}</h2><span>@{user.handle}</span></div>
