@@ -76,19 +76,6 @@
 .recommendations-retry { min-height: 44px; padding: 8px 16px; border: 1px solid var(--brand-line); border-radius: 8px; background: white; color: var(--text); font-size: 13px; }
 .recommendations-unavailable { align-items: center; justify-content: center; padding: 16px; border: 1px solid var(--brand-border); border-radius: 12px; color: var(--muted); font-size: 13px; }
 
-.recommendations-image {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  aspect-ratio: 1;
-  border-radius: 8px;
-  background: var(--brand-soft);
-  color: var(--muted);
-  font-size: 11px;
-}
-
 .recommendations-detail { display: block; min-width: 0; }
 .recommendations-exercise-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin-bottom: 10px; }
 .recommendations-exercise-heading strong { min-width: 0; margin: 0; font-size: 17px; font-weight: 700; line-height: 1.4; overflow-wrap: anywhere; }
@@ -99,9 +86,7 @@
 @media (max-width: 480px) {
   .recommendations-screen { gap: 10px; }
   .recommendations-list { gap: 10px; }
-  .recommendations-exercise { grid-template-columns: 62px minmax(0, 1fr); gap: 10px; padding: 10px; }
-  .recommendations-image { gap: 4px; font-size: 10px; }
-  .recommendations-image svg { width: 26px; height: 26px; }
+  .recommendations-exercise { grid-template-columns: 72px minmax(0, 1fr); gap: 10px; padding: 10px; }
   .recommendations-exercise-heading { gap: 5px; margin-bottom: 6px; }
   .recommendations-exercise-heading strong { font-size: 14px; }
   .recommendations-part { padding: 2px 5px; font-size: 10px; }

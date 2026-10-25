@@ -9,7 +9,8 @@
       ],
       "equipment_ids": [
         "cec6385b-38d6-5871-94bb-03040d5db440",
-        "12beea06-f111-533e-a650-94a58c0e31ca"
+        "12beea06-f111-533e-a650-94a58c0e31ca",
+        "45500b3e-bfcb-4fc9-9972-988ce8a16667"
       ]
     },
     {
@@ -52,7 +53,8 @@
         "58e4e00d-89b9-5ee7-991b-73ac726f97f8"
       ],
       "equipment_ids": [
-        "f2bc1504-6ee4-5bd4-b207-a5d48467bbf5"
+        "f2bc1504-6ee4-5bd4-b207-a5d48467bbf5",
+        "45a6b709-6ab9-4c98-a924-2e3f71a057ed"
       ]
     },
     {
@@ -62,7 +64,9 @@
         "2ebf23eb-c325-5ffc-9419-4923d91b546d"
       ],
       "equipment_ids": [
-        "e72cb41e-8aae-5e0b-b7ed-dceb573820ba"
+        "e72cb41e-8aae-5e0b-b7ed-dceb573820ba",
+        "1ecfea67-89c9-4df4-935a-c8e0af3b8e73",
+        "735914d7-06b0-41e1-adff-093527db652d"
       ]
     },
     {
@@ -123,7 +127,8 @@
         "fba150f8-d3fe-5dae-baed-6d2b42921112"
       ],
       "equipment_ids": [
-        "ef8d062e-38fd-5937-835b-a98fd216a4bc"
+        "ef8d062e-38fd-5937-835b-a98fd216a4bc",
+        "941ed025-13dc-4cd3-804d-a2b08867a7f3"
       ]
     },
     {
@@ -154,7 +159,8 @@
         "58e4e00d-89b9-5ee7-991b-73ac726f97f8"
       ],
       "equipment_ids": [
-        "e72cb41e-8aae-5e0b-b7ed-dceb573820ba"
+        "e72cb41e-8aae-5e0b-b7ed-dceb573820ba",
+        "8a22f767-3513-42b0-b5fc-92d916c8b1b6"
       ]
     },
     {
@@ -166,6 +172,1083 @@
       ],
       "equipment_ids": [
         "f2bc1504-6ee4-5bd4-b207-a5d48467bbf5"
+      ]
+    },
+    {
+      "exercise_id": "65975877-e2c6-4885-837c-722e48e0495d",
+      "display_name": "膝つき腕立て伏せ",
+      "body_part_ids": [
+        "a673f34d-69e1-598c-85a6-9ece3ef8194d"
+      ],
+      "equipment_ids": [
+        "ef8d062e-38fd-5937-835b-a98fd216a4bc"
+      ]
+    },
+    {
+      "exercise_id": "7472e848-be96-4d55-bffe-faaaa4863de9",
+      "display_name": "インクラインベンチプレス",
+      "body_part_ids": [
+        "a673f34d-69e1-598c-85a6-9ece3ef8194d"
+      ],
+      "equipment_ids": [
+        "cec6385b-38d6-5871-94bb-03040d5db440",
+        "45a6b709-6ab9-4c98-a924-2e3f71a057ed",
+        "45500b3e-bfcb-4fc9-9972-988ce8a16667"
+      ]
+    },
+    {
+      "exercise_id": "4b14ca28-b742-4fca-8d6e-acfffbba376d",
+      "display_name": "ダンベルベンチプレス",
+      "body_part_ids": [
+        "a673f34d-69e1-598c-85a6-9ece3ef8194d"
+      ],
+      "equipment_ids": [
+        "f2bc1504-6ee4-5bd4-b207-a5d48467bbf5",
+        "12beea06-f111-533e-a650-94a58c0e31ca"
+      ]
+    },
+    {
+      "exercise_id": "fb58837d-3d9c-4216-859c-44e91af747b2",
+      "display_name": "インクラインダンベルプレス",
+      "body_part_ids": [
+        "a673f34d-69e1-598c-85a6-9ece3ef8194d"
+      ],
+      "equipment_ids": [
+        "f2bc1504-6ee4-5bd4-b207-a5d48467bbf5",
+        "45a6b709-6ab9-4c98-a924-2e3f71a057ed"
+      ]
+    },
+    {
+      "exercise_id": "9cace03e-a280-4ed1-990e-66d1233e1504",
+      "display_name": "ダンベルフロアプレス",
+      "body_part_ids": [
+        "a673f34d-69e1-598c-85a6-9ece3ef8194d"
+      ],
+      "equipment_ids": [
+        "f2bc1504-6ee4-5bd4-b207-a5d48467bbf5"
+      ]
+    },
+    {
+      "exercise_id": "f0620689-138c-499e-aeee-d025e2729acb",
+      "display_name": "スミスマシンベンチプレス",
+      "body_part_ids": [
+        "a673f34d-69e1-598c-85a6-9ece3ef8194d"
+      ],
+      "equipment_ids": [
+        "73cfa4f2-8600-44b7-8722-3106e0194843",
+        "12beea06-f111-533e-a650-94a58c0e31ca"
+      ]
+    },
+    {
+      "exercise_id": "6ffcfc82-9ff5-4d3f-a5b8-c23c62719046",
+      "display_name": "ダンベルフライ",
+      "body_part_ids": [
+        "a673f34d-69e1-598c-85a6-9ece3ef8194d"
+      ],
+      "equipment_ids": [
+        "f2bc1504-6ee4-5bd4-b207-a5d48467bbf5",
+        "12beea06-f111-533e-a650-94a58c0e31ca"
+      ]
+    },
+    {
+      "exercise_id": "503039b1-82d2-4c36-8bcf-a93b5d5573ba",
+      "display_name": "ペックフライ",
+      "body_part_ids": [
+        "a673f34d-69e1-598c-85a6-9ece3ef8194d"
+      ],
+      "equipment_ids": [
+        "e72cb41e-8aae-5e0b-b7ed-dceb573820ba",
+        "034c0c69-7255-461f-a651-95013de75f11"
+      ]
+    },
+    {
+      "exercise_id": "cf790d86-826f-4ea1-9b8c-76443110fa57",
+      "display_name": "ケーブルフライ",
+      "body_part_ids": [
+        "a673f34d-69e1-598c-85a6-9ece3ef8194d"
+      ],
+      "equipment_ids": [
+        "55574c22-7548-4cd8-a8ff-8449cd70dbef",
+        "6e46c7c8-a14a-4fb9-b5a4-acb9407d0455"
+      ]
+    },
+    {
+      "exercise_id": "dfe22433-92cb-4060-ba21-0bbe68ca0b28",
+      "display_name": "バンドチェストプレス",
+      "body_part_ids": [
+        "a673f34d-69e1-598c-85a6-9ece3ef8194d"
+      ],
+      "equipment_ids": [
+        "3b540e43-22c7-46f7-8033-6bb08e8aaa93",
+        "057cbf5e-d11c-473f-ac9c-85e07316f6a4"
+      ]
+    },
+    {
+      "exercise_id": "aff5f51f-deb7-4729-887d-1c8d07911ce3",
+      "display_name": "ディップス",
+      "body_part_ids": [
+        "a673f34d-69e1-598c-85a6-9ece3ef8194d"
+      ],
+      "equipment_ids": [
+        "ef8d062e-38fd-5937-835b-a98fd216a4bc",
+        "dc756992-37e6-4783-94b5-fa12a3a2c0f3"
+      ]
+    },
+    {
+      "exercise_id": "073a1bdd-0236-4468-a8a3-df243f7fc008",
+      "display_name": "スミスマシンインクラインベンチプレス",
+      "body_part_ids": [
+        "a673f34d-69e1-598c-85a6-9ece3ef8194d"
+      ],
+      "equipment_ids": [
+        "73cfa4f2-8600-44b7-8722-3106e0194843",
+        "45a6b709-6ab9-4c98-a924-2e3f71a057ed"
+      ]
+    },
+    {
+      "exercise_id": "6fd0004d-66c5-4807-bab8-45680cf094b3",
+      "display_name": "ケーブルチェストプレス",
+      "body_part_ids": [
+        "a673f34d-69e1-598c-85a6-9ece3ef8194d"
+      ],
+      "equipment_ids": [
+        "55574c22-7548-4cd8-a8ff-8449cd70dbef",
+        "6e46c7c8-a14a-4fb9-b5a4-acb9407d0455"
+      ]
+    },
+    {
+      "exercise_id": "ab10758f-3f3b-40f0-9ecf-d0ffb86a0108",
+      "display_name": "インクラインチェストプレス（プレート式）",
+      "body_part_ids": [
+        "a673f34d-69e1-598c-85a6-9ece3ef8194d"
+      ],
+      "equipment_ids": [
+        "e72cb41e-8aae-5e0b-b7ed-dceb573820ba",
+        "5aabbd5f-4897-40eb-8395-3f89140e7f3c"
+      ]
+    },
+    {
+      "exercise_id": "79549f71-21e8-4a40-ba86-0f7838df186d",
+      "display_name": "シーテッドロー",
+      "body_part_ids": [
+        "2ebf23eb-c325-5ffc-9419-4923d91b546d"
+      ],
+      "equipment_ids": [
+        "e72cb41e-8aae-5e0b-b7ed-dceb573820ba",
+        "d7c2a0c6-1cb4-44ef-a9d8-3c0bb7e3ab63",
+        "edda61ae-6923-400a-b337-1e81113af6f8"
+      ]
+    },
+    {
+      "exercise_id": "29493ea9-24b8-41c5-b8f7-3e791ee4bee7",
+      "display_name": "懸垂（プルアップ）",
+      "body_part_ids": [
+        "2ebf23eb-c325-5ffc-9419-4923d91b546d"
+      ],
+      "equipment_ids": [
+        "ef8d062e-38fd-5937-835b-a98fd216a4bc",
+        "099cacf7-9383-4cde-a756-a7aedf341d45",
+        "62a42727-12dd-4534-89ab-53ad7bddfb40"
+      ]
+    },
+    {
+      "exercise_id": "f3b528c8-2e6d-4bb0-b299-d82246efe874",
+      "display_name": "逆手懸垂（チンアップ）",
+      "body_part_ids": [
+        "2ebf23eb-c325-5ffc-9419-4923d91b546d"
+      ],
+      "equipment_ids": [
+        "ef8d062e-38fd-5937-835b-a98fd216a4bc",
+        "099cacf7-9383-4cde-a756-a7aedf341d45"
+      ]
+    },
+    {
+      "exercise_id": "3e80992c-c177-40a8-b480-322e37dc0785",
+      "display_name": "斜め懸垂（インバーテッドロー）",
+      "body_part_ids": [
+        "2ebf23eb-c325-5ffc-9419-4923d91b546d"
+      ],
+      "equipment_ids": [
+        "ef8d062e-38fd-5937-835b-a98fd216a4bc",
+        "d1cc346b-cdbd-4e60-a0e0-6436912baf6b"
+      ]
+    },
+    {
+      "exercise_id": "fbeca2fb-3444-42a4-a061-0e2c304a89ca",
+      "display_name": "バーベルベントオーバーロー",
+      "body_part_ids": [
+        "2ebf23eb-c325-5ffc-9419-4923d91b546d"
+      ],
+      "equipment_ids": [
+        "cec6385b-38d6-5871-94bb-03040d5db440"
+      ]
+    },
+    {
+      "exercise_id": "3cd152be-c00b-441e-952b-5cc5e19ef64d",
+      "display_name": "チェストサポートロー",
+      "body_part_ids": [
+        "2ebf23eb-c325-5ffc-9419-4923d91b546d"
+      ],
+      "equipment_ids": [
+        "f2bc1504-6ee4-5bd4-b207-a5d48467bbf5",
+        "45a6b709-6ab9-4c98-a924-2e3f71a057ed"
+      ]
+    },
+    {
+      "exercise_id": "b4fe13e3-9e82-4789-b229-488c2f36404f",
+      "display_name": "Tバーロー",
+      "body_part_ids": [
+        "2ebf23eb-c325-5ffc-9419-4923d91b546d"
+      ],
+      "equipment_ids": [
+        "e72cb41e-8aae-5e0b-b7ed-dceb573820ba",
+        "fecca052-5360-44c1-b0db-068a00dfd987"
+      ]
+    },
+    {
+      "exercise_id": "790e4458-69e1-4f39-9e42-838922fe6f00",
+      "display_name": "ケーブルロー",
+      "body_part_ids": [
+        "2ebf23eb-c325-5ffc-9419-4923d91b546d"
+      ],
+      "equipment_ids": [
+        "55574c22-7548-4cd8-a8ff-8449cd70dbef",
+        "d7c2a0c6-1cb4-44ef-a9d8-3c0bb7e3ab63",
+        "edda61ae-6923-400a-b337-1e81113af6f8"
+      ]
+    },
+    {
+      "exercise_id": "29c02522-cbec-4a90-80c4-4c5a0386eeb4",
+      "display_name": "ストレートアームプルダウン",
+      "body_part_ids": [
+        "2ebf23eb-c325-5ffc-9419-4923d91b546d"
+      ],
+      "equipment_ids": [
+        "55574c22-7548-4cd8-a8ff-8449cd70dbef",
+        "2b42007a-5ac9-46e7-9636-cac6a01102c5"
+      ]
+    },
+    {
+      "exercise_id": "77d5707b-737a-4117-9e1b-3ebed3c7ff17",
+      "display_name": "ダンベルプルオーバー",
+      "body_part_ids": [
+        "2ebf23eb-c325-5ffc-9419-4923d91b546d"
+      ],
+      "equipment_ids": [
+        "f2bc1504-6ee4-5bd4-b207-a5d48467bbf5",
+        "12beea06-f111-533e-a650-94a58c0e31ca"
+      ]
+    },
+    {
+      "exercise_id": "03b04b69-488c-4308-8d7d-facbd3c524e1",
+      "display_name": "バンドロー",
+      "body_part_ids": [
+        "2ebf23eb-c325-5ffc-9419-4923d91b546d"
+      ],
+      "equipment_ids": [
+        "3b540e43-22c7-46f7-8033-6bb08e8aaa93",
+        "057cbf5e-d11c-473f-ac9c-85e07316f6a4"
+      ]
+    },
+    {
+      "exercise_id": "57c46ebe-9fdc-4313-aa9f-3aa1ee6a4d56",
+      "display_name": "バンドラットプルダウン",
+      "body_part_ids": [
+        "2ebf23eb-c325-5ffc-9419-4923d91b546d"
+      ],
+      "equipment_ids": [
+        "3b540e43-22c7-46f7-8033-6bb08e8aaa93",
+        "057cbf5e-d11c-473f-ac9c-85e07316f6a4"
+      ]
+    },
+    {
+      "exercise_id": "4b980944-7d71-4cee-a1b7-58fb4fcc6056",
+      "display_name": "バックエクステンション",
+      "body_part_ids": [
+        "2ebf23eb-c325-5ffc-9419-4923d91b546d"
+      ],
+      "equipment_ids": [
+        "ef8d062e-38fd-5937-835b-a98fd216a4bc",
+        "86d84da3-fea6-48fd-bd68-360b7880065e"
+      ]
+    },
+    {
+      "exercise_id": "f7ee4b35-750b-476b-ae0f-a24f02b8f49b",
+      "display_name": "ダンベルシュラッグ",
+      "body_part_ids": [
+        "2ebf23eb-c325-5ffc-9419-4923d91b546d"
+      ],
+      "equipment_ids": [
+        "f2bc1504-6ee4-5bd4-b207-a5d48467bbf5"
+      ]
+    },
+    {
+      "exercise_id": "a4e13882-c1ff-461c-89f3-99708a1a1c43",
+      "display_name": "ハイロー（プレート式）",
+      "body_part_ids": [
+        "2ebf23eb-c325-5ffc-9419-4923d91b546d"
+      ],
+      "equipment_ids": [
+        "e72cb41e-8aae-5e0b-b7ed-dceb573820ba",
+        "dfc3505d-055e-4b54-9eeb-f2f9c8e63996"
+      ]
+    },
+    {
+      "exercise_id": "7a3d563f-7f0c-44e0-beaa-e8e01e8aaa77",
+      "display_name": "マシンショルダープレス",
+      "body_part_ids": [
+        "257e671e-abde-5172-8145-1a7e77648648"
+      ],
+      "equipment_ids": [
+        "e72cb41e-8aae-5e0b-b7ed-dceb573820ba",
+        "eb304874-d971-497e-8bcf-ca6960441809"
+      ]
+    },
+    {
+      "exercise_id": "d029bb67-c690-464c-80c9-1b149e427654",
+      "display_name": "バーベルオーバーヘッドプレス",
+      "body_part_ids": [
+        "257e671e-abde-5172-8145-1a7e77648648"
+      ],
+      "equipment_ids": [
+        "cec6385b-38d6-5871-94bb-03040d5db440"
+      ]
+    },
+    {
+      "exercise_id": "33f387f3-8842-48e3-a294-9d98d1d1fc35",
+      "display_name": "アーノルドプレス",
+      "body_part_ids": [
+        "257e671e-abde-5172-8145-1a7e77648648"
+      ],
+      "equipment_ids": [
+        "f2bc1504-6ee4-5bd4-b207-a5d48467bbf5"
+      ]
+    },
+    {
+      "exercise_id": "36dc9869-553a-490e-b8fc-5ff6dc5c9664",
+      "display_name": "スミスマシンショルダープレス",
+      "body_part_ids": [
+        "257e671e-abde-5172-8145-1a7e77648648"
+      ],
+      "equipment_ids": [
+        "73cfa4f2-8600-44b7-8722-3106e0194843",
+        "45a6b709-6ab9-4c98-a924-2e3f71a057ed"
+      ]
+    },
+    {
+      "exercise_id": "aeea2f13-8d61-437c-b353-106e106f9f8f",
+      "display_name": "サイドレイズ",
+      "body_part_ids": [
+        "257e671e-abde-5172-8145-1a7e77648648"
+      ],
+      "equipment_ids": [
+        "f2bc1504-6ee4-5bd4-b207-a5d48467bbf5"
+      ]
+    },
+    {
+      "exercise_id": "9a1f301f-5b99-4075-b11d-5a281c30fc4d",
+      "display_name": "ケーブルサイドレイズ",
+      "body_part_ids": [
+        "257e671e-abde-5172-8145-1a7e77648648"
+      ],
+      "equipment_ids": [
+        "55574c22-7548-4cd8-a8ff-8449cd70dbef",
+        "6e46c7c8-a14a-4fb9-b5a4-acb9407d0455"
+      ]
+    },
+    {
+      "exercise_id": "d750af69-458d-4a09-b760-172b3d1d807e",
+      "display_name": "ラテラルレイズマシン",
+      "body_part_ids": [
+        "257e671e-abde-5172-8145-1a7e77648648"
+      ],
+      "equipment_ids": [
+        "e72cb41e-8aae-5e0b-b7ed-dceb573820ba",
+        "aed5e0d5-fcf0-45ea-a212-d6996bad961d"
+      ]
+    },
+    {
+      "exercise_id": "2683d767-c071-4f8d-8d20-abfeeb8a09ec",
+      "display_name": "バンドサイドレイズ",
+      "body_part_ids": [
+        "257e671e-abde-5172-8145-1a7e77648648"
+      ],
+      "equipment_ids": [
+        "3b540e43-22c7-46f7-8033-6bb08e8aaa93"
+      ]
+    },
+    {
+      "exercise_id": "c09b8baf-d0b6-4ca5-a442-8fefb7ce9f2d",
+      "display_name": "ダンベルフロントレイズ",
+      "body_part_ids": [
+        "257e671e-abde-5172-8145-1a7e77648648"
+      ],
+      "equipment_ids": [
+        "f2bc1504-6ee4-5bd4-b207-a5d48467bbf5"
+      ]
+    },
+    {
+      "exercise_id": "14aeecbc-6a2c-434b-9a33-ef9b9de84089",
+      "display_name": "リバースペックデック",
+      "body_part_ids": [
+        "257e671e-abde-5172-8145-1a7e77648648"
+      ],
+      "equipment_ids": [
+        "e72cb41e-8aae-5e0b-b7ed-dceb573820ba",
+        "034c0c69-7255-461f-a651-95013de75f11"
+      ]
+    },
+    {
+      "exercise_id": "d1730d1d-8181-496b-b081-7794a2afa719",
+      "display_name": "フェイスプル",
+      "body_part_ids": [
+        "257e671e-abde-5172-8145-1a7e77648648"
+      ],
+      "equipment_ids": [
+        "55574c22-7548-4cd8-a8ff-8449cd70dbef",
+        "e7d0e007-99b1-42d2-b65d-9e32a8a1911e"
+      ]
+    },
+    {
+      "exercise_id": "48c3952d-3e57-485e-b87f-fae49a673139",
+      "display_name": "バンドプルアパート",
+      "body_part_ids": [
+        "257e671e-abde-5172-8145-1a7e77648648"
+      ],
+      "equipment_ids": [
+        "3b540e43-22c7-46f7-8033-6bb08e8aaa93"
+      ]
+    },
+    {
+      "exercise_id": "cdac8248-8253-47e1-a374-b19b00b58317",
+      "display_name": "ケーブルリバースフライ",
+      "body_part_ids": [
+        "257e671e-abde-5172-8145-1a7e77648648"
+      ],
+      "equipment_ids": [
+        "55574c22-7548-4cd8-a8ff-8449cd70dbef",
+        "6e46c7c8-a14a-4fb9-b5a4-acb9407d0455"
+      ]
+    },
+    {
+      "exercise_id": "155eab44-614a-4506-b70c-c6d81a2f825a",
+      "display_name": "マシンアームカール",
+      "body_part_ids": [
+        "58e4e00d-89b9-5ee7-991b-73ac726f97f8"
+      ],
+      "equipment_ids": [
+        "e72cb41e-8aae-5e0b-b7ed-dceb573820ba",
+        "e20b8c7c-413c-4e66-abd6-23193eb8e5b9"
+      ]
+    },
+    {
+      "exercise_id": "e72ff392-d911-4532-b209-d084cdf1dac2",
+      "display_name": "インクラインダンベルカール",
+      "body_part_ids": [
+        "58e4e00d-89b9-5ee7-991b-73ac726f97f8"
+      ],
+      "equipment_ids": [
+        "f2bc1504-6ee4-5bd4-b207-a5d48467bbf5",
+        "45a6b709-6ab9-4c98-a924-2e3f71a057ed"
+      ]
+    },
+    {
+      "exercise_id": "47d83847-c2c5-45cf-bc76-c9f085e81e29",
+      "display_name": "コンセントレーションカール",
+      "body_part_ids": [
+        "58e4e00d-89b9-5ee7-991b-73ac726f97f8"
+      ],
+      "equipment_ids": [
+        "f2bc1504-6ee4-5bd4-b207-a5d48467bbf5",
+        "12beea06-f111-533e-a650-94a58c0e31ca"
+      ]
+    },
+    {
+      "exercise_id": "674e3d89-b724-46ee-b0cd-dda0122f635f",
+      "display_name": "バーベルカール",
+      "body_part_ids": [
+        "58e4e00d-89b9-5ee7-991b-73ac726f97f8"
+      ],
+      "equipment_ids": [
+        "cec6385b-38d6-5871-94bb-03040d5db440"
+      ]
+    },
+    {
+      "exercise_id": "2387cade-3d1c-46db-881a-2fc8e3b98363",
+      "display_name": "EZバーカール",
+      "body_part_ids": [
+        "58e4e00d-89b9-5ee7-991b-73ac726f97f8"
+      ],
+      "equipment_ids": [
+        "8618a2ad-284f-4dd2-9486-0842e7f861e0"
+      ]
+    },
+    {
+      "exercise_id": "9ab76cb8-a665-4466-b069-3bbecf59bb60",
+      "display_name": "プリーチャーカール",
+      "body_part_ids": [
+        "58e4e00d-89b9-5ee7-991b-73ac726f97f8"
+      ],
+      "equipment_ids": [
+        "cec6385b-38d6-5871-94bb-03040d5db440",
+        "420c7d80-6b0d-461e-a8a3-903130b2c2af"
+      ]
+    },
+    {
+      "exercise_id": "82312278-76ec-46c9-84d6-0a120cab3d7f",
+      "display_name": "ケーブルカール",
+      "body_part_ids": [
+        "58e4e00d-89b9-5ee7-991b-73ac726f97f8"
+      ],
+      "equipment_ids": [
+        "55574c22-7548-4cd8-a8ff-8449cd70dbef",
+        "2b42007a-5ac9-46e7-9636-cac6a01102c5"
+      ]
+    },
+    {
+      "exercise_id": "f05f83a7-050e-4e5b-879b-f8a1457499f9",
+      "display_name": "バンドカール",
+      "body_part_ids": [
+        "58e4e00d-89b9-5ee7-991b-73ac726f97f8"
+      ],
+      "equipment_ids": [
+        "3b540e43-22c7-46f7-8033-6bb08e8aaa93"
+      ]
+    },
+    {
+      "exercise_id": "3c9e15d4-1bb1-4716-9df4-b4e03580f8fe",
+      "display_name": "トライセプスプッシュダウン",
+      "body_part_ids": [
+        "58e4e00d-89b9-5ee7-991b-73ac726f97f8"
+      ],
+      "equipment_ids": [
+        "55574c22-7548-4cd8-a8ff-8449cd70dbef",
+        "2b42007a-5ac9-46e7-9636-cac6a01102c5"
+      ]
+    },
+    {
+      "exercise_id": "d117e40c-6162-43fa-ac85-d78472554680",
+      "display_name": "ローププッシュダウン",
+      "body_part_ids": [
+        "58e4e00d-89b9-5ee7-991b-73ac726f97f8"
+      ],
+      "equipment_ids": [
+        "55574c22-7548-4cd8-a8ff-8449cd70dbef",
+        "e7d0e007-99b1-42d2-b65d-9e32a8a1911e"
+      ]
+    },
+    {
+      "exercise_id": "1fee6646-1a46-4bc9-b472-686c15455482",
+      "display_name": "ダンベルフレンチプレス",
+      "body_part_ids": [
+        "58e4e00d-89b9-5ee7-991b-73ac726f97f8"
+      ],
+      "equipment_ids": [
+        "f2bc1504-6ee4-5bd4-b207-a5d48467bbf5"
+      ]
+    },
+    {
+      "exercise_id": "8e9bfa49-6256-4459-b5aa-f24e041122a9",
+      "display_name": "ケーブルオーバーヘッドエクステンション",
+      "body_part_ids": [
+        "58e4e00d-89b9-5ee7-991b-73ac726f97f8"
+      ],
+      "equipment_ids": [
+        "55574c22-7548-4cd8-a8ff-8449cd70dbef",
+        "e7d0e007-99b1-42d2-b65d-9e32a8a1911e"
+      ]
+    },
+    {
+      "exercise_id": "a562bdf2-1cef-4caa-8473-b9c1ef4fce39",
+      "display_name": "ライイングトライセプスエクステンション",
+      "body_part_ids": [
+        "58e4e00d-89b9-5ee7-991b-73ac726f97f8"
+      ],
+      "equipment_ids": [
+        "8618a2ad-284f-4dd2-9486-0842e7f861e0",
+        "12beea06-f111-533e-a650-94a58c0e31ca"
+      ]
+    },
+    {
+      "exercise_id": "6e0547bc-8ced-480c-bbe0-20c84fcf4b48",
+      "display_name": "ナロープッシュアップ",
+      "body_part_ids": [
+        "58e4e00d-89b9-5ee7-991b-73ac726f97f8"
+      ],
+      "equipment_ids": [
+        "ef8d062e-38fd-5937-835b-a98fd216a4bc"
+      ]
+    },
+    {
+      "exercise_id": "aedffd24-e75f-4dd7-99e6-b3750d708b76",
+      "display_name": "リストカール",
+      "body_part_ids": [
+        "58e4e00d-89b9-5ee7-991b-73ac726f97f8"
+      ],
+      "equipment_ids": [
+        "f2bc1504-6ee4-5bd4-b207-a5d48467bbf5",
+        "12beea06-f111-533e-a650-94a58c0e31ca"
+      ]
+    },
+    {
+      "exercise_id": "f74ea281-de8c-485f-ac8c-193f491de0a3",
+      "display_name": "リバースリストカール",
+      "body_part_ids": [
+        "58e4e00d-89b9-5ee7-991b-73ac726f97f8"
+      ],
+      "equipment_ids": [
+        "f2bc1504-6ee4-5bd4-b207-a5d48467bbf5",
+        "12beea06-f111-533e-a650-94a58c0e31ca"
+      ]
+    },
+    {
+      "exercise_id": "2a13eb76-594e-49c6-b32e-c552f9c55f19",
+      "display_name": "トライセプスエクステンション（マシン）",
+      "body_part_ids": [
+        "58e4e00d-89b9-5ee7-991b-73ac726f97f8"
+      ],
+      "equipment_ids": [
+        "e72cb41e-8aae-5e0b-b7ed-dceb573820ba",
+        "5c1ac069-ab03-4ae3-873a-9775d1d14e0d"
+      ]
+    },
+    {
+      "exercise_id": "c52d6788-c49c-4eb8-8627-0884453fe3a0",
+      "display_name": "レッグプレス",
+      "body_part_ids": [
+        "fba150f8-d3fe-5dae-baed-6d2b42921112"
+      ],
+      "equipment_ids": [
+        "e72cb41e-8aae-5e0b-b7ed-dceb573820ba",
+        "343c287c-6e48-4182-8d1f-3c63ea3f9531"
+      ]
+    },
+    {
+      "exercise_id": "b911a8a4-7cae-4b04-a81d-c55b9e7fa3b6",
+      "display_name": "シーテッドレッグカール",
+      "body_part_ids": [
+        "fba150f8-d3fe-5dae-baed-6d2b42921112"
+      ],
+      "equipment_ids": [
+        "e72cb41e-8aae-5e0b-b7ed-dceb573820ba",
+        "913ab422-fcd5-4cd6-865d-cdc2ca2908d3"
+      ]
+    },
+    {
+      "exercise_id": "49176f06-ef93-459c-a4b4-23cfef9bd2fd",
+      "display_name": "ゴブレットスクワット",
+      "body_part_ids": [
+        "fba150f8-d3fe-5dae-baed-6d2b42921112",
+        "168d53ad-9499-48d6-a653-c8faea96074f"
+      ],
+      "equipment_ids": [
+        "f2bc1504-6ee4-5bd4-b207-a5d48467bbf5"
+      ]
+    },
+    {
+      "exercise_id": "5cb1e564-0a2f-4294-a1bc-0e9e51cc01a3",
+      "display_name": "バーベルスクワット",
+      "body_part_ids": [
+        "fba150f8-d3fe-5dae-baed-6d2b42921112",
+        "168d53ad-9499-48d6-a653-c8faea96074f"
+      ],
+      "equipment_ids": [
+        "cec6385b-38d6-5871-94bb-03040d5db440",
+        "45500b3e-bfcb-4fc9-9972-988ce8a16667"
+      ]
+    },
+    {
+      "exercise_id": "5ae213e6-5a9a-4054-bb11-a96bd82f3704",
+      "display_name": "フロントスクワット",
+      "body_part_ids": [
+        "fba150f8-d3fe-5dae-baed-6d2b42921112",
+        "168d53ad-9499-48d6-a653-c8faea96074f"
+      ],
+      "equipment_ids": [
+        "cec6385b-38d6-5871-94bb-03040d5db440",
+        "45500b3e-bfcb-4fc9-9972-988ce8a16667"
+      ]
+    },
+    {
+      "exercise_id": "06ed9347-82d5-4790-a5cf-2c7f9bf99410",
+      "display_name": "スミスマシンスクワット",
+      "body_part_ids": [
+        "fba150f8-d3fe-5dae-baed-6d2b42921112",
+        "168d53ad-9499-48d6-a653-c8faea96074f"
+      ],
+      "equipment_ids": [
+        "73cfa4f2-8600-44b7-8722-3106e0194843"
+      ]
+    },
+    {
+      "exercise_id": "4e9c0d15-7794-4130-8f52-86dd0adc9331",
+      "display_name": "ハックスクワット",
+      "body_part_ids": [
+        "fba150f8-d3fe-5dae-baed-6d2b42921112",
+        "168d53ad-9499-48d6-a653-c8faea96074f"
+      ],
+      "equipment_ids": [
+        "e72cb41e-8aae-5e0b-b7ed-dceb573820ba",
+        "22f7552f-6419-4201-bbb6-18d1d835a60e"
+      ]
+    },
+    {
+      "exercise_id": "25f630dc-1981-46cf-87ff-59e7e87cfdad",
+      "display_name": "ケトルベルスクワット",
+      "body_part_ids": [
+        "fba150f8-d3fe-5dae-baed-6d2b42921112",
+        "168d53ad-9499-48d6-a653-c8faea96074f"
+      ],
+      "equipment_ids": [
+        "410a73eb-1fcb-47ff-a057-6326a23f7b9e"
+      ]
+    },
+    {
+      "exercise_id": "46c62475-d4af-4a60-9bbf-8f3c905b7712",
+      "display_name": "リバースランジ",
+      "body_part_ids": [
+        "fba150f8-d3fe-5dae-baed-6d2b42921112",
+        "168d53ad-9499-48d6-a653-c8faea96074f"
+      ],
+      "equipment_ids": [
+        "ef8d062e-38fd-5937-835b-a98fd216a4bc"
+      ]
+    },
+    {
+      "exercise_id": "07cf6f52-ac82-461c-b208-519a0de42a45",
+      "display_name": "ブルガリアンスクワット",
+      "body_part_ids": [
+        "fba150f8-d3fe-5dae-baed-6d2b42921112",
+        "168d53ad-9499-48d6-a653-c8faea96074f"
+      ],
+      "equipment_ids": [
+        "ef8d062e-38fd-5937-835b-a98fd216a4bc",
+        "62a42727-12dd-4534-89ab-53ad7bddfb40"
+      ]
+    },
+    {
+      "exercise_id": "5650ee3c-50b2-422c-b431-c32ceb46b2b2",
+      "display_name": "ダンベルランジ",
+      "body_part_ids": [
+        "fba150f8-d3fe-5dae-baed-6d2b42921112",
+        "168d53ad-9499-48d6-a653-c8faea96074f"
+      ],
+      "equipment_ids": [
+        "f2bc1504-6ee4-5bd4-b207-a5d48467bbf5"
+      ]
+    },
+    {
+      "exercise_id": "ee90d1db-f6f9-44f8-9ab6-ba24d3154904",
+      "display_name": "ステップアップ",
+      "body_part_ids": [
+        "fba150f8-d3fe-5dae-baed-6d2b42921112",
+        "168d53ad-9499-48d6-a653-c8faea96074f"
+      ],
+      "equipment_ids": [
+        "ef8d062e-38fd-5937-835b-a98fd216a4bc",
+        "62a42727-12dd-4534-89ab-53ad7bddfb40"
+      ]
+    },
+    {
+      "exercise_id": "78fcb510-010d-42ed-b188-9c40b8ab1e48",
+      "display_name": "デッドリフト",
+      "body_part_ids": [
+        "fba150f8-d3fe-5dae-baed-6d2b42921112",
+        "168d53ad-9499-48d6-a653-c8faea96074f",
+        "2ebf23eb-c325-5ffc-9419-4923d91b546d"
+      ],
+      "equipment_ids": [
+        "cec6385b-38d6-5871-94bb-03040d5db440"
+      ]
+    },
+    {
+      "exercise_id": "5033528e-2b9b-4528-b7d1-b7fdd398f59f",
+      "display_name": "ルーマニアンデッドリフト",
+      "body_part_ids": [
+        "fba150f8-d3fe-5dae-baed-6d2b42921112",
+        "168d53ad-9499-48d6-a653-c8faea96074f"
+      ],
+      "equipment_ids": [
+        "cec6385b-38d6-5871-94bb-03040d5db440"
+      ]
+    },
+    {
+      "exercise_id": "350e592d-14d2-4719-acb3-a18a122f03fa",
+      "display_name": "ダンベルルーマニアンデッドリフト",
+      "body_part_ids": [
+        "fba150f8-d3fe-5dae-baed-6d2b42921112",
+        "168d53ad-9499-48d6-a653-c8faea96074f"
+      ],
+      "equipment_ids": [
+        "f2bc1504-6ee4-5bd4-b207-a5d48467bbf5"
+      ]
+    },
+    {
+      "exercise_id": "415662e9-7fda-45a9-9bc8-e123f2f65177",
+      "display_name": "レッグエクステンション",
+      "body_part_ids": [
+        "fba150f8-d3fe-5dae-baed-6d2b42921112"
+      ],
+      "equipment_ids": [
+        "e72cb41e-8aae-5e0b-b7ed-dceb573820ba",
+        "0254e392-aba7-46d8-b98f-01dadcf7b316"
+      ]
+    },
+    {
+      "exercise_id": "ef9062a1-e6bf-4bdf-a3b1-ba4ba22c24a0",
+      "display_name": "ライイングレッグカール",
+      "body_part_ids": [
+        "fba150f8-d3fe-5dae-baed-6d2b42921112"
+      ],
+      "equipment_ids": [
+        "e72cb41e-8aae-5e0b-b7ed-dceb573820ba",
+        "10f0de9b-03df-4b26-b131-cbfc0c43524b"
+      ]
+    },
+    {
+      "exercise_id": "0883a3f5-fd1b-4483-b746-9915580d7ebd",
+      "display_name": "シーテッドカーフレイズ",
+      "body_part_ids": [
+        "fba150f8-d3fe-5dae-baed-6d2b42921112"
+      ],
+      "equipment_ids": [
+        "e72cb41e-8aae-5e0b-b7ed-dceb573820ba",
+        "23931550-d091-4760-b753-1653ff5c99ae"
+      ]
+    },
+    {
+      "exercise_id": "a67990c0-dc51-44af-a689-61e7c4279219",
+      "display_name": "ヒップアダクション",
+      "body_part_ids": [
+        "fba150f8-d3fe-5dae-baed-6d2b42921112"
+      ],
+      "equipment_ids": [
+        "e72cb41e-8aae-5e0b-b7ed-dceb573820ba",
+        "b7800264-261e-42fc-bfdb-d917e3c45cd8"
+      ]
+    },
+    {
+      "exercise_id": "935c635d-b28e-43b4-9f5a-55e9644341ac",
+      "display_name": "バンドスクワット",
+      "body_part_ids": [
+        "fba150f8-d3fe-5dae-baed-6d2b42921112",
+        "168d53ad-9499-48d6-a653-c8faea96074f"
+      ],
+      "equipment_ids": [
+        "3b540e43-22c7-46f7-8033-6bb08e8aaa93"
+      ]
+    },
+    {
+      "exercise_id": "bf376cce-7b3d-425e-87ec-c7857d828991",
+      "display_name": "ヒップリフト",
+      "body_part_ids": [
+        "168d53ad-9499-48d6-a653-c8faea96074f"
+      ],
+      "equipment_ids": [
+        "ef8d062e-38fd-5937-835b-a98fd216a4bc"
+      ]
+    },
+    {
+      "exercise_id": "174091cb-f175-42c7-bd1c-9942f49d5742",
+      "display_name": "片脚ヒップリフト",
+      "body_part_ids": [
+        "168d53ad-9499-48d6-a653-c8faea96074f"
+      ],
+      "equipment_ids": [
+        "ef8d062e-38fd-5937-835b-a98fd216a4bc"
+      ]
+    },
+    {
+      "exercise_id": "38008650-9b26-464e-9c3d-e831279db1cd",
+      "display_name": "ヒップスラスト",
+      "body_part_ids": [
+        "168d53ad-9499-48d6-a653-c8faea96074f"
+      ],
+      "equipment_ids": [
+        "cec6385b-38d6-5871-94bb-03040d5db440",
+        "12beea06-f111-533e-a650-94a58c0e31ca",
+        "89bfcf01-80c5-44fc-ba8a-861e84240861"
+      ]
+    },
+    {
+      "exercise_id": "69dfe9fe-e5ee-43ff-99d7-d2360d4a3002",
+      "display_name": "ダンベルヒップスラスト",
+      "body_part_ids": [
+        "168d53ad-9499-48d6-a653-c8faea96074f"
+      ],
+      "equipment_ids": [
+        "f2bc1504-6ee4-5bd4-b207-a5d48467bbf5",
+        "12beea06-f111-533e-a650-94a58c0e31ca"
+      ]
+    },
+    {
+      "exercise_id": "2518a16c-ffd3-4763-99e2-b17e185b9f53",
+      "display_name": "ヒップスラストマシン",
+      "body_part_ids": [
+        "168d53ad-9499-48d6-a653-c8faea96074f"
+      ],
+      "equipment_ids": [
+        "e72cb41e-8aae-5e0b-b7ed-dceb573820ba",
+        "90bc4ef0-720f-4883-b35a-5ce95dfb6d92"
+      ]
+    },
+    {
+      "exercise_id": "0ba47694-3bb8-491f-bc58-b32857d3ec96",
+      "display_name": "ヒップアブダクション",
+      "body_part_ids": [
+        "168d53ad-9499-48d6-a653-c8faea96074f"
+      ],
+      "equipment_ids": [
+        "e72cb41e-8aae-5e0b-b7ed-dceb573820ba",
+        "cc003e5d-cb8b-4a85-932a-1be742162d5d"
+      ]
+    },
+    {
+      "exercise_id": "4fca6867-52e1-48b3-86e9-2968c570db59",
+      "display_name": "ケーブルキックバック（お尻）",
+      "body_part_ids": [
+        "168d53ad-9499-48d6-a653-c8faea96074f"
+      ],
+      "equipment_ids": [
+        "55574c22-7548-4cd8-a8ff-8449cd70dbef",
+        "e4bb49ea-d490-48c9-a79b-5d758db156d2"
+      ]
+    },
+    {
+      "exercise_id": "6a957454-6554-4cbe-911d-bb6eb163791f",
+      "display_name": "ドンキーキック",
+      "body_part_ids": [
+        "168d53ad-9499-48d6-a653-c8faea96074f"
+      ],
+      "equipment_ids": [
+        "ef8d062e-38fd-5937-835b-a98fd216a4bc"
+      ]
+    },
+    {
+      "exercise_id": "7180dd8c-ce9f-4243-a604-382f982272b2",
+      "display_name": "バンドヒップアブダクション",
+      "body_part_ids": [
+        "168d53ad-9499-48d6-a653-c8faea96074f"
+      ],
+      "equipment_ids": [
+        "e3dab91e-0bd6-4d87-bdd2-2a46d2ba63b9",
+        "12beea06-f111-533e-a650-94a58c0e31ca"
+      ]
+    },
+    {
+      "exercise_id": "5735a878-d12e-44e1-ba1e-abf516c4db46",
+      "display_name": "クラムシェル",
+      "body_part_ids": [
+        "168d53ad-9499-48d6-a653-c8faea96074f"
+      ],
+      "equipment_ids": [
+        "ef8d062e-38fd-5937-835b-a98fd216a4bc"
+      ]
+    },
+    {
+      "exercise_id": "9ce6ae43-7a03-45d7-b48c-fd8fab837240",
+      "display_name": "リバースクランチ",
+      "body_part_ids": [
+        "a1b3745c-26e3-5703-9634-e194bfee4a90"
+      ],
+      "equipment_ids": [
+        "ef8d062e-38fd-5937-835b-a98fd216a4bc"
+      ]
+    },
+    {
+      "exercise_id": "88502aad-792d-4cbd-a0dd-9fdaaa99a200",
+      "display_name": "アブドミナルクランチ",
+      "body_part_ids": [
+        "a1b3745c-26e3-5703-9634-e194bfee4a90"
+      ],
+      "equipment_ids": [
+        "e72cb41e-8aae-5e0b-b7ed-dceb573820ba",
+        "24fc860e-d374-47dd-a1e5-999dc4d51005"
+      ]
+    },
+    {
+      "exercise_id": "9ca9874b-3201-46ad-8da8-689c3c974642",
+      "display_name": "ケーブルクランチ",
+      "body_part_ids": [
+        "a1b3745c-26e3-5703-9634-e194bfee4a90"
+      ],
+      "equipment_ids": [
+        "55574c22-7548-4cd8-a8ff-8449cd70dbef",
+        "e7d0e007-99b1-42d2-b65d-9e32a8a1911e"
+      ]
+    },
+    {
+      "exercise_id": "4676e3cf-e0c2-4f23-9485-1a6dd6bcc4de",
+      "display_name": "ロシアンツイスト",
+      "body_part_ids": [
+        "a1b3745c-26e3-5703-9634-e194bfee4a90"
+      ],
+      "equipment_ids": [
+        "ef8d062e-38fd-5937-835b-a98fd216a4bc"
+      ]
+    },
+    {
+      "exercise_id": "01c8dec8-ff96-40df-8c78-accee52780b1",
+      "display_name": "ハンギングニーレイズ",
+      "body_part_ids": [
+        "a1b3745c-26e3-5703-9634-e194bfee4a90"
+      ],
+      "equipment_ids": [
+        "ef8d062e-38fd-5937-835b-a98fd216a4bc",
+        "099cacf7-9383-4cde-a756-a7aedf341d45"
+      ]
+    },
+    {
+      "exercise_id": "14284883-d182-43de-b6a3-c70dc5e551f6",
+      "display_name": "キャプテンズチェアニーレイズ",
+      "body_part_ids": [
+        "a1b3745c-26e3-5703-9634-e194bfee4a90"
+      ],
+      "equipment_ids": [
+        "ef8d062e-38fd-5937-835b-a98fd216a4bc",
+        "d0707faf-a28f-4c35-bf62-d3419285d7cf"
+      ]
+    },
+    {
+      "exercise_id": "36219da1-745b-4a02-83cd-bc931ff7da63",
+      "display_name": "腹筋ローラー（膝つき）",
+      "body_part_ids": [
+        "a1b3745c-26e3-5703-9634-e194bfee4a90"
+      ],
+      "equipment_ids": [
+        "ef8d062e-38fd-5937-835b-a98fd216a4bc",
+        "7a829dc3-3d64-476e-af91-30ba4999f476"
+      ]
+    },
+    {
+      "exercise_id": "b9c52eec-d402-4685-aa6e-14761ea602e2",
+      "display_name": "パロフプレス",
+      "body_part_ids": [
+        "a1b3745c-26e3-5703-9634-e194bfee4a90"
+      ],
+      "equipment_ids": [
+        "55574c22-7548-4cd8-a8ff-8449cd70dbef",
+        "6e46c7c8-a14a-4fb9-b5a4-acb9407d0455"
+      ]
+    },
+    {
+      "exercise_id": "f7320eea-bb57-4013-87d7-390550de2fda",
+      "display_name": "デッドバグ",
+      "body_part_ids": [
+        "a1b3745c-26e3-5703-9634-e194bfee4a90"
+      ],
+      "equipment_ids": [
+        "ef8d062e-38fd-5937-835b-a98fd216a4bc"
+      ]
+    },
+    {
+      "exercise_id": "e211b05c-3c15-4e3a-a341-705c6415f663",
+      "display_name": "バードドッグ",
+      "body_part_ids": [
+        "a1b3745c-26e3-5703-9634-e194bfee4a90"
+      ],
+      "equipment_ids": [
+        "ef8d062e-38fd-5937-835b-a98fd216a4bc"
       ]
     }
   ],
@@ -193,6 +1276,10 @@
     {
       "body_part_id": "257e671e-abde-5172-8145-1a7e77648648",
       "name": "肩"
+    },
+    {
+      "body_part_id": "168d53ad-9499-48d6-a653-c8faea96074f",
+      "name": "お尻"
     }
   ],
   "equipment": [
@@ -215,6 +1302,190 @@
     {
       "equipment_id": "e72cb41e-8aae-5e0b-b7ed-dceb573820ba",
       "name": "マシン"
+    },
+    {
+      "equipment_id": "45a6b709-6ab9-4c98-a924-2e3f71a057ed",
+      "name": "角度調整ベンチ"
+    },
+    {
+      "equipment_id": "45500b3e-bfcb-4fc9-9972-988ce8a16667",
+      "name": "ラック・セーフティー"
+    },
+    {
+      "equipment_id": "73cfa4f2-8600-44b7-8722-3106e0194843",
+      "name": "スミスマシン"
+    },
+    {
+      "equipment_id": "034c0c69-7255-461f-a651-95013de75f11",
+      "name": "ペックフライ／リアデルト機"
+    },
+    {
+      "equipment_id": "55574c22-7548-4cd8-a8ff-8449cd70dbef",
+      "name": "ケーブルマシン"
+    },
+    {
+      "equipment_id": "6e46c7c8-a14a-4fb9-b5a4-acb9407d0455",
+      "name": "片手用ケーブルハンドル"
+    },
+    {
+      "equipment_id": "3b540e43-22c7-46f7-8033-6bb08e8aaa93",
+      "name": "長いトレーニングバンド"
+    },
+    {
+      "equipment_id": "057cbf5e-d11c-473f-ac9c-85e07316f6a4",
+      "name": "バンド用の専用固定点"
+    },
+    {
+      "equipment_id": "dc756992-37e6-4783-94b5-fa12a3a2c0f3",
+      "name": "ディップス用平行棒"
+    },
+    {
+      "equipment_id": "5aabbd5f-4897-40eb-8395-3f89140e7f3c",
+      "name": "インクラインプレス機（プレート式）"
+    },
+    {
+      "equipment_id": "d7c2a0c6-1cb4-44ef-a9d8-3c0bb7e3ab63",
+      "name": "シーテッドロー機（ケーブル式）"
+    },
+    {
+      "equipment_id": "edda61ae-6923-400a-b337-1e81113af6f8",
+      "name": "ケーブル用Vハンドル"
+    },
+    {
+      "equipment_id": "099cacf7-9383-4cde-a756-a7aedf341d45",
+      "name": "懸垂バー"
+    },
+    {
+      "equipment_id": "62a42727-12dd-4534-89ab-53ad7bddfb40",
+      "name": "安定した台・ステップ"
+    },
+    {
+      "equipment_id": "d1cc346b-cdbd-4e60-a0e0-6436912baf6b",
+      "name": "斜め懸垂用の固定バー"
+    },
+    {
+      "equipment_id": "fecca052-5360-44c1-b0db-068a00dfd987",
+      "name": "胸当て付きTバーロー機"
+    },
+    {
+      "equipment_id": "2b42007a-5ac9-46e7-9636-cac6a01102c5",
+      "name": "ケーブル用ショートバー"
+    },
+    {
+      "equipment_id": "86d84da3-fea6-48fd-bd68-360b7880065e",
+      "name": "バックエクステンション台"
+    },
+    {
+      "equipment_id": "dfc3505d-055e-4b54-9eeb-f2f9c8e63996",
+      "name": "ハイローマシン（プレート式）"
+    },
+    {
+      "equipment_id": "eb304874-d971-497e-8bcf-ca6960441809",
+      "name": "ショルダープレスマシン"
+    },
+    {
+      "equipment_id": "aed5e0d5-fcf0-45ea-a212-d6996bad961d",
+      "name": "ラテラルレイズマシン"
+    },
+    {
+      "equipment_id": "e7d0e007-99b1-42d2-b65d-9e32a8a1911e",
+      "name": "ケーブル用ロープ"
+    },
+    {
+      "equipment_id": "e20b8c7c-413c-4e66-abd6-23193eb8e5b9",
+      "name": "アームカールマシン"
+    },
+    {
+      "equipment_id": "8618a2ad-284f-4dd2-9486-0842e7f861e0",
+      "name": "EZバー"
+    },
+    {
+      "equipment_id": "420c7d80-6b0d-461e-a8a3-903130b2c2af",
+      "name": "プリーチャー台"
+    },
+    {
+      "equipment_id": "5c1ac069-ab03-4ae3-873a-9775d1d14e0d",
+      "name": "トライセプスエクステンション機"
+    },
+    {
+      "equipment_id": "343c287c-6e48-4182-8d1f-3c63ea3f9531",
+      "name": "レッグプレスマシン"
+    },
+    {
+      "equipment_id": "913ab422-fcd5-4cd6-865d-cdc2ca2908d3",
+      "name": "シーテッドレッグカール機"
+    },
+    {
+      "equipment_id": "22f7552f-6419-4201-bbb6-18d1d835a60e",
+      "name": "ハックスクワットマシン"
+    },
+    {
+      "equipment_id": "410a73eb-1fcb-47ff-a057-6326a23f7b9e",
+      "name": "ケトルベル"
+    },
+    {
+      "equipment_id": "0254e392-aba7-46d8-b98f-01dadcf7b316",
+      "name": "レッグエクステンション機"
+    },
+    {
+      "equipment_id": "10f0de9b-03df-4b26-b131-cbfc0c43524b",
+      "name": "ライイングレッグカール機"
+    },
+    {
+      "equipment_id": "23931550-d091-4760-b753-1653ff5c99ae",
+      "name": "シーテッドカーフ機"
+    },
+    {
+      "equipment_id": "b7800264-261e-42fc-bfdb-d917e3c45cd8",
+      "name": "ヒップアダクション機"
+    },
+    {
+      "equipment_id": "89bfcf01-80c5-44fc-ba8a-861e84240861",
+      "name": "バー用保護パッド"
+    },
+    {
+      "equipment_id": "90bc4ef0-720f-4883-b35a-5ce95dfb6d92",
+      "name": "ヒップスラストマシン"
+    },
+    {
+      "equipment_id": "cc003e5d-cb8b-4a85-932a-1be742162d5d",
+      "name": "ヒップアブダクション機"
+    },
+    {
+      "equipment_id": "e4bb49ea-d490-48c9-a79b-5d758db156d2",
+      "name": "ケーブル用アンクルカフ"
+    },
+    {
+      "equipment_id": "e3dab91e-0bd6-4d87-bdd2-2a46d2ba63b9",
+      "name": "ループバンド"
+    },
+    {
+      "equipment_id": "1ecfea67-89c9-4df4-935a-c8e0af3b8e73",
+      "name": "ラットプルダウン機"
+    },
+    {
+      "equipment_id": "735914d7-06b0-41e1-adff-093527db652d",
+      "name": "ラットプル用ロングバー"
+    },
+    {
+      "equipment_id": "941ed025-13dc-4cd3-804d-a2b08867a7f3",
+      "name": "固定された手すり・支え"
+    },
+    {
+      "equipment_id": "8a22f767-3513-42b0-b5fc-92d916c8b1b6",
+      "name": "チェストプレスマシン"
+    },
+    {
+      "equipment_id": "24fc860e-d374-47dd-a1e5-999dc4d51005",
+      "name": "アブドミナルマシン"
+    },
+    {
+      "equipment_id": "d0707faf-a28f-4c35-bf62-d3419285d7cf",
+      "name": "キャプテンズチェア"
+    },
+    {
+      "equipment_id": "7a829dc3-3d64-476e-af91-30ba4999f476",
+      "name": "腹筋ローラー"
     }
   ],
   "recommendations": {
