@@ -4,6 +4,7 @@ import { filterServerExercises } from "../features/exercises/serverCatalog.ts";
 import { useExerciseCatalog } from "../features/exercises/useExerciseCatalog.ts";
 import { useWorkoutSelection } from "../features/workouts/useWorkoutSelection.ts";
 import { paths } from "../routes.ts";
+import { ExerciseVisual, ExerciseEquipment } from "../features/exercises/ExerciseVisual.tsx";
 
 export default function Exercises() {
   const { catalog, error: catalogError } = useExerciseCatalog();
@@ -36,11 +37,8 @@ export default function Exercises() {
       <ul className="mt-2 overflow-hidden rounded-2xl border border-line bg-white">
         {exercises.map((exercise) => <li key={exercise.exercise_id} className="border-b border-line last:border-b-0">
           <button type="button" onClick={() => void select(exercise.exercise_id)} disabled={busy} aria-label={exercise.display_name + "を選んで記録へ"} className="flex min-h-16 w-full items-center gap-3 bg-white px-3 py-2 text-left transition-colors hover:bg-brand-soft focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-focus">
-            <span className="flex size-12 shrink-0 flex-col items-center justify-center rounded-lg bg-brand-soft text-muted" aria-hidden="true">
-              <svg viewBox="0 0 32 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="h-6 w-8"><path d="M10 12h12M3 9v6m26-6v6" /><rect x="5" y="5" width="5" height="14" rx="1.5" /><rect x="22" y="5" width="5" height="14" rx="1.5" /></svg>
-              <span className="text-[8px] leading-3">画像準備中</span>
-            </span>
-            <span className="min-w-0 flex-1"><span className="block text-[11px] leading-4 text-brand">{exercise.body_parts.map((part) => part.name).join("・")}</span><span className="block break-words text-sm font-medium leading-6 text-ink">{exercise.display_name}</span></span>
+            <ExerciseVisual exerciseId={exercise.exercise_id} />
+            <span className="min-w-0 flex-1"><span className="block text-[11px] leading-4 text-brand">{exercise.body_parts.map((part) => part.name).join("・")}</span><span className="block break-words text-sm font-medium leading-6 text-ink">{exercise.display_name}</span><ExerciseEquipment exercise={exercise} /></span>
             <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" className="size-4 shrink-0 text-muted" aria-hidden="true"><path d="m7 4 6 6-6 6" /></svg>
           </button>
         </li>)}

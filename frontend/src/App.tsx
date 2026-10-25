@@ -1,4 +1,7 @@
 import { useState } from "react";
+import Notifications from "./pages/Notifications.tsx";
+import NotificationProvider from "./features/notifications/NotificationProvider.tsx";
+import { releaseDevicePush } from "./features/notifications/push.ts";
 import { Route, Routes, useLocation } from "react-router";
 import ProtectedRoutes from "./components/ProtectedRoutes.tsx";
 import type { ComposeLocationState } from "./features/posts/navigation.ts";
@@ -23,6 +26,7 @@ export default function App() {
   const location = useLocation();
   const state = location.state as ComposeLocationState | null;
   const [previewEnabled, setPreviewEnabled] = useState(false);
+  const [exitError, setExitError] = useState("");
   // TODO: Add the authenticated session once the backend login API is available.
   // Preview access is development-only and is never treated as an authenticated user.
   const allowPreview = import.meta.env.DEV && previewEnabled;
@@ -30,13 +34,17 @@ export default function App() {
     && state?.backgroundLocation?.pathname !== paths.compose
     ? state?.backgroundLocation
     : undefined;
-  function exitPreview() {
+  async function exitPreview() {
+    try { await releaseDevicePush(); }
+    catch { setExitError("通知の解除に失敗しました。ブラウザーのサイト設定で通知を解除してから、再度終了してください。"); return; }
+    setExitError("");
     clearWorkoutSession();
     setPreviewEnabled(false);
   }
 
   return (
-    <>
+    <NotificationProvider enabled={allowPreview}>
+      {exitError && <p className="notifications-error" role="alert">{exitError}</p>}
       <Routes location={backgroundLocation ?? location}>
         <Route path={paths.login} element={<Login onPreview={() => setPreviewEnabled(true)} />} />
         <Route element={<ProtectedRoutes allowAccess={allowPreview} />}>
@@ -46,7 +54,7 @@ export default function App() {
           </Route>
           <Route element={<AppLayout onExitPreview={exitPreview} />}>
             <Route path="/posts/:postId" element={<HomeDestination title="投稿詳細・返信" />} />
-            <Route path="/notifications" element={<HomeDestination title="通知" />} />
+            <Route path={paths.notifications} element={<Notifications />} />
             <Route path="/settings" element={<HomeDestination title="設定" />} />
             <Route path={paths.profile} element={<Profile />} />
             <Route path={paths.profileEdit} element={<ProfileEditPlaceholder />} />
@@ -66,6 +74,6 @@ export default function App() {
           </Route>
         </Routes>
       )}
-    </>
+    </NotificationProvider>
   );
 }

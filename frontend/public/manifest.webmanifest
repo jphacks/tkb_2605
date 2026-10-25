@@ -1,0 +1,15 @@
+{
+  "id": "/",
+  "name": "WORKOUT — 筋トレ通知",
+  "short_name": "WORKOUT",
+  "lang": "ja",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#faf7f4",
+  "theme_color": "#8b2817",
+  "icons": [
+    { "src": "/icons/push-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icons/push-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
