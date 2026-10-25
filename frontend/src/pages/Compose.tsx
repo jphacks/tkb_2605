@@ -2,26 +2,57 @@ import { useAuth } from "../features/auth/useAuth.ts";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { useLocation, useNavigate, useSearchParams } from "react-router";
 import { createPost, type CreatePost } from "../api/posts.ts";
+import { fetchWorkout, type WorkoutDetail } from "../api/workouts.ts";
 import type { ComposeLocationState } from "../features/posts/navigation.ts";
+import { workoutShareContent } from "../features/workouts/sharing.ts";
 import { paths } from "../routes.ts";
 import "./Compose.css";
 
+type ShareState =
+  | { status: "loading" }
+  | { status: "error"; message: string }
+  | { status: "ready"; workout: WorkoutDetail | null };
+
 export default function Compose() {
+  const [searchParams] = useSearchParams();
+  const workoutId = searchParams.get("workoutId");
+  return <ComposeDialog key={workoutId ?? "post"} workoutId={workoutId} />;
+}
+
+function ComposeDialog({ workoutId }: { workoutId: string | null }) {
   const { user } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
   const state = location.state as ComposeLocationState | null;
-  const workoutId = searchParams.get("workoutId");
-  const workout = state?.workout?.workout_id === workoutId ? state.workout : null;
-  const [content, setContent] = useState(state?.initialContent ?? "");
+  const initialContent = state?.initialContent ?? "";
+  const initialWorkout = state?.workout?.workout_id === workoutId && state.workout.is_completed
+    && state.workout.exercises.some((exercise) => exercise.sets.length > 0) ? state.workout : null;
+  const [share, setShare] = useState<ShareState>(() => workoutId && !initialWorkout
+    ? { status: "loading" } : { status: "ready", workout: initialWorkout });
+  const [attempt, setAttempt] = useState(0);
+  const workout = share.status === "ready" ? share.workout : null;
+  const [content, setContent] = useState(() => initialWorkout ? workoutShareContent(initialWorkout, initialContent) : initialContent);
   const contentLength = [...content.trim()].length;
-  const canSubmit = (!!content.trim() || !!workoutId) && contentLength <= 500;
+  const canSubmit = !!content.trim() && contentLength <= 500 && share.status === "ready";
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const dialogRef = useRef<HTMLDialogElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const requestRef = useRef<AbortController | null>(null);
+
+  useEffect(() => {
+    if (!workoutId || initialWorkout) return;
+    const controller = new AbortController();
+    fetchWorkout(workoutId, { signal: controller.signal }).then((saved) => {
+      if (controller.signal.aborted) return;
+      const message = workoutShareContent(saved, initialContent);
+      setContent(message);
+      setShare({ status: "ready", workout: saved });
+    }).catch((cause: unknown) => {
+      if (!controller.signal.aborted) setShare({ status: "error", message: cause instanceof Error ? cause.message : "共有する記録を取得できませんでした。" });
+    });
+    return () => controller.abort();
+  }, [workoutId, initialWorkout, initialContent, attempt]);
 
   useEffect(() => {
     const dialog = dialogRef.current;
@@ -113,17 +144,24 @@ export default function Compose() {
               ref={textareaRef}
               id="compose-message"
               name="content"
-              maxLength={1000}
               placeholder="いまどうしてる？"
               value={content}
               onChange={(event) => setContent(event.target.value)}
-              readOnly={submitting}
+              readOnly={submitting || share.status !== "ready"}
               aria-invalid={error || contentLength > 500 ? true : undefined}
               aria-describedby={error ? "compose-limit compose-error" : "compose-limit"}
             />
-            <p id="compose-limit" className="compose-status">{contentLength} / 500文字{workoutId ? "（本文は省略できます）" : ""}</p>
+            <p id="compose-limit" className="compose-limit" role="status">
+              {contentLength} / 500文字{contentLength > 500 ? "（500文字以内に編集してください）" : ""}
+            </p>
+            {share.status === "loading" && <p className="compose-workout-notice" role="status">共有する記録を読み込んでいます…</p>}
+            {share.status === "error" && <div className="compose-error" role="alert">
+              <p>{share.message}</p>
+              <button type="button" onClick={() => { setShare({ status: "loading" }); setAttempt((value) => value + 1); }}>再試行</button>
+            </div>}
             {workoutId && <aside className="compose-attachment" aria-label="共有するメニュー">
               <p>トレーニング記録を添付</p>
+              {workout && <p className="compose-workout-notice">トレーニング内容を本文に含めています。本文は編集できます。</p>}
               {workout && <ul className="compose-workout-menus">
                 {workout.exercises.filter((exercise) => exercise.sets.length > 0).map((exercise) => (
                   <li key={exercise.workout_exercise_id}>
