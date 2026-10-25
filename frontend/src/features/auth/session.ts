@@ -2,8 +2,7 @@ import { releaseDevicePush } from "../notifications/push.ts";
 import { fetchCurrentUser, loginUser, logoutUser, refreshCsrf, type AuthUser, type Credentials } from "../../api/auth.ts";
 import { onAuthenticationFailure, resetApiSession, setAuthenticatedUserId } from "../../api/http.ts";
 import { clearWorkoutSession } from "../workouts/session.ts";
-import { resetPreviewProfile } from "../profile/preview.ts";
-import { clearPreviewMasmates } from "../profile/masmates.ts";
+import { resetCurrentProfile, refreshCurrentProfile } from "../profile/currentProfile.ts";
 
 export type AuthState = { status: "loading" | "authenticated" | "anonymous" | "error"; user: AuthUser | null; error: string; revision: number };
 let state: AuthState = { status: "loading", user: null, error: "", revision: 0 };
@@ -23,15 +22,16 @@ export const getAuthState = () => state;
 export function subscribeAuth(listener: () => void) { listeners.add(listener); return () => { listeners.delete(listener); }; }
 function update(next: AuthState) { state = next; listeners.forEach((listener) => listener()); }
 function clearIdentity() {
-  resetApiSession(); clearWorkoutSession(); clearPreviewMasmates(); resetPreviewProfile();
+  resetApiSession(); clearWorkoutSession(); resetCurrentProfile();
 }
 async function accept(user: AuthUser | null) {
   const changed = state.user?.user_id !== user?.user_id;
   if (changed) clearIdentity();
   setAuthenticatedUserId(user?.user_id ?? null);
-  if (user) resetPreviewProfile({ id: user.user_id, name: user.user_name });
+  if (user) resetCurrentProfile({ id: user.user_id, name: user.user_name });
   if (user) await refreshCsrf();
   update({ status: user ? "authenticated" : "anonymous", user, error: "", revision: state.revision + (changed ? 1 : 0) });
+  if (user) void refreshCurrentProfile();
 }
 export function refreshSession(): Promise<void> {
   if (changing) return Promise.resolve();
@@ -84,7 +84,7 @@ export async function signOut() {
     await accept(null);
     broadcastChange();
   } catch {
-    if (previous.user) resetPreviewProfile({ id: previous.user.user_id, name: previous.user.user_name });
+    if (previous.user) resetCurrentProfile({ id: previous.user.user_id, name: previous.user.user_name });
     setAuthenticatedUserId(previous.user?.user_id ?? null);
     update({ ...previous, revision: state.revision, error: "ログアウトできませんでした。接続を確認してもう一度お試しください。" });
   } finally { changing = false; }

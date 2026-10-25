@@ -6,7 +6,7 @@ import { createSearchParams, Link, useNavigate } from "react-router";
 import { Avatar } from "../components/Avatar.tsx";
 import { Icon } from "../components/Icon.tsx";
 import { ApiTimeline } from "../components/ApiTimeline.tsx";
-import { usePreviewProfile } from "../features/profile/usePreviewProfile.ts";
+import { useCurrentProfile } from "../features/profile/useCurrentProfile.ts";
 import { startWorkout } from "../features/workouts/startWorkout.ts";
 import { workoutSessionVersion } from "../features/workouts/session.ts";
 import { paths } from "../routes.ts";
@@ -20,7 +20,7 @@ export default function Home() {
   const [startError, setStartError] = useState("");
   const locked = useRef(false);
   const mounted = useRef(true);
-  const currentUser = usePreviewProfile();
+  const currentUser = useCurrentProfile();
   useEffect(() => {
     mounted.current = true;
     return () => { mounted.current = false; };
@@ -51,6 +51,7 @@ export default function Home() {
     <header className="home-header">
       <h1><span>HOME</span></h1>
       <div className="home-header-actions">
+        <Link className="icon-button" to={paths.masmates} aria-label="マスメイトを探す"><Icon name="user" size={18} /></Link>
         <Link className="icon-button home-settings" to="/settings" aria-label="設定を開く"><Icon name="settings" size={18} /></Link>
         <NotificationLink className="icon-button home-notification" />
       </div>

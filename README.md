@@ -103,7 +103,7 @@ URLは `frontend/src/routes.ts`、画面の割り当ては `frontend/src/App.tsx
 
 記録はAPI応答のIDを使用し、`workoutExerciseId` クエリで応答内の種目を特定する。選択した種目IDと応答が一致することを検証する。「別の種目」では同じ `workoutId` を引き継ぎ、`from` クエリに応じて種目選択・おすすめへ戻る。「終了」はセットPOST後にPATCHし、結果をGETする。完了後はGETでも終了状態を確認し、再編集を許可しない。詳細は [記録画面](frontend/RECORD_SCREEN.md) を参照。
 
-記録IDを認証済みユーザーと混同せず、記録フローではlocalStorage/sessionStorageを使わない。旧 `workout.active.v1:`・`workout.operation.v1:`・`workout.draft.v1:` の値は読み込み・変更・送信しない。入力はメモリだけに保持し、再読込ではAPIの保存済みデータを再取得する。投稿・共有の永続化、プロフィール更新、マスメイト保存、チャット詳細はバックエンド対応が必要である。
+記録IDを認証済みユーザーと混同せず、記録フローではlocalStorage/sessionStorageを使わない。旧 `workout.active.v1:`・`workout.operation.v1:`・`workout.draft.v1:` の値は読み込み・変更・送信しない。入力はメモリだけに保持し、再読込ではAPIの保存済みデータを再取得する。プロフィール編集・ユーザー検索・マスメイト保存は専用APIへ接続する（[プロフィールとマスメイト](docs/profile.md)）。投稿・共有の永続化、チャット詳細はバックエンド対応が必要である。
 
 ## 開発の流れ（GitHub Flow）
 

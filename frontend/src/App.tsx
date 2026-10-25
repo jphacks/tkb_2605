@@ -17,7 +17,8 @@ import Recommendations from "./pages/Recommendations.tsx";
 import WorkoutRecord from "./pages/WorkoutRecord.tsx";
 import WorkoutResults from "./pages/WorkoutResults.tsx";
 import Profile from "./pages/Profile.tsx";
-import ProfileEditPlaceholder from "./pages/ProfileEditPlaceholder.tsx";
+import ProfileEdit from "./pages/ProfileEdit.tsx";
+import Masmates from "./pages/Masmates.tsx";
 import { refreshSession } from "./features/auth/session.ts";
 import { useAuth } from "./features/auth/useAuth.ts";
 import Settings from "./pages/Settings.tsx";
@@ -56,7 +57,8 @@ export default function App() {
             <Route path="/notifications" element={<Notifications />} />
             <Route path="/settings" element={<Settings />} />
             <Route path={paths.profile} element={<Profile />} />
-            <Route path={paths.profileEdit} element={<ProfileEditPlaceholder />} />
+            <Route path={paths.masmates} element={<Masmates />} />
+            <Route path={paths.profileEdit} element={<ProfileEdit />} />
             <Route path={paths.chats} element={<Chats />} />
             <Route path={paths.recommendations} element={<Recommendations />} />
             <Route path={paths.exercises} element={<Exercises />} />
