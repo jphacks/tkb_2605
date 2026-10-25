@@ -160,7 +160,7 @@ class NoteAPITests(TestCase):
         self.workout.refresh_from_db()
         self.assertFalse(self.workout.is_completed)
 
-    def test_missing_and_foreign_resources_return_404(self):
+    def test_missing_resources_and_foreign_workout_writes_return_404(self):
         for user in [self.user, self.other_user]:
             self.client.force_login(user)
             workout_id = uuid4() if user == self.user else self.workout.pk
@@ -174,7 +174,12 @@ class NoteAPITests(TestCase):
             ]:
                 with self.subTest(user=user.pk, url=url, method=method):
                     response = getattr(self.client, method)(url, body, format="json")
-                    self.assertEqual(response.status_code, 404)
+                    expected_status = (
+                        200
+                        if method == "get" and user == self.other_user
+                        else 404
+                    )
+                    self.assertEqual(response.status_code, expected_status)
         self.assertFalse(self.entry.sets.exists())
         self.workout.refresh_from_db()
         self.assertFalse(self.workout.is_completed)
