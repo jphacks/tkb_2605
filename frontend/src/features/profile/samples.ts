@@ -16,7 +16,7 @@ export type ProfilePostSample = {
 };
 
 export const profileSamples: ProfileSample[] = [
-  { id: "me", name: "ユウ", handle: "you_workout", bio: "昨日の自分より、少しだけ強く。自分のペースで続けています。", color: "#d9e9d4", following: false },
+  { id: "me", name: "ユウ", handle: "you_workout", bio: "昨日の自分より、少しだけ強く。自分のペースで続けています。", color: "var(--brand-subtle)", following: false },
   { id: "haru", name: "ハル", handle: "haru_lifts", bio: "筋トレとコーヒーが日課。小さな成長を記録しています。", color: "#f3dfcc", following: true },
   { id: "mio", name: "ミオ", handle: "mio_moves", bio: "ランニングとストレッチ。気持ちよく体を動かそう。", color: "#e7dff0", following: true },
   { id: "ren", name: "レン", handle: "ren_training", bio: "トレーニング初心者。続けることから始めています！", color: "#dce9ee", following: false },
