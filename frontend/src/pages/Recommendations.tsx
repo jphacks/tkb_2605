@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { WORKOUT_MOCK_NOTICE } from "../api/workouts.ts";
 import { resolveRecommendation, type RecommendationKey } from "../features/exercises/serverCatalog.ts";
 import { useExerciseCatalog } from "../features/exercises/useExerciseCatalog.ts";
 import { useWorkoutSelection } from "../features/workouts/useWorkoutSelection.ts";
 import "./Recommendations.css";
+import { ExerciseVisual, ExerciseEquipment } from "../features/exercises/ExerciseVisual.tsx";
 
 type Recommendation = { key: RecommendationKey; reason: string; comment: string };
 type Menu = { part: string; exercises: Recommendation[] };
@@ -52,8 +52,7 @@ export default function Recommendations() {
         <option value="" disabled>おすすめメニューを選択</option>
         {menus.map((item, index) => <option key={item.part} value={index + 1}>おすすめメニュー{index + 1} {item.part}メニュー</option>)}
       </select>
-      <p className="recommendations-note">説明はサンプルです。画像は準備中です。</p>
-      <p className="recommendations-note">{WORKOUT_MOCK_NOTICE}</p>
+      <p className="recommendations-note">説明はサンプルです。</p>
       {catalogError && <p className="recommendations-error" role="alert">{catalogError}</p>}
       {error && <p className="recommendations-error" role="alert">{error}</p>}
       {busy && <p className="recommendations-note" role="status">トレーニングを確認しています…</p>}
@@ -64,14 +63,12 @@ export default function Recommendations() {
           return (
             <li key={recommendation.key}>
               <button className="recommendations-exercise" type="button" onClick={() => void select(exercise.exercise_id)} disabled={busy} aria-label={exercise.display_name + "を選んで記録へ"}>
-                <span className="recommendations-image" aria-hidden="true">
-                  <svg viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="4" y="5" width="24" height="22" rx="3" /><circle cx="12" cy="12" r="2" /><path d="m5 23 7-7 5 5 4-4 7 7" /></svg>
-                  <span>画像準備中</span>
-                </span>
+                <ExerciseVisual exerciseId={exercise.exercise_id} />
                 <span className="recommendations-detail">
                   <span className="recommendations-exercise-heading"><strong>{exercise.display_name}</strong><span className="recommendations-part">{exercise.body_parts.map((part) => part.name).join("・")}</span></span>
                   <span className="recommendations-reason">{recommendation.reason}</span>
                   <span className="recommendations-comment">{recommendation.comment}</span>
+                  <ExerciseEquipment exercise={exercise} />
                 </span>
               </button>
             </li>

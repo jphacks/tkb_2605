@@ -1,0 +1,1558 @@
+{
+  "source": {
+    "repository": "U10-h/Muscle_Training_Private_ver",
+    "ref": "archive/repnote-sites-v1-v21-20261009",
+    "commit": "039d8a3bd7b65ce86cb1729ee98f17d82034d16c"
+  },
+  "exercises": {
+    "47e21a2d-a97c-5dda-8d91-64f46f513a7b": {
+      "sourceId": "bench-press",
+      "src": "/images/exercises/bench-press-v5.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        175,
+        505,
+        710,
+        490
+      ],
+      "sha256": "22972a4646d410bfaef0938ca56f286009148790aafbab2c764464658ec6028d"
+    },
+    "95fd687d-8605-5885-8fa1-4081796581f0": {
+      "sourceId": "pushup",
+      "src": "/images/exercises/pushup.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        50,
+        640,
+        950,
+        310
+      ],
+      "sha256": "17aed43f84d859b248473a6af4e345fa061aee3244b26b2ea8d34cb587e52724"
+    },
+    "2c103480-78cb-5cf1-91ff-043e08f9c502": {
+      "sourceId": "squat",
+      "src": "/images/exercises/squat.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        375,
+        545,
+        375,
+        405
+      ],
+      "sha256": "45c09b6f5d0b0b8da58c84160b74a90799e6cc9ec5c4c7c4a18ed48ea3de11ed"
+    },
+    "cc4331eb-01ac-5a82-990d-593532557a5a": {
+      "sourceId": "dumbbell-row",
+      "src": "/images/exercises/dumbbell-row.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        185,
+        510,
+        620,
+        495
+      ],
+      "sha256": "6236e880be1ed58d67a2417c8b5e48ded7bb8186e3fa195526869c8c9cb0d252"
+    },
+    "e70d9a0d-0ee0-5610-9f5d-2f1ebef011cc": {
+      "sourceId": "dumbbell-shoulder-press",
+      "src": "/images/exercises/dumbbell-shoulder-press.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        275,
+        5,
+        410,
+        480
+      ],
+      "sha256": "a04b5e487074ea992758017d713e8d167dddd5825729af31bd8b8d18fd973f7a"
+    },
+    "1fe76cfe-6308-5bec-91d4-99ef94365625": {
+      "sourceId": "lat",
+      "src": "/images/exercises/lat.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        305,
+        510,
+        420,
+        490
+      ],
+      "sha256": "029357055abf3a9f033ce42ec611cad5fa0d10fafdb16c7346124cd9c2efae80"
+    },
+    "334d9cac-ea4c-5f9e-8ee6-cccc3f00be7e": {
+      "sourceId": "lunge",
+      "src": "/images/exercises/lunge.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        325,
+        515,
+        380,
+        450
+      ],
+      "sha256": "161892f8e0909dc7b8990bbe993ab2b8c38473df13a971635dfdf65690df4bbf"
+    },
+    "f33edb3c-8711-5aa1-9a4e-19926fee635b": {
+      "sourceId": "crunch",
+      "src": "/images/exercises/crunch.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        95,
+        575,
+        925,
+        400
+      ],
+      "sha256": "0f7253189ca27c01870620c3e1e915e5d003f69bdfad8423a68212eee118ce23"
+    },
+    "554d3a78-9596-5ef3-ac48-e870d46c655f": {
+      "sourceId": "dumbbell-curl",
+      "src": "/images/exercises/dumbbell-curl.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        400,
+        515,
+        235,
+        500
+      ],
+      "sha256": "5247537fa21c3914c5e0729d76d48958aa62d55dafd8827b2eaff3db7850ed61"
+    },
+    "f3128f9e-478f-5712-8b27-6771e4c473e4": {
+      "sourceId": "hammer-curl",
+      "src": "/images/exercises/hammer-curl.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        415,
+        505,
+        210,
+        495
+      ],
+      "sha256": "9c5882210e59d72d61dff63e2fa8221d5624716065439e3738261867c6818e27"
+    },
+    "c005fa6d-eda8-52e4-ace2-ba6c91686e2e": {
+      "sourceId": "triceps-kickback",
+      "src": "/images/exercises/triceps-kickback.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        220,
+        510,
+        740,
+        490
+      ],
+      "sha256": "8384f76e2c1b9ef1c2f543afcf61082f1547761f1e605b2306911ec3c42121c7"
+    },
+    "b4122f61-af21-5a2b-b6dd-ba5e1c7a2b7c": {
+      "sourceId": "standing-calf",
+      "src": "/images/exercises/standing-calf.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        415,
+        495,
+        205,
+        500
+      ],
+      "sha256": "0c7ac047b5b5c49af715b2132a1541cf2bd41fafa18f245fe0da05e40a89a9e9"
+    },
+    "67f4fd4b-fc63-564b-9f18-abe3936efab6": {
+      "sourceId": "leg-raise",
+      "src": "/images/exercises/leg-raise.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        15,
+        130,
+        990,
+        310
+      ],
+      "sha256": "f8540957109660a69acd06e8acb3789e03a94df8700ee80bf9276bb20b3e46be"
+    },
+    "fc38f5ff-6013-5c89-81a9-eae62802fae8": {
+      "sourceId": "bicycle-crunch",
+      "src": "/images/exercises/bicycle-crunch.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        0,
+        600,
+        1024,
+        360
+      ],
+      "sha256": "b81e4e68d42791257952b580d07da43eb3cd2d824a0e4203e97dd20ce6ca9271"
+    },
+    "4ec77c43-2e62-5ae1-8f50-d80ccdadd795": {
+      "sourceId": "chest",
+      "src": "/images/exercises/chest-v3.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        260,
+        505,
+        555,
+        490
+      ],
+      "sha256": "ec5855e4176735f3e7d817cbd68686339b296f2419847fcfea960f796dfdb6bf"
+    },
+    "5ba258bd-d61a-528c-89f9-0804d84f279e": {
+      "sourceId": "rear-raise",
+      "src": "/images/exercises/rear-raise.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        195,
+        505,
+        645,
+        495
+      ],
+      "sha256": "4218dcc3ea1ff73a03ba7169a27fd7332991aa695794f74e140150b6fde25587"
+    },
+    "65975877-e2c6-4885-837c-722e48e0495d": {
+      "sourceId": "knee-pushup",
+      "src": "/images/exercises/knee-pushup-v2.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        0,
+        593,
+        1024,
+        354
+      ],
+      "sha256": "423d715c1f0adf8485cec43928e29a04cc609288b21e4b4e6c5d2ae78fe0976c"
+    },
+    "7472e848-be96-4d55-bffe-faaaa4863de9": {
+      "sourceId": "incline-bench",
+      "src": "/images/exercises/incline-bench.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        210,
+        492,
+        654,
+        461
+      ],
+      "sha256": "2de781b20cd126bbb6a4df4ae33956a6a1623c5dee4a89faf31750c8547b8cb7"
+    },
+    "4b14ca28-b742-4fca-8d6e-acfffbba376d": {
+      "sourceId": "dumbbell-bench",
+      "src": "/images/exercises/dumbbell-bench.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        126,
+        578,
+        770,
+        407
+      ],
+      "sha256": "f42c7f2e36799bbbefe222e9f9821760819a88b9e0192ef0369cf672607c25dc"
+    },
+    "fb58837d-3d9c-4216-859c-44e91af747b2": {
+      "sourceId": "incline-dumbbell-bench",
+      "src": "/images/exercises/incline-dumbbell-bench.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        246,
+        485,
+        576,
+        473
+      ],
+      "sha256": "1a5a31f29e2211f510c293cd1f021574fd8813bb9734390a9dcfdf3f6410fbdf"
+    },
+    "9cace03e-a280-4ed1-990e-66d1233e1504": {
+      "sourceId": "dumbbell-floor-press",
+      "src": "/images/exercises/dumbbell-floor-press.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        112,
+        583,
+        858,
+        348
+      ],
+      "sha256": "b9cdca79efbfbcfacfd2304ca5bad0c4d096d6e632d2f10e642035f15b37f265"
+    },
+    "f0620689-138c-499e-aeee-d025e2729acb": {
+      "sourceId": "smith-bench",
+      "src": "/images/exercises/smith-bench-v9.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        174,
+        505,
+        688,
+        495
+      ],
+      "sha256": "0787fd9061c74d0be8917f586564d18db054697bb5c042828c069e0cdc5d9d26"
+    },
+    "6ffcfc82-9ff5-4d3f-a5b8-c23c62719046": {
+      "sourceId": "dumbbell-fly",
+      "src": "/images/exercises/dumbbell-fly.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        246,
+        513,
+        586,
+        509
+      ],
+      "sha256": "f528850a91fe427adbeff191ead0cb8590806749cca9811672261d1a21033749"
+    },
+    "503039b1-82d2-4c36-8bcf-a93b5d5573ba": {
+      "sourceId": "pec-deck",
+      "src": "/images/exercises/pec-deck.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        306,
+        508,
+        438,
+        500
+      ],
+      "sha256": "d56103fa425b01246da5ee579cc292d8134d599d364ee5243c2d3856ecab1c11"
+    },
+    "cf790d86-826f-4ea1-9b8c-76443110fa57": {
+      "sourceId": "cable-fly",
+      "src": "/images/exercises/cable-fly.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        24,
+        509,
+        976,
+        506
+      ],
+      "sha256": "006425d564175f54b8af242825def02126b275db4f2ef0f36531dab9bff81b29"
+    },
+    "dfe22433-92cb-4060-ba21-0bbe68ca0b28": {
+      "sourceId": "band-chest-press",
+      "src": "/images/exercises/band-chest-press.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        202,
+        507,
+        548,
+        508
+      ],
+      "sha256": "d71421f7880bb0c3f190a5bfa346815b883f28b3c51c6de8637e86e4178f215b"
+    },
+    "aff5f51f-deb7-4729-887d-1c8d07911ce3": {
+      "sourceId": "dips",
+      "src": "/images/exercises/dips.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        224,
+        514,
+        584,
+        476
+      ],
+      "sha256": "58983015d1abd102709534e67788c4e66ae9dd3d571a6c9785dc22618d53cd8d"
+    },
+    "073a1bdd-0236-4468-a8a3-df243f7fc008": {
+      "sourceId": "smith-incline-bench",
+      "src": "/images/exercises/smith-incline-bench.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        206,
+        507,
+        628,
+        482
+      ],
+      "sha256": "83277ff46543e21b6133acd419cbcafa7b52101a8f2ddecd60d40cfd41b58902"
+    },
+    "6fd0004d-66c5-4807-bab8-45680cf094b3": {
+      "sourceId": "cable-chest-press",
+      "src": "/images/exercises/cable-chest-press-v2.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        136,
+        507,
+        750,
+        496
+      ],
+      "sha256": "5e0e868c9d3ebab2044fec8e3b68f8ccba87cdd7ace8ef730e3cb11977632f26"
+    },
+    "ab10758f-3f3b-40f0-9ecf-d0ffb86a0108": {
+      "sourceId": "machine-incline-press",
+      "src": "/images/exercises/machine-incline-press.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        194,
+        506,
+        656,
+        506
+      ],
+      "sha256": "3ec3d34dbc4f71ae177f496ea149e9d1b767c95a121ea8379bd17c99c5aac7cb"
+    },
+    "79549f71-21e8-4a40-ba86-0f7838df186d": {
+      "sourceId": "row",
+      "src": "/images/exercises/row.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        98,
+        497,
+        904,
+        503
+      ],
+      "sha256": "3606204cb17bd80625cc8249043f6542fa82498cdf4c1a1569e3ed8d20006a7d"
+    },
+    "29493ea9-24b8-41c5-b8f7-3e791ee4bee7": {
+      "sourceId": "pullup",
+      "src": "/images/exercises/pullup.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        298,
+        503,
+        430,
+        499
+      ],
+      "sha256": "43d04b3af0e3acfcb6ca9e0f043da3cdc671abb5abde86ee8b43a8c6a7b47b19"
+    },
+    "f3b528c8-2e6d-4bb0-b299-d82246efe874": {
+      "sourceId": "chinup",
+      "src": "/images/exercises/chinup.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        300,
+        504,
+        414,
+        512
+      ],
+      "sha256": "9e75acfccf3247daef1352d3bbd9e2d709b90d1ba788bf7ccc05ef5c7b376808"
+    },
+    "3e80992c-c177-40a8-b480-322e37dc0785": {
+      "sourceId": "inverted-row",
+      "src": "/images/exercises/inverted-row-v2.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        60,
+        507,
+        880,
+        492
+      ],
+      "sha256": "f2a5832b7d757ede363efea6e161e4d7b89bb21e347caef17b8af79342e29039"
+    },
+    "fbeca2fb-3444-42a4-a061-0e2c304a89ca": {
+      "sourceId": "barbell-row",
+      "src": "/images/exercises/barbell-row.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        254,
+        499,
+        518,
+        504
+      ],
+      "sha256": "45e2a02ef3f21b4fe96c51293f388b6ca337e72f4062067445afb1d1aafb4888"
+    },
+    "3cd152be-c00b-441e-952b-5cc5e19ef64d": {
+      "sourceId": "chest-supported-row",
+      "src": "/images/exercises/chest-supported-row.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        166,
+        511,
+        674,
+        504
+      ],
+      "sha256": "ff626f31a8d8d6d9dd13264b4598ffd15371f0e1435654ae1a17ffbe9a6b926b"
+    },
+    "b4fe13e3-9e82-4789-b229-488c2f36404f": {
+      "sourceId": "tbar-row",
+      "src": "/images/exercises/tbar-row-v3.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        30,
+        507,
+        964,
+        504
+      ],
+      "sha256": "fc00f2bd89f1b4e6ffbeb9f2a247e5eb844d488fb26168fe9072a10b0a9fadfd"
+    },
+    "790e4458-69e1-4f39-9e42-838922fe6f00": {
+      "sourceId": "cable-row",
+      "src": "/images/exercises/cable-row-v2.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        114,
+        501,
+        866,
+        506
+      ],
+      "sha256": "9ff08bad49567e612f17b7ea88b246ca1fc85391e716e1dfcfc0656925383c6b"
+    },
+    "29c02522-cbec-4a90-80c4-4c5a0386eeb4": {
+      "sourceId": "straight-arm-pulldown",
+      "src": "/images/exercises/straight-arm-pulldown.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        280,
+        495,
+        614,
+        491
+      ],
+      "sha256": "4ae2b6d06e4218b3d72f5934bd579ef821c61c852d510b01143846dd27a9bbd6"
+    },
+    "77d5707b-737a-4117-9e1b-3ebed3c7ff17": {
+      "sourceId": "dumbbell-pullover",
+      "src": "/images/exercises/dumbbell-pullover-v3.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        50,
+        545,
+        910,
+        427
+      ],
+      "sha256": "3631a5fb50f5156eff40b6f5635f5c98bbfb664acadd4e50135b8097e1c9cab4"
+    },
+    "03b04b69-488c-4308-8d7d-facbd3c524e1": {
+      "sourceId": "band-row",
+      "src": "/images/exercises/band-row.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        258,
+        483,
+        766,
+        502
+      ],
+      "sha256": "b4f6d29bf44ce8a6d043b22e8fe662607a98b1c6d1472ce720d8e0ffede37bd9"
+    },
+    "57c46ebe-9fdc-4313-aa9f-3aa1ee6a4d56": {
+      "sourceId": "band-pulldown",
+      "src": "/images/exercises/band-pulldown.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        318,
+        508,
+        524,
+        503
+      ],
+      "sha256": "350c31f8a4d3b2fefd8b7848439efa1566e7aa69203bc3ca3889382781348d23"
+    },
+    "4b980944-7d71-4cee-a1b7-58fb4fcc6056": {
+      "sourceId": "back-extension",
+      "src": "/images/exercises/back-extension.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        186,
+        489,
+        694,
+        576
+      ],
+      "sha256": "d6d69a4303249ec0495499d992cb7c34618f82b8adf51d210a035e4391b1ac4b"
+    },
+    "f7ee4b35-750b-476b-ae0f-a24f02b8f49b": {
+      "sourceId": "dumbbell-shrug",
+      "src": "/images/exercises/dumbbell-shrug.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        388,
+        511,
+        242,
+        505
+      ],
+      "sha256": "d437a7886cd295123e64eb384036f27ca17d3882959ad46584276eaa8be7b475"
+    },
+    "a4e13882-c1ff-461c-89f3-99708a1a1c43": {
+      "sourceId": "machine-high-row",
+      "src": "/images/exercises/machine-high-row.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        288,
+        520,
+        522,
+        472
+      ],
+      "sha256": "e5d57e0db74057f298e0ed1a0ca33c9a0d31ace627880e8cb9ecd4b98caefb30"
+    },
+    "7a3d563f-7f0c-44e0-beaa-e8e01e8aaa77": {
+      "sourceId": "shoulder",
+      "src": "/images/exercises/shoulder.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        274,
+        483,
+        502,
+        534
+      ],
+      "sha256": "99b13ad6a063c4154ddff8e24a8d585fa1fcf72a4dc7ef2203b8f8109955a12c"
+    },
+    "d029bb67-c690-464c-80c9-1b149e427654": {
+      "sourceId": "barbell-overhead-press",
+      "src": "/images/exercises/barbell-overhead-press.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        250,
+        483,
+        518,
+        563
+      ],
+      "sha256": "42fbbf63c2e28db6fc53d8021da88506bb7c942392bf5685d91307df440d8407"
+    },
+    "33f387f3-8842-48e3-a294-9d98d1d1fc35": {
+      "sourceId": "arnold-press",
+      "src": "/images/exercises/arnold-press.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        322,
+        486,
+        400,
+        550
+      ],
+      "sha256": "1685991ed9c62f6f366ddad46d2544f91938ef12b989327c63382d39d6006f4b"
+    },
+    "36dc9869-553a-490e-b8fc-5ff6dc5c9664": {
+      "sourceId": "smith-shoulder-press",
+      "src": "/images/exercises/smith-shoulder-press-v3.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        208,
+        499,
+        630,
+        539
+      ],
+      "sha256": "d7f66c4175376e2882a6e57cf2ddced7e1393acc46e3d585091d0db6e9473471"
+    },
+    "aeea2f13-8d61-437c-b353-106e106f9f8f": {
+      "sourceId": "lateral-raise",
+      "src": "/images/exercises/lateral-raise.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        260,
+        511,
+        500,
+        495
+      ],
+      "sha256": "a264652463b88be99ed49790ec7834a2c02da8fa982435e9bee4a657cd2ca53f"
+    },
+    "9a1f301f-5b99-4075-b11d-5a281c30fc4d": {
+      "sourceId": "cable-lateral-raise",
+      "src": "/images/exercises/cable-lateral-raise-v2.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        154,
+        483,
+        610,
+        489
+      ],
+      "sha256": "c34f3b66f87b8da4e99958e7244c1fca0aa04517e9a087437b274812d48e3551"
+    },
+    "d750af69-458d-4a09-b760-172b3d1d807e": {
+      "sourceId": "machine-lateral-raise",
+      "src": "/images/exercises/machine-lateral-raise-v2.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        128,
+        500,
+        768,
+        495
+      ],
+      "sha256": "5a44a8980bcdfca245de8344fa08e302c765c66a018fc34aaac004c24501bc9a"
+    },
+    "2683d767-c071-4f8d-8d20-abfeeb8a09ec": {
+      "sourceId": "band-lateral-raise",
+      "src": "/images/exercises/band-lateral-raise.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        254,
+        499,
+        510,
+        519
+      ],
+      "sha256": "fd904d9b21f5ab6056e040747c956096d8fb7d911795b1f959510eb2af03d7ea"
+    },
+    "c09b8baf-d0b6-4ca5-a442-8fefb7ce9f2d": {
+      "sourceId": "front-raise",
+      "src": "/images/exercises/front-raise.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        408,
+        496,
+        296,
+        491
+      ],
+      "sha256": "26615dbc49fd7d600bff150cd4a452502bcc1afef4a0742fd5a21a99a1a193e4"
+    },
+    "14aeecbc-6a2c-434b-9a33-ef9b9de84089": {
+      "sourceId": "reverse-pec-deck",
+      "src": "/images/exercises/reverse-pec-deck.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        210,
+        501,
+        620,
+        503
+      ],
+      "sha256": "f17dec07e24dfb91842492c6910a6d05cfed460b924ad0cd56297befb4293d2c"
+    },
+    "d1730d1d-8181-496b-b081-7794a2afa719": {
+      "sourceId": "face-pull",
+      "src": "/images/exercises/face-pull-v4.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        248,
+        509,
+        776,
+        502
+      ],
+      "sha256": "162f4841ece35784f330ca292c574c4639c86882e85d977525f72a7e48aa2bfc"
+    },
+    "48c3952d-3e57-485e-b87f-fae49a673139": {
+      "sourceId": "band-pull-apart",
+      "src": "/images/exercises/band-pull-apart.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        230,
+        516,
+        534,
+        506
+      ],
+      "sha256": "db409888f9d4848306909724d60c8b4ea16ebca32970cd275b823609979de10e"
+    },
+    "cdac8248-8253-47e1-a374-b19b00b58317": {
+      "sourceId": "cable-reverse-fly",
+      "src": "/images/exercises/cable-reverse-fly-v3.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        0,
+        504,
+        1024,
+        507
+      ],
+      "sha256": "ee0ee9f21ad34f2490aad80d8b936d66a96465198d433572f7f651c6e661fde2"
+    },
+    "155eab44-614a-4506-b70c-c6d81a2f825a": {
+      "sourceId": "biceps",
+      "src": "/images/exercises/biceps.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        272,
+        499,
+        466,
+        483
+      ],
+      "sha256": "29e8adeedf7ed141475322b9a4db75468eb779101c6035357baadc1228c6c6cd"
+    },
+    "e72ff392-d911-4532-b209-d084cdf1dac2": {
+      "sourceId": "incline-curl",
+      "src": "/images/exercises/incline-curl.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        210,
+        512,
+        580,
+        505
+      ],
+      "sha256": "7504ebd57e70227ec3ed9713dc94da4a5860c793c287596d7ef9342d353a9550"
+    },
+    "47d83847-c2c5-45cf-bc76-c9f085e81e29": {
+      "sourceId": "concentration-curl",
+      "src": "/images/exercises/concentration-curl.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        212,
+        506,
+        594,
+        494
+      ],
+      "sha256": "592570735be04eacf2b14d2c39ad6dd6ba4d185c52ee982526aaf45f45ec108d"
+    },
+    "674e3d89-b724-46ee-b0cd-dda0122f635f": {
+      "sourceId": "barbell-curl",
+      "src": "/images/exercises/barbell-curl.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        306,
+        495,
+        410,
+        501
+      ],
+      "sha256": "2e8e247a671e7aac5c844443b7a0557a077e7f5be4b27b93e379a35b540f8ab4"
+    },
+    "2387cade-3d1c-46db-881a-2fc8e3b98363": {
+      "sourceId": "ez-curl",
+      "src": "/images/exercises/ez-curl.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        334,
+        515,
+        358,
+        502
+      ],
+      "sha256": "42555630488bb08f310c517ca6b7d609081038cfcb245191c0282c5f46af8296"
+    },
+    "9ab76cb8-a665-4466-b069-3bbecf59bb60": {
+      "sourceId": "preacher-curl",
+      "src": "/images/exercises/preacher-curl.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        276,
+        514,
+        470,
+        500
+      ],
+      "sha256": "20395c28d98e1f0c11f43831b9d85f789b8657c557cc0d0af2404f8b71871d03"
+    },
+    "82312278-76ec-46c9-84d6-0a120cab3d7f": {
+      "sourceId": "cable-curl",
+      "src": "/images/exercises/cable-curl.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        282,
+        505,
+        558,
+        502
+      ],
+      "sha256": "0ae32e58374e888dfbf440f9af24421070334a81fee0f94b5bbb3c02ee062b47"
+    },
+    "f05f83a7-050e-4e5b-879b-f8a1457499f9": {
+      "sourceId": "band-curl",
+      "src": "/images/exercises/band-curl.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        410,
+        500,
+        218,
+        496
+      ],
+      "sha256": "4c0d52c051f7e748c75534940e77d90fd4c3278f7d6298ef1cd8a31aa3c2af84"
+    },
+    "3c9e15d4-1bb1-4716-9df4-b4e03580f8fe": {
+      "sourceId": "triceps-pushdown",
+      "src": "/images/exercises/triceps-pushdown.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        334,
+        501,
+        454,
+        505
+      ],
+      "sha256": "4c886061f7365512bcdab0bf03c0974f2ca0b1b5f79ec339cb661ebdafe384c6"
+    },
+    "d117e40c-6162-43fa-ac85-d78472554680": {
+      "sourceId": "rope-pushdown",
+      "src": "/images/exercises/rope-pushdown-v2.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        346,
+        516,
+        352,
+        505
+      ],
+      "sha256": "6a5df9387f4e3f5dac772c684d63df38ca11874ea3dae2161fec45f66f059178"
+    },
+    "1fee6646-1a46-4bc9-b472-686c15455482": {
+      "sourceId": "overhead-triceps",
+      "src": "/images/exercises/overhead-triceps.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        430,
+        473,
+        184,
+        546
+      ],
+      "sha256": "a9c7444b0c437b8924b39326cdc2e2339e3f6b18b893297e37f7209638b18487"
+    },
+    "8e9bfa49-6256-4459-b5aa-f24e041122a9": {
+      "sourceId": "cable-overhead-triceps",
+      "src": "/images/exercises/cable-overhead-triceps.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        66,
+        479,
+        822,
+        522
+      ],
+      "sha256": "47c453682683b93f739940858e19f196839a9332129327c53b1d326670527ccb"
+    },
+    "a562bdf2-1cef-4caa-8473-b9c1ef4fce39": {
+      "sourceId": "skull-crusher",
+      "src": "/images/exercises/skull-crusher.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        180,
+        497,
+        744,
+        561
+      ],
+      "sha256": "87ecaeb27b49353ecbd2c0b1bb522f209c62912ce2517a984b2a046e1d517d7c"
+    },
+    "6e0547bc-8ced-480c-bbe0-20c84fcf4b48": {
+      "sourceId": "diamond-pushup",
+      "src": "/images/exercises/diamond-pushup.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        54,
+        642,
+        936,
+        312
+      ],
+      "sha256": "cebe597565f64c2854883ec4e6acfef5fbc4a74da62cee2fc533186d6dce95a4"
+    },
+    "aedffd24-e75f-4dd7-99e6-b3750d708b76": {
+      "sourceId": "wrist-curl",
+      "src": "/images/exercises/wrist-curl-v2.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        230,
+        507,
+        532,
+        504
+      ],
+      "sha256": "e38bf8adf29280ca73e4a5476d9efa63de2dd6a030db7fdea386e5d7b5c95acc"
+    },
+    "f74ea281-de8c-485f-ac8c-193f491de0a3": {
+      "sourceId": "reverse-wrist-curl",
+      "src": "/images/exercises/reverse-wrist-curl.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        0,
+        516,
+        1024,
+        502
+      ],
+      "sha256": "d72c593eaea0293c75a13ece8bff5152dae816da384e8efebadd012850a021f7"
+    },
+    "2a13eb76-594e-49c6-b32e-c552f9c55f19": {
+      "sourceId": "machine-triceps-extension",
+      "src": "/images/exercises/machine-triceps-extension-v4.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        300,
+        510,
+        430,
+        501
+      ],
+      "sha256": "188e6fae532a07bb22ae04f5b12572d2c19802117990484c527aa279827710d4"
+    },
+    "c52d6788-c49c-4eb8-8627-0884453fe3a0": {
+      "sourceId": "leg",
+      "src": "/images/exercises/leg-v2.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        66,
+        511,
+        958,
+        514
+      ],
+      "sha256": "92e76070d1fbeab58bb822b9ef6ec1bb2bdf7f3deed62b05daabffcc91d2cc59"
+    },
+    "b911a8a4-7cae-4b04-a81d-c55b9e7fa3b6": {
+      "sourceId": "curl",
+      "src": "/images/exercises/curl-v4.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        224,
+        513,
+        482,
+        504
+      ],
+      "sha256": "d159e80f2e390a5c757fd14e9c920ee2a868cff417537265f934b8c5c383a4f9"
+    },
+    "49176f06-ef93-459c-a4b4-23cfef9bd2fd": {
+      "sourceId": "goblet-squat",
+      "src": "/images/exercises/goblet-squat.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        378,
+        522,
+        260,
+        427
+      ],
+      "sha256": "8df6e3371ba063e79f9b10cebc49443040e5b09493c2ebebfec631083a7e7cb7"
+    },
+    "5cb1e564-0a2f-4294-a1bc-0e9e51cc01a3": {
+      "sourceId": "back-squat",
+      "src": "/images/exercises/back-squat-v3.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        236,
+        515,
+        560,
+        459
+      ],
+      "sha256": "8a80ae9b624a728ecf56301a921f5e51f744c916a4918ed538a5e50d0bd2fe99"
+    },
+    "5ae213e6-5a9a-4054-bb11-a96bd82f3704": {
+      "sourceId": "front-squat",
+      "src": "/images/exercises/front-squat.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        238,
+        536,
+        558,
+        416
+      ],
+      "sha256": "6b99f28fac71ecf407b4337a2ecbdf9fe0536a8c17d4268eefb5ef0186184fa5"
+    },
+    "06ed9347-82d5-4790-a5cf-2c7f9bf99410": {
+      "sourceId": "smith-squat",
+      "src": "/images/exercises/smith-squat-v2.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        270,
+        518,
+        482,
+        475
+      ],
+      "sha256": "ab0e367719081742153e12a52e204cb4b6dfad8c5df16d1ad4870af1e1f228a4"
+    },
+    "4e9c0d15-7794-4130-8f52-86dd0adc9331": {
+      "sourceId": "hack-squat",
+      "src": "/images/exercises/hack-squat-v2.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        138,
+        518,
+        742,
+        502
+      ],
+      "sha256": "572fb0f623f252690bd6f56c11e645c3e2066f559f5f8fab90706a8c08b6ea25"
+    },
+    "25f630dc-1981-46cf-87ff-59e7e87cfdad": {
+      "sourceId": "kettlebell-squat",
+      "src": "/images/exercises/kettlebell-squat.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        380,
+        548,
+        276,
+        432
+      ],
+      "sha256": "42465c2a7a87b1914635f97322234cf1fc44be6b5d706953f4aeb21fd33ad08f"
+    },
+    "46c62475-d4af-4a60-9bbf-8f3c905b7712": {
+      "sourceId": "reverse-lunge",
+      "src": "/images/exercises/reverse-lunge.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        340,
+        520,
+        358,
+        450
+      ],
+      "sha256": "302081dc7f2c2248beae0b518df3c06b355f4ba074ea4d710ac1c438f0672b96"
+    },
+    "07cf6f52-ac82-461c-b208-519a0de42a45": {
+      "sourceId": "bulgarian-squat",
+      "src": "/images/exercises/bulgarian-squat.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        148,
+        516,
+        564,
+        452
+      ],
+      "sha256": "1542f1e61064c2d02272bf25c2f40566b37dea4ab06f792318242133c99e645d"
+    },
+    "5650ee3c-50b2-422c-b431-c32ceb46b2b2": {
+      "sourceId": "dumbbell-lunge",
+      "src": "/images/exercises/dumbbell-lunge.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        296,
+        509,
+        402,
+        445
+      ],
+      "sha256": "831ff1084d4568bf7a4bd937dcebafab37e1aa03f47a26371576ae288ac02865"
+    },
+    "ee90d1db-f6f9-44f8-9ab6-ba24d3154904": {
+      "sourceId": "step-up",
+      "src": "/images/exercises/step-up.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        394,
+        473,
+        242,
+        537
+      ],
+      "sha256": "989caa57f2f36c7a39645ba8b25fb919a99a24ecd1930c59e4c961274414758e"
+    },
+    "78fcb510-010d-42ed-b188-9c40b8ab1e48": {
+      "sourceId": "deadlift",
+      "src": "/images/exercises/deadlift.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        208,
+        469,
+        610,
+        490
+      ],
+      "sha256": "2d5b8703a66d6e9a31160e0f0c2415adcbaf0ed1f0630af5d70235fabcfbe39f"
+    },
+    "5033528e-2b9b-4528-b7d1-b7fdd398f59f": {
+      "sourceId": "romanian-deadlift",
+      "src": "/images/exercises/romanian-deadlift.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        310,
+        516,
+        416,
+        446
+      ],
+      "sha256": "c505027c10435ace2d770083caf05c515fc9731e6119dcf051c966981e8cffe8"
+    },
+    "350e592d-14d2-4719-acb3-a18a122f03fa": {
+      "sourceId": "dumbbell-rdl",
+      "src": "/images/exercises/dumbbell-rdl.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        392,
+        520,
+        296,
+        444
+      ],
+      "sha256": "24c77a91f5bb2badb7abd5ee91645abbf29c67ae0d2f118c7eb4d6473887086b"
+    },
+    "415662e9-7fda-45a9-9bc8-e123f2f65177": {
+      "sourceId": "leg-extension",
+      "src": "/images/exercises/leg-extension-v2.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        238,
+        497,
+        556,
+        506
+      ],
+      "sha256": "b1d959a30c048979590834ea73ea59d7a3d4607dfe6c0f5fcd8fc211473722ef"
+    },
+    "ef9062a1-e6bf-4bdf-a3b1-ba4ba22c24a0": {
+      "sourceId": "lying-leg-curl",
+      "src": "/images/exercises/lying-leg-curl-v3.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        86,
+        491,
+        844,
+        508
+      ],
+      "sha256": "21898ebe75a2b66f70fa5cbd5671cb0d010f00792bf4f4760e99b3b8823d665c"
+    },
+    "0883a3f5-fd1b-4483-b746-9915580d7ebd": {
+      "sourceId": "seated-calf",
+      "src": "/images/exercises/seated-calf-v2.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        132,
+        503,
+        734,
+        505
+      ],
+      "sha256": "1c4e99c001341364e4a695a4b2dba249834507d2b0d0ea4970021f46cf97acbd"
+    },
+    "a67990c0-dc51-44af-a689-61e7c4279219": {
+      "sourceId": "machine-adduction",
+      "src": "/images/exercises/machine-adduction.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        240,
+        498,
+        512,
+        487
+      ],
+      "sha256": "6bbbd3588e5717563928526734354ba74162b585b9a6488ebfe8f7eefa71c757"
+    },
+    "935c635d-b28e-43b4-9f5a-55e9644341ac": {
+      "sourceId": "band-squat",
+      "src": "/images/exercises/band-squat.webp",
+      "width": 768,
+      "height": 1152,
+      "crop": [
+        290,
+        414,
+        200,
+        315
+      ],
+      "sha256": "84cc365614c062c198b68167128989279d07bce64d6d9526e6c3c4dcb555162e"
+    },
+    "bf376cce-7b3d-425e-87ec-c7857d828991": {
+      "sourceId": "hip-lift",
+      "src": "/images/exercises/hip-lift.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        52,
+        563,
+        960,
+        420
+      ],
+      "sha256": "55c87aee056924fc7994d951ee553ae6680642992327e78a347b909bae2403d0"
+    },
+    "174091cb-f175-42c7-bd1c-9942f49d5742": {
+      "sourceId": "single-leg-bridge",
+      "src": "/images/exercises/single-leg-bridge.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        0,
+        503,
+        1024,
+        466
+      ],
+      "sha256": "17375e394f2056bbbe010216535e5bde3328b97b79fa5a9a1b668191ca33e480"
+    },
+    "38008650-9b26-464e-9c3d-e831279db1cd": {
+      "sourceId": "hip-thrust",
+      "src": "/images/exercises/hip-thrust.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        44,
+        483,
+        902,
+        492
+      ],
+      "sha256": "6fb58a5776066e21e5d8f2eb2026d944cff56e595f46925659393221557de09e"
+    },
+    "69dfe9fe-e5ee-43ff-99d7-d2360d4a3002": {
+      "sourceId": "dumbbell-hip-thrust",
+      "src": "/images/exercises/dumbbell-hip-thrust.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        16,
+        515,
+        970,
+        504
+      ],
+      "sha256": "2ecfcccb7595ac826c42f87800f65b2048d74cf437cbeb4f18f3bf263888b1f7"
+    },
+    "2518a16c-ffd3-4763-99e2-b17e185b9f53": {
+      "sourceId": "machine-hip-thrust",
+      "src": "/images/exercises/machine-hip-thrust-v2.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        56,
+        503,
+        948,
+        502
+      ],
+      "sha256": "96349074fae5e9fc8f696f2d6fe41b4877209441051b71732b3d93138cadaccf"
+    },
+    "0ba47694-3bb8-491f-bc58-b32857d3ec96": {
+      "sourceId": "machine-abduction",
+      "src": "/images/exercises/machine-abduction-v2.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        238,
+        499,
+        568,
+        497
+      ],
+      "sha256": "f1fbeea3fa244671fb60393468d4b490478fb85e6d8aa793560133f909db3446"
+    },
+    "4fca6867-52e1-48b3-86e9-2968c570db59": {
+      "sourceId": "cable-kickback",
+      "src": "/images/exercises/cable-kickback-v2.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        254,
+        483,
+        660,
+        515
+      ],
+      "sha256": "311fb205d8662295e94ca8a92e2a8c9dc6c8c51ad3947322178bb157bee49f98"
+    },
+    "6a957454-6554-4cbe-911d-bb6eb163791f": {
+      "sourceId": "donkey-kick",
+      "src": "/images/exercises/donkey-kick.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        4,
+        479,
+        1020,
+        532
+      ],
+      "sha256": "d1ec21dfba8c9aa60f19aa088ebb2f4da8024de1dbf2cd0d7e68ee2420498723"
+    },
+    "7180dd8c-ce9f-4243-a604-382f982272b2": {
+      "sourceId": "band-abduction",
+      "src": "/images/exercises/band-abduction.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        282,
+        507,
+        428,
+        497
+      ],
+      "sha256": "dd073e1614e3c75d06da2622a93c823bd5ef55abb0a3f55e99a2b9f319006884"
+    },
+    "5735a878-d12e-44e1-ba1e-abf516c4db46": {
+      "sourceId": "clamshell",
+      "src": "/images/exercises/clamshell.webp",
+      "width": 1145,
+      "height": 1374,
+      "crop": [
+        0,
+        455,
+        1145,
+        407
+      ],
+      "sha256": "393ad198255a58eba470d3c9ffb5f69022ab012925056564fa8baf5ad69d2daf"
+    },
+    "9ce6ae43-7a03-45d7-b48c-fd8fab837240": {
+      "sourceId": "reverse-crunch",
+      "src": "/images/exercises/reverse-crunch.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        60,
+        483,
+        816,
+        500
+      ],
+      "sha256": "d2238b0a84d8de720fefed4c6c450a1330adf52a0ed83c86b091c41cf6e9a97c"
+    },
+    "88502aad-792d-4cbd-a0dd-9fdaaa99a200": {
+      "sourceId": "abs",
+      "src": "/images/exercises/abs-v2.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        276,
+        541,
+        444,
+        495
+      ],
+      "sha256": "dca5e2f13761b64c3dcbc09091be22cb361b6784045591c9a7cf93afd2d51a07"
+    },
+    "9ca9874b-3201-46ad-8da8-689c3c974642": {
+      "sourceId": "cable-crunch",
+      "src": "/images/exercises/cable-crunch-v2.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        244,
+        518,
+        546,
+        480
+      ],
+      "sha256": "2af9bf7b59c7120cf35a240710d7d8c61286513fec5a8d77c6d55da9546b5882"
+    },
+    "4676e3cf-e0c2-4f23-9485-1a6dd6bcc4de": {
+      "sourceId": "russian-twist",
+      "src": "/images/exercises/russian-twist.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        202,
+        510,
+        648,
+        489
+      ],
+      "sha256": "f6f9a93588788eee1b4b3ff3e5c541f4c1a59deddf5481c1e4679b2a13fadc7d"
+    },
+    "01c8dec8-ff96-40df-8c78-accee52780b1": {
+      "sourceId": "hanging-knee-raise",
+      "src": "/images/exercises/hanging-knee-raise.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        272,
+        516,
+        490,
+        502
+      ],
+      "sha256": "1b262ed47411b2f0f293a1e53d72298bc339e5d28303a6fc0b98fd14365dfb4b"
+    },
+    "14284883-d182-43de-b6a3-c70dc5e551f6": {
+      "sourceId": "captains-chair-knee",
+      "src": "/images/exercises/captains-chair-knee.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        304,
+        515,
+        418,
+        502
+      ],
+      "sha256": "33bc317867ca93d77eaed4821ea571f946e3f424405acf296a9c45b5138a0e61"
+    },
+    "36219da1-745b-4a02-83cd-bc931ff7da63": {
+      "sourceId": "ab-wheel",
+      "src": "/images/exercises/ab-wheel.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        48,
+        516,
+        976,
+        456
+      ],
+      "sha256": "0b21cf3879e087a14390209613f3d0875fbedf37c1a012764da31409894f02c3"
+    },
+    "b9c52eec-d402-4685-aa6e-14761ea602e2": {
+      "sourceId": "pallof-press",
+      "src": "/images/exercises/pallof-press-v2.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        128,
+        511,
+        622,
+        504
+      ],
+      "sha256": "2251f9532d781b27824e0d332ee8e64e0e7de845d96d9ee3521972ffe516fe19"
+    },
+    "f7320eea-bb57-4013-87d7-390550de2fda": {
+      "sourceId": "dead-bug",
+      "src": "/images/exercises/dead-bug.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        0,
+        497,
+        1024,
+        434
+      ],
+      "sha256": "517377053f8ae6cb13ff9b7d239fd4d41f86e90cc0486cdf12fb771f5bc6b59a"
+    },
+    "e211b05c-3c15-4e3a-a341-705c6415f663": {
+      "sourceId": "bird-dog",
+      "src": "/images/exercises/bird-dog.webp",
+      "width": 1024,
+      "height": 1536,
+      "crop": [
+        10,
+        538,
+        1014,
+        476
+      ],
+      "sha256": "2ea7e04785601e30a0fcf4eceec7b434f4a735dd92f96c8800fc7c37e6d828a6"
+    }
+  },
+  "equipment": {
+    "f2bc1504-6ee4-5bd4-b207-a5d48467bbf5": "/images/equipment/dumbbell.svg",
+    "cec6385b-38d6-5871-94bb-03040d5db440": "/images/equipment/barbell.svg",
+    "12beea06-f111-533e-a650-94a58c0e31ca": "/images/equipment/flat-bench.svg",
+    "45a6b709-6ab9-4c98-a924-2e3f71a057ed": "/images/equipment/adjustable-bench.svg",
+    "45500b3e-bfcb-4fc9-9972-988ce8a16667": "/images/equipment/rack.svg",
+    "73cfa4f2-8600-44b7-8722-3106e0194843": "/images/equipment/smith-machine.svg",
+    "034c0c69-7255-461f-a651-95013de75f11": "/images/equipment/pec-deck-machine.svg",
+    "55574c22-7548-4cd8-a8ff-8449cd70dbef": "/images/equipment/cable-machine.svg",
+    "6e46c7c8-a14a-4fb9-b5a4-acb9407d0455": "/images/equipment/cable-handle.svg",
+    "3b540e43-22c7-46f7-8033-6bb08e8aaa93": "/images/equipment/resistance-band.svg",
+    "057cbf5e-d11c-473f-ac9c-85e07316f6a4": "/images/equipment/band-anchor.svg",
+    "dc756992-37e6-4783-94b5-fa12a3a2c0f3": "/images/equipment/parallel-bars.svg",
+    "5aabbd5f-4897-40eb-8395-3f89140e7f3c": "/images/equipment/incline-press-machine.svg",
+    "d7c2a0c6-1cb4-44ef-a9d8-3c0bb7e3ab63": "/images/equipment/seated-row-machine.svg",
+    "edda61ae-6923-400a-b337-1e81113af6f8": "/images/equipment/cable-v-handle.svg",
+    "099cacf7-9383-4cde-a756-a7aedf341d45": "/images/equipment/pullup-bar.svg",
+    "62a42727-12dd-4534-89ab-53ad7bddfb40": "/images/equipment/box.svg",
+    "d1cc346b-cdbd-4e60-a0e0-6436912baf6b": "/images/equipment/low-bar.svg",
+    "fecca052-5360-44c1-b0db-068a00dfd987": "/images/equipment/tbar-row-machine.svg",
+    "2b42007a-5ac9-46e7-9636-cac6a01102c5": "/images/equipment/cable-bar.svg",
+    "86d84da3-fea6-48fd-bd68-360b7880065e": "/images/equipment/back-extension-bench.svg",
+    "dfc3505d-055e-4b54-9eeb-f2f9c8e63996": "/images/equipment/high-row-machine.svg",
+    "eb304874-d971-497e-8bcf-ca6960441809": "/images/equipment/shoulder-press-machine.svg",
+    "aed5e0d5-fcf0-45ea-a212-d6996bad961d": "/images/equipment/lateral-raise-machine.svg",
+    "e7d0e007-99b1-42d2-b65d-9e32a8a1911e": "/images/equipment/cable-rope.svg",
+    "e20b8c7c-413c-4e66-abd6-23193eb8e5b9": "/images/equipment/biceps-curl-machine.svg",
+    "8618a2ad-284f-4dd2-9486-0842e7f861e0": "/images/equipment/ez-bar.svg",
+    "420c7d80-6b0d-461e-a8a3-903130b2c2af": "/images/equipment/preacher-bench.svg",
+    "5c1ac069-ab03-4ae3-873a-9775d1d14e0d": "/images/equipment/triceps-extension-machine.svg",
+    "343c287c-6e48-4182-8d1f-3c63ea3f9531": "/images/equipment/leg-press-machine.svg",
+    "913ab422-fcd5-4cd6-865d-cdc2ca2908d3": "/images/equipment/seated-leg-curl-machine.svg",
+    "22f7552f-6419-4201-bbb6-18d1d835a60e": "/images/equipment/hack-squat-machine.svg",
+    "410a73eb-1fcb-47ff-a057-6326a23f7b9e": "/images/equipment/kettlebell.svg",
+    "0254e392-aba7-46d8-b98f-01dadcf7b316": "/images/equipment/leg-extension-machine.svg",
+    "10f0de9b-03df-4b26-b131-cbfc0c43524b": "/images/equipment/lying-leg-curl-machine.svg",
+    "23931550-d091-4760-b753-1653ff5c99ae": "/images/equipment/seated-calf-machine.svg",
+    "b7800264-261e-42fc-bfdb-d917e3c45cd8": "/images/equipment/hip-adduction-machine.svg",
+    "89bfcf01-80c5-44fc-ba8a-861e84240861": "/images/equipment/bar-pad.svg",
+    "90bc4ef0-720f-4883-b35a-5ce95dfb6d92": "/images/equipment/hip-thrust-machine.svg",
+    "cc003e5d-cb8b-4a85-932a-1be742162d5d": "/images/equipment/hip-abduction-machine.svg",
+    "e4bb49ea-d490-48c9-a79b-5d758db156d2": "/images/equipment/cable-ankle-strap.svg",
+    "e3dab91e-0bd6-4d87-bdd2-2a46d2ba63b9": "/images/equipment/mini-band.svg",
+    "1ecfea67-89c9-4df4-935a-c8e0af3b8e73": "/images/equipment/lat-pulldown-machine.svg",
+    "735914d7-06b0-41e1-adff-093527db652d": "/images/equipment/lat-bar.svg",
+    "941ed025-13dc-4cd3-804d-a2b08867a7f3": "/images/equipment/support-rail.svg",
+    "8a22f767-3513-42b0-b5fc-92d916c8b1b6": "/images/equipment/chest-press-machine.svg",
+    "24fc860e-d374-47dd-a1e5-999dc4d51005": "/images/equipment/abdominal-machine.svg",
+    "d0707faf-a28f-4c35-bf62-d3419285d7cf": "/images/equipment/captain-chair.svg",
+    "7a829dc3-3d64-476e-af91-30ba4999f476": "/images/equipment/ab-wheel.svg"
+  },
+  "aggregateEquipmentIds": [
+    "e72cb41e-8aae-5e0b-b7ed-dceb573820ba"
+  ]
+}
