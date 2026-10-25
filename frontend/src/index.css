@@ -33,7 +33,7 @@ svg { flex-shrink: 0; }
 .app-shell { display: grid; grid-template-columns: 210px minmax(0, 680px) 260px; max-width: 1230px; min-height: 100vh; margin: 0 auto; gap: 28px; padding: 0 12px; }
 .sidebar { position: sticky; top: 0; height: 100dvh; display: flex; flex-direction: column; overflow-y: auto; padding: 38px 10px 25px 0; }
 .brand { display: flex; align-items: center; gap: 10px; font-size: 22px; font-weight: 850; letter-spacing: -.9px; line-height: 1.1; }
-.brand-symbol { display: grid; place-items: center; width: 39px; height: 39px; background: var(--brand); color: #fff; border-radius: 12px; }
+.brand-symbol { flex-shrink: 0; display: grid; place-items: center; width: 39px; height: 39px; background: var(--brand); color: #fff; border-radius: 12px; }
 .brand-caption { display: block; font-size: 7px; letter-spacing: .16em; margin-top: 7px; font-weight: 600; color: var(--muted); }
 .desktop-nav { display: flex; flex-direction: column; gap: 10px; margin-top: 53px; }
 .desktop-nav a { display: flex; align-items: center; gap: 15px; padding: 14px 18px; min-height: 53px; border-radius: 12px; color: var(--muted); font-weight: 600; }

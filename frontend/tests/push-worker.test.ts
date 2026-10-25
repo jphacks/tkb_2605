@@ -27,7 +27,7 @@ test("background push displays generic lock-screen text, stable dedup tag, and r
   const messages: unknown[] = [];
   const sw = worker([{ postMessage: (value: unknown) => messages.push(value) }]);
   await sw.dispatch("push", { data: { json: () => ({ notification_id: 42, notifier_name: "private name", url: "https://evil.example" }) } });
-  assert.equal(sw.notifications[0].title, "WORKOUT");
+  assert.equal(sw.notifications[0].title, "MUSCLE MATE");
   assert.equal(sw.notifications[0].options.tag, "workout-42");
   assert.equal(sw.notifications[0].options.renotify, false);
   assert.equal(JSON.stringify(sw.notifications).includes("private name"), false);
