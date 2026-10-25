@@ -1,42 +1,26 @@
 # API・データ仕様との対応
 
-ホーム・種目選択・おすすめ・記録・結果のAPI対応状況。記録APIはIssue #31のURL・JSON構造を維持し、noteのrepositoryを使ったDB保存とセッション認証に接続している。投稿APIは引き続き固定応答。
+記録APIはIssue #31のURL・JSON構造を維持し、DB保存とセッション認証に接続している。投稿APIは[PR #60](https://github.com/jphacks/tkb_2605/pull/60)の実装を基準に、いいね通知と投稿詳細を追加した。
 
-## 定義済みの投稿API
+## 投稿API（DB接続）
 
-[Issue #10](https://github.com/jphacks/tkb_2605/issues/10) と [mainのURL定義](https://github.com/jphacks/tkb_2605/blob/8a7523ce13ad38433c4504801bc9f8c3ab4a301a/backend/posts/urls.py)・[実装](https://github.com/jphacks/tkb_2605/blob/8a7523ce13ad38433c4504801bc9f8c3ab4a301a/backend/posts/views.py)には次の相違がある。
+| 操作 | URL | 成功コード |
+|---|---|---|
+| POST 投稿作成 | /api/posts/ | 201 |
+| GET 投稿一覧 | /api/posts/ | 200 |
+| GET ユーザー別投稿 | /api/users/{user_id}/posts/ | 200 |
+| GET 投稿詳細 | /api/posts/{post_id}/ | 200 |
+| PUT いいね追加 | /api/posts/{post_id}/like/ | 200 |
 
-| 操作 | mainのURL | Issueの成功コード | mainの成功コード |
-|---|---|---|---|
-| POST 投稿作成 | `/api/posts/` | 200 | 201 |
-| GET 投稿一覧 | `/api/posts/` | 201 | 200 |
-| GET ユーザー別投稿 | `/api/users/{user_id}/posts/` | 201 | 200 |
-| PUT いいね | `/api/posts/{post_id}/like/` | 200 | 200 |
+セッション認証と書き込み時のCSRFが必須。投稿IDはDBで採番したUUID文字列をそのまま使う。投稿者・いいね実行者はログインユーザーから決定する。本文は500文字まで。記録付き投稿は本人の記録のみ添付でき、本文は省略できる。
 
-ホームの投稿クライアントは2xxを受け付け、JSONの形・投稿型・対象投稿IDを検証する。いいねは末尾スラッシュ付きURLへのボディなしPUT。ユーザー別投稿URLはIssueでは末尾スラッシュなしだが、mainはスラッシュありであり、今回のホームからは呼ばない。`limit` は1〜100、`offset` は0以上、履歴終端は `next_offset: null` とする。書き込みでは既存の同一オリジンCookieと、取得できる場合のDjango標準 `csrftoken` / `X-CSRFToken` を使用する。
+一覧はlimit=1〜100（既定20）、offset=0以上（既定0）。ホームは応答のnext_offsetを次の取得に使い、nullだけを終端とする。プロフィールはユーザー別一覧を取得する。失敗時は取得済み投稿とoffsetを保持し、同じ位置で再試行する。投稿IDで重複を除去する。ホームのマスメイトタブは現在全員の投稿を表示し、関係による絞り込みは未実装。
 
-ホームは開発環境でも常に投稿APIを取得し、フロントのサンプル投稿・通知やサンプル/APIの切り替えは使用しない。初回は `limit=20&offset=0`、追加取得は `limit=20` と応答の `next_offset` を使い、offsetをフロントで加算しない。空のページでも `next_offset` があれば次へ進め、`null` のときだけ終端とする。失敗時は取得済み投稿とoffsetを保持し、同じ位置で再試行する。投稿は `post_id` でページ内・ページ間の重複を除去し、既存投稿のいいね状態を維持する。
+いいねは本文なしPUTで追加する。再実行は追加済みの状態を返し、取り消し機能はない。フロントは返された件数と状態を表示し、いいね済みボタンを無効にする。初回だけ投稿者宛の通知を同じトランザクションで保存する。詳細・移行手順は[投稿・いいね通知API](like-notifications-api.md)を参照。
 
-mainは固定のサンプル応答を返すスタブで、投稿の永続化・いいねの実トグルは未実装。POSTは入力によらず `post_type: 1` を返すため、タイプ2・3の作成応答はフロントの型一致検証で拒否する。PUTも固定の投稿ID・件数・状態を返す。接続確認の成功を、保存やトグルの完成とは扱わない。
+Postsのuser_idは既存の文字列カラムを維持する。user_name・like_count・is_likedはAPIで補完し、生のDB行とは区別する。既存の数値でないユーザーIDも安全に扱い、存在しないユーザー名は「不明なユーザー」、通知先が無効な場合はいいねだけを保存する。
 
-ホームはマスメイト・ベルの2タブ。マスメイトのサーバー側分類は未実装で、投稿APIの結果を表示する。通知は[通知仕様](notifications.md)のGETへ接続。ログアウトやアカウント変更で取得済みデータを破棄する。
-
-### 投稿・いいねテーブルとの対応
-
-[Issue #6](https://github.com/jphacks/tkb_2605/issues/6) と `feature/table_posts` の [モデル・migration（1be5c27）](https://github.com/jphacks/tkb_2605/tree/1be5c27/backend/posts) を確認した。確認時点のmain `aed893c` にはこのテーブル変更は未統合で、当該ブランチでも投稿APIのviews・URLはmainと同じ固定応答である。
-
-| DBの定義 | フロントとの対応 |
-|---|---|
-| `Posts.post_id`: UUID主キー、DB側で採番 | APIでは文字列のまま扱う。数値化・フロント採番を行わず、一覧の識別・投稿リンク・いいねURLへ同じIDを渡す。既存モックの `"12"` も引き続き扱う |
-| `Posts.user_id`: 100文字までの文字列 | 投稿者IDとして保持する。認証済みの現在ユーザーIDと推定しない |
-| `post_type`・`content`・自動設定の`posted_at`・nullableな`workout_id` | 既存APIの3種類の投稿、本文、日時、任意の記録IDに対応 |
-| `Like.id`: 自動採番、`Like.post_id`: 投稿への外部キー（CASCADE）、`Like.user_id`: 文字列 | いいねは投稿IDをURLで指定する。Like行のIDやuser_idをフロントから送るAPIには変更しない |
-
-`user_name`・`like_count`・`is_liked` は投稿テーブルの列ではなくAPI表示用の情報。フロントはIssue #10の応答から取得し、DBの生の投稿行・いいね行をそのままAPI応答として扱わない。テーブル追加だけでAPIの永続化・トグルが完成したとは扱わない。
-
-[Issue #35](https://github.com/jphacks/tkb_2605/issues/35) の投稿保存・フォロー中投稿のページング・投稿存在確認、[Issue #36](https://github.com/jphacks/tkb_2605/issues/36) のいいね済み確認・件数集計・ユーザー別保存はバックエンドの作業項目。これらに対する新しいURLや追加リクエスト項目は未定義。現在のGETの`limit`/`offset`・応答の`next_offset`と、本文なしPUTのいいね処理を維持する。
-
-UUIDの投稿IDで一覧・ページング・作成・いいねを検証するテスト、およびAPI表示用情報が欠けたDB行を誤って受理しないテストを追加している。
+通知は[通知仕様](notifications.md)のGETへ接続し、空の差分で既存表示を消さない。ログアウトやアカウント変更で取得済みデータを破棄する。
 
 ## 記録API（DB接続）
 

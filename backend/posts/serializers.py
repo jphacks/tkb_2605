@@ -4,6 +4,8 @@ from note.models import Workout
 from .models import Posts
 
 from django.contrib.auth import get_user_model
+from django.db.models import CharField
+from django.db.models.functions import Cast
 
 from . import repositories
 
@@ -85,7 +87,7 @@ class PostSerializer(serializers.ModelSerializer):
         User = get_user_model()
 
         return (
-            User.objects.filter(pk=post.user_id)
+            User.objects.annotate(public_id=Cast("pk", CharField())).filter(public_id=post.user_id)
             .values_list("user_name", flat=True)
             .first()
         ) or "不明なユーザー"

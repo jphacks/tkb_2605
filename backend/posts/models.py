@@ -33,4 +33,6 @@ class Like(models.Model):
     
     # あとでForeignKeyに変更する
     user_id = models.CharField(max_length=100)
-    
+
+    class Meta:
+        constraints = [models.UniqueConstraint(fields=["post_id", "user_id"], name="unique_post_like_user")]

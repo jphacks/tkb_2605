@@ -20,3 +20,10 @@ class NotificationSerializer(serializers.ModelSerializer):
             "notified_at",
         ]
         read_only_fields = fields
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        # Keep the four-field start-notification contract unchanged.
+        if instance.notification_type == "post_liked":
+            data.update(notification_type="post_liked", post_id=str(instance.post_id), post_excerpt=instance.post.content[:100])
+        return data

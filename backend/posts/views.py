@@ -1,4 +1,5 @@
-from django.db import DatabaseError, connection
+from django.shortcuts import get_object_or_404
+from .models import Posts
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.response import Response
 from rest_framework.request import Request
@@ -11,43 +12,6 @@ from . import repositories
 from .serializers import CreatePostSerializer, PostSerializer, PostListQuerySerializer
 
 from uuid import UUID
-
-
-CREATE_POSTS_RESPONSE_EXAMPLE = {
-  "post_id": "12",
-  "user_id": "3",
-  "user_name": "たろう",
-  "post_type": 1,
-  "content": "今日はスクワットを頑張った！",
-  "posted_at": "2026-10-24T15:00:00+09:00",
-  "workout_id": None,
-  "like_count": 0,
-  "is_liked": False
-}
-
-GET_POSTS_RESPONSE_EXAMPLE = {
-  "results": [
-    {
-      "post_id": "12",
-      "user_id": "3",
-      "user_name": "たろう",
-      "post_type": 1,
-      "content": "今日はスクワットを頑張った！",
-      "posted_at": "2026-10-24T15:00:00+09:00",
-      "workout_id": None,
-      "like_count": 5,
-      "is_liked": True
-    }
-  ],
-  "next_offset": None
-}
-
-LIKED_RESPONSE_EXAMPLE = {
-  "post_id": "12",
-  "like_count": 6,
-  "is_liked": True
-}
-
 
 
 @api_view(["GET", "POST"])
@@ -156,10 +120,10 @@ def like_post(request: Request, post_id: UUID):
         )
 
     # ログイン中のユーザーとしていいねする
-    repositories.like_post(
-        user_id=str(request.user.pk),
-        post_id=post_id_str,
-    )
+    try:
+        repositories.like_post(user_id=str(request.user.pk), post_id=post_id_str)
+    except Posts.DoesNotExist:
+        return Response({"detail": "投稿が見つかりません。"}, status=status.HTTP_404_NOT_FOUND)
 
     return Response(
         {
@@ -170,3 +134,11 @@ def like_post(request: Request, post_id: UUID):
         status=status.HTTP_200_OK,
     )
 
+
+
+@api_view(["GET"])
+@authentication_classes([SessionAuthentication])
+@permission_classes([IsAuthenticated])
+def post_detail(request: Request, post_id: UUID):
+    post = get_object_or_404(Posts, pk=post_id)
+    return Response(PostSerializer(post, context={"request": request}).data)
