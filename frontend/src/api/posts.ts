@@ -42,7 +42,8 @@ async function request(url: string, init: RequestInit): Promise<unknown> {
   }
   if (!response.ok) {
     if (response.status === 401 || response.status === 403) throw new Error("投稿機能を利用するにはログイン状態の確認が必要です。");
-    if (response.status === 404 || response.status === 501) throw new Error("投稿機能にまだ接続できません。時間をおいて再試行してください。");
+    if (response.status === 404) throw new Error("投稿が見つかりません。削除されたか、表示できない投稿です。");
+    if (response.status === 501) throw new Error("投稿機能にまだ接続できません。時間をおいて再試行してください。");
     if (response.status === 400) {
       const body: unknown = await response.json().catch(() => null);
       if (object(body)) {
@@ -83,5 +84,12 @@ export async function createPost(input: CreatePost, signal?: AbortSignal): Promi
   if (input.post_type === 2 && !input.workout_id.trim()) throw new Error("ワークアウトを選択してください。");
   const value = await request("/api/posts/", { method: "POST", headers: headers(true, true), body: JSON.stringify(input), signal });
   if (!validPost(value) || (authenticatedUserId() !== null && value.user_id !== authenticatedUserId()) || value.post_type !== input.post_type) throw new Error("作成した投稿の応答形式を確認できませんでした。");
+  return value;
+}
+
+export async function fetchPost(postId: string, signal?: AbortSignal): Promise<ApiPost> {
+  if (!postId.trim()) throw new Error("投稿を選択してください。");
+  const value = await request("/api/posts/" + encodeURIComponent(postId) + "/", { method: "GET", headers: headers(false), signal });
+  if (!validPost(value) || value.post_id !== postId) throw new Error("対象の投稿を確認できませんでした。");
   return value;
 }

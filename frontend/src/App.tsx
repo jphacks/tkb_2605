@@ -6,7 +6,7 @@ import ProtectedRoutes from "./components/ProtectedRoutes.tsx";
 import type { ComposeLocationState } from "./features/posts/navigation.ts";
 import AppShell from "./components/AppShell.tsx";
 import AppLayout from "./layouts/AppLayout.tsx";
-import HomeDestination from "./pages/HomeDestination.tsx";
+import PostDetail from "./pages/PostDetail.tsx";
 import Chats from "./pages/Chats.tsx";
 import Compose from "./pages/Compose.tsx";
 import Exercises from "./pages/Exercises.tsx";
@@ -52,7 +52,7 @@ export default function App() {
             <Route path={paths.compose} element={<><Home /><Compose /></>} />
           </Route>
           <Route element={<AppLayout />}>
-            <Route path="/posts/:postId" element={<HomeDestination title="投稿詳細・返信" />} />
+            <Route path="/posts/:postId" element={<PostDetail />} />
             <Route path="/notifications" element={<Notifications />} />
             <Route path="/settings" element={<Settings />} />
             <Route path={paths.profile} element={<Profile />} />

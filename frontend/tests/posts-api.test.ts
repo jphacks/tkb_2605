@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, test } from "node:test";
 import assert from "node:assert/strict";
-import { createPost, fetchPosts, togglePostLike, type ApiPost } from "../src/api/posts.ts";
+import { createPost, fetchPosts, fetchPost, togglePostLike, type ApiPost } from "../src/api/posts.ts";
 
 const originalFetch = globalThis.fetch;
 const originalDocument = Object.getOwnPropertyDescriptor(globalThis, "document");
@@ -100,7 +100,7 @@ test("writes forward the Django CSRF cookie while list requests do not", async (
 
 test("server errors and malformed payloads never masquerade as success", async () => {
   respond({}, 404);
-  await assert.rejects(fetchPosts(), /接続できません/);
+  await assert.rejects(fetchPosts(), /見つかりません/);
   respond({ results: [{ ...fixture, is_liked: "true" }], next_offset: null });
   await assert.rejects(fetchPosts(), /応答形式/);
   respond({ results: [fixture], next_offset: 0 });
@@ -192,4 +192,20 @@ test("database rows do not replace the enriched post API or aggregate like respo
   await assert.rejects(togglePostLike(postId), /応答形式/);
   respond({ post_id: "another-post", like_count: 1, is_liked: true });
   await assert.rejects(togglePostLike(postId), /応答形式/);
+});
+
+test("notification detail fetch uses the exact post ID and rejects another post", async () => {
+  respond(fixture);
+  assert.deepEqual(await fetchPost("12"), fixture);
+  assert.equal(requests[0].url, "/api/posts/12/");
+  assert.equal(requests[0].init?.method, "GET");
+  respond({ ...fixture, post_id: "other" });
+  await assert.rejects(fetchPost("12"), /対象の投稿/);
+  respond({}, 404); await assert.rejects(fetchPost("12"), /見つかりません/);
+});
+
+test("liking only writes the like endpoint and never sends a broadcast start notice", async () => {
+  respond({ post_id: "12", like_count: 1, is_liked: true });
+  await togglePostLike("12");
+  assert.deepEqual(requests.map((request) => request.url), ["/api/posts/12/like/"]);
 });
