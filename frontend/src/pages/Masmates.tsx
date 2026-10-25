@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, type FormEvent } from "react";
 import { Link } from "react-router";
 import { becomeMasmates, findPeople, type Profile } from "../api/profiles.ts";
 import { Avatar } from "../components/Avatar.tsx";
+import { Icon } from "../components/Icon.tsx";
 import { profilePath, paths } from "../routes.ts";
 import "../features/profile/profile.css";
 
@@ -65,7 +66,7 @@ export default function Masmates() {
   const [query, setQuery] = useState("");
   function search(event: FormEvent) { event.preventDefault(); setQuery(input.trim()); }
   return <section className="profile-page people-page">
-    <header className="profile-topbar"><Link to={paths.home}>← ホーム</Link><h1>マスメイト<span>MASMATES</span></h1></header>
+    <header className="profile-topbar"><Link to={paths.home} aria-label="ホームに戻る"><Icon name="arrow-left" /></Link><h1>マスメイト<span>MASMATES</span></h1></header>
     <div className="feed-tabs" role="group" aria-label="ユーザーの表示切り替え"><button className={masmates ? "active" : ""} aria-pressed={masmates} onClick={() => setMasmates(true)}>マスメイト</button><button className={!masmates ? "active" : ""} aria-pressed={!masmates} onClick={() => setMasmates(false)}>ユーザーを探す</button></div>
     <form className="people-search" onSubmit={search}><label><span className="visually-hidden">名前で検索</span><input type="search" maxLength={50} value={input} onChange={(event) => setInput(event.target.value)} placeholder="名前で検索" /></label><button className="profile-action" type="submit">検索</button></form>
     <p className="profile-sample-notice">どちらかが追加すると、お互いにマスメイトになります。</p>
