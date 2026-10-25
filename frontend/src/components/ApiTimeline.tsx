@@ -12,7 +12,7 @@ function appendUniquePosts(current: ApiPost[], incoming: ApiPost[]): ApiPost[] {
   })];
 }
 
-export function ApiTimeline() {
+export function ApiTimeline({ userId, onAuthor }: { userId?: string; onAuthor?: (name: string) => void } = {}) {
   const [posts, setPosts] = useState<ApiPost[]>([]);
   const [next, setNext] = useState<number | null>(0);
   const [loading, setLoading] = useState(true);
@@ -30,8 +30,9 @@ export function ApiTimeline() {
     const controller = new AbortController();
     pageController.current = controller;
     pendingPage.current = true;
-    fetchPosts({ signal: controller.signal }).then((page) => {
+    fetchPosts({ userId, signal: controller.signal }).then((page) => {
       if (!controller.signal.aborted) {
+        if (userId && page.results[0]) onAuthor?.(page.results[0].user_name);
         nextOffset.current = page.next_offset;
         setPosts(appendUniquePosts([], page.results));
         setNext(page.next_offset);
@@ -42,7 +43,7 @@ export function ApiTimeline() {
       if (!controller.signal.aborted) { setLoading(false); pendingPage.current = false; }
     });
     return () => { mounted.current = false; controller.abort(); pageController.current?.abort(); };
-  }, []);
+  }, [userId, onAuthor]);
 
   async function loadMore() {
     if (!mounted.current || pendingPage.current || nextOffset.current === null) return;
@@ -52,7 +53,7 @@ export function ApiTimeline() {
     pageController.current = controller;
     setLoading(true); setError("");
     try {
-      const page = await fetchPosts({ offset, signal: controller.signal });
+      const page = await fetchPosts({ userId, offset, signal: controller.signal });
       if (controller.signal.aborted) return;
       // Offset pagination can overlap when a new post is inserted; keep existing like state.
       setPosts((items) => appendUniquePosts(items, page.results));
@@ -84,9 +85,9 @@ export function ApiTimeline() {
 
   return <div aria-busy={loading}>
     <div className="post-list">{posts.map((post) => <article className="post-card" key={post.post_id}>
-      <Link className="avatar-link" to={"/profile/" + encodeURIComponent(post.user_id)} aria-label={post.user_name + "のプロフィールを開く"}><span className="avatar avatar-medium api-avatar" aria-hidden="true"><Icon name="user" size={25} /></span></Link>
+      <Link className="avatar-link" to={"/profile/" + encodeURIComponent(post.user_id)} state={{ profile: { id: post.user_id, name: post.user_name } }} aria-label={post.user_name + "のプロフィールを開く"}><span className="avatar avatar-medium api-avatar" aria-hidden="true"><Icon name="user" size={25} /></span></Link>
       <div className="post-main">
-        <div className="post-meta"><Link className="post-author" to={"/profile/" + encodeURIComponent(post.user_id)}>{post.user_name}</Link><span className="meta-dot">·</span><time dateTime={post.posted_at} title={new Date(post.posted_at).toLocaleString("ja-JP")}>{new Date(post.posted_at).toLocaleDateString("ja-JP", { month: "numeric", day: "numeric" })}</time></div>
+        <div className="post-meta"><Link className="post-author" to={"/profile/" + encodeURIComponent(post.user_id)} state={{ profile: { id: post.user_id, name: post.user_name } }}>{post.user_name}</Link><span className="meta-dot">·</span><time dateTime={post.posted_at} title={new Date(post.posted_at).toLocaleString("ja-JP")}>{new Date(post.posted_at).toLocaleDateString("ja-JP", { month: "numeric", day: "numeric" })}</time></div>
         <Link className="post-content" to={"/posts/" + encodeURIComponent(post.post_id)} aria-label={post.user_name + "の投稿を開く"}><p className="post-text">{post.content || (post.post_type === 3 ? "トレーニングを始めました" : "トレーニングの記録")}</p></Link>
         <div className="post-actions"><Link className="post-action" to={"/posts/" + encodeURIComponent(post.post_id) + "#reply"} aria-label="返信する"><Icon name="message" size={18} /></Link><button className={"post-action" + (post.is_liked ? " liked" : "")} type="button" disabled={liking.includes(post.post_id) || !!likeErrors[post.post_id]} aria-pressed={post.is_liked} aria-label={post.is_liked ? "いいねを取り消す" : "いいねする"} onClick={() => void like(post.post_id)}><Icon name="arm" size={18} /><span>{post.like_count}</span></button><span className="post-category">{post.post_type === 2 ? "トレーニング記録" : post.post_type === 3 ? "トレーニング開始" : "投稿"}</span></div>
         {likeErrors[post.post_id] && <p className="feed-error" role="alert">{likeErrors[post.post_id]}</p>}
