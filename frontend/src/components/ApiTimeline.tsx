@@ -55,6 +55,7 @@ export function ApiTimeline({ userId, onAuthor }: { userId?: string; onAuthor?: 
     try {
       const page = await fetchPosts({ userId, offset, signal: controller.signal });
       if (controller.signal.aborted) return;
+      if (userId && page.results[0]) onAuthor?.(page.results[0].user_name);
       // Offset pagination can overlap when a new post is inserted; keep existing like state.
       setPosts((items) => appendUniquePosts(items, page.results));
       // Advance only after success, before releasing the request lock. Failed pages retry this offset.
