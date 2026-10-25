@@ -61,6 +61,16 @@ DBは `sqlite-data` というDockerのボリュームに保存されるので、
 
 ホームは「マスメイト」とベルの2タブ。開始成功時の通知送信・GET履歴・新着表示は[通知仕様](docs/notifications.md)、端末購読は[Web Push](docs/web-push.md)を参照。ログイン中だけ通知を取得し、ログアウト・アカウント変更で通知と入力状態を破棄する。ホーム・プロフィールには認証APIのIDと名前を使用する。通知・プッシュのバックエンドが未実装でも、トレーニングの記録は続行できる。
 
+### 筋トレ開始通知API（バックエンドのみ）
+
+セッション認証が必須。本文なしの `POST /api/notify/` でログイン中のユーザの通知を保存し、200 と `{}` を返す。POSTには `/api/auth/csrf/` で取得したCSRFトークンを `X-CSRFToken` ヘッダに付ける。
+
+`GET /api/notify/` は自分の通知を除外し、前回の取得位置より新しい通知を `notified_at` 降順（同時刻は `notification_id` 降順）で最新20件まで配列で返す。`?limit=1` ～ `100` で件数を指定でき、不正な値は400、通知なしは `[]`。各要素は `notification_id`（整数）、`notifier_id`（整数）、`notifier_name`（ユーザの `user_name`）、`notified_at`（タイムゾーン付きISO 8601日時）。未ログイン時はGET・POSTとも403。
+
+取得位置は `notification_cursors` テーブルにユーザ単位で保存する。初回GETでは保存済み通知の最新分を返し、以降は新規通知だけを返す。同じユーザの別端末・ログアウト後の再ログインでも返却済み通知は再取得できない。GETの処理時点で取得済みとするため、通信失敗時の再配信はしない。件数上限を超えた古い通知も次回には返さず、取りこぼし対策は行わない。
+
+フロントの開始ボタン連携・1秒間隔のポーリング・通知表示は今回の対象外。通知APIのテストは `docker compose exec -T backend python manage.py test notifications`。
+
 フロントの契約・状態管理・マスターテスト: `docker compose exec -T frontend npm test`。
 
 主な動作確認：投稿の取得・ページング・再試行、ログイン後の開始 → 種目追加 → 全セット保存 → 別の種目／終了 → DB記録取得、通信失敗後の手動再試行、連打・離脱後の遷移防止。記録APIは `docker compose exec -T backend python manage.py test core.tests` で検証する。PC／スマートフォンで各画面の収まりも確認する。静的チェックは `docker compose exec -T frontend npm run lint` と `docker compose exec -T frontend npm run build`。
