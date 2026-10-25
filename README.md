@@ -7,6 +7,8 @@
 | DB | SQLite（DBコンテナなし） |
 | 本番 | 自宅Proxmoxの専用VM（512MB）、Nginx + Gunicorn、Cloudflare Tunnel |
 
+プロフィール編集・ユーザー検索・マスメイト保存の追加APIは [接続仕様](docs/profile-masmates-api.md) を参照してください。
+
 ## 開発環境
 
 ホーム・種目選択・おすすめ・記録・結果のAPI接続と未実装範囲は [API・データ仕様との対応](docs/api-compatibility.md)、フロント所有の種目データは [種目マスター](docs/exercise-master.md) を参照。
