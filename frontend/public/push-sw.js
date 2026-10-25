@@ -9,7 +9,7 @@ self.addEventListener("push", (event) => {
     if (Number.isSafeInteger(payload?.notification_id) && payload.notification_id > 0) id = payload.notification_id;
   } catch { /* Empty or malformed payloads still produce a visible generic notification. */ }
   event.waitUntil((async () => {
-    await self.registration.showNotification("WORKOUT", {
+    await self.registration.showNotification("MUSCLE MATE", {
       body: "新しい通知が届きました。タップして確認できます。",
       icon: "/icons/push-192.png", badge: "/icons/push-badge.png",
       tag: id ? `workout-${id}` : "workout", renotify: false,

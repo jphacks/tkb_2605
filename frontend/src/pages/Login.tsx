@@ -44,7 +44,7 @@ export default function Login() {
 
   return <main className="auth-page">
     <section className="auth-card" aria-labelledby="auth-title">
-      <div className="auth-brand"><Icon name="dumbbell" size={30} /><span>WORKOUT<small>MOVE. SHARE. GROW.</small></span></div>
+      <div className="auth-brand"><Icon name="dumbbell" size={30} /><span>MUSCLE MATE<small>MOVE. SHARE. GROW.</small></span></div>
       <p className="auth-eyebrow">YOUR DAILY TRAINING CLUB</p>
       <h1 id="auth-title">{register ? "アカウントを作成" : "おかえりなさい"}</h1>
       <p className="auth-description">{register ? "仲間と一緒に、毎日のトレーニングを。" : "ログインして、今日の積み重ねを記録しましょう。"}</p>

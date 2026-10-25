@@ -1,4 +1,4 @@
-# Workout App（JPHACK 筋トレWebアプリ）
+# MUSCLE MATE（JPHACK 筋トレWebアプリ）
 
 | | |
 |---|---|
