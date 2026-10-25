@@ -44,10 +44,8 @@ export default function Login() {
 
   return <main className="auth-page">
     <section className="auth-card" aria-labelledby="auth-title">
-      <div className="auth-brand"><Icon name="dumbbell" size={30} /><span>MUSCLE MATE<small>MOVE. SHARE. GROW.</small></span></div>
-      <p className="auth-eyebrow">YOUR DAILY TRAINING CLUB</p>
-      <h1 id="auth-title">{register ? "アカウントを作成" : "おかえりなさい"}</h1>
-      <p className="auth-description">{register ? "仲間と一緒に、毎日のトレーニングを。" : "ログインして、今日の積み重ねを記録しましょう。"}</p>
+      <div className="auth-brand"><Icon name="dumbbell" size={30} /><span>MUSCLE MATE</span></div>
+      <h1 id="auth-title">{register ? "アカウントを作成" : "ログイン"}</h1>
       <form onSubmit={(event) => void submit(event)} aria-busy={busy}>
         <fieldset disabled={busy} className="auth-fields">
           {register && <label>名前<input name="user_name" autoComplete="nickname" required maxLength={50} value={name} onChange={(event) => setName(event.target.value)} /></label>}
@@ -62,6 +60,6 @@ export default function Login() {
       <button className="auth-switch" disabled={busy} onClick={() => { setRegister(!register); setPassword(""); setConfirmation(""); setError(""); setNotice(""); }}>{register ? "アカウントをお持ちの方はログイン" : "はじめての方はこちら · 新規登録"}</button>
       {error && <button className="auth-switch" disabled={busy} onClick={() => void refreshSession()}>ログイン状態を再確認</button>}
     </section>
-    <p className="auth-footer">ONE MORE REP. ONE MORE STEP.</p>
+    <p className="auth-footer">© チーム_M1</p>
   </main>;
 }
