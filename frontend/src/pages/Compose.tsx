@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { useLocation, useNavigate, useSearchParams } from "react-router";
 import { createPost, type CreatePost } from "../api/posts.ts";
-import { WORKOUT_MOCK_NOTICE } from "../api/workouts.ts";
 import type { ComposeLocationState } from "../features/posts/navigation.ts";
 import { paths } from "../routes.ts";
 import "./Compose.css";
@@ -119,7 +118,6 @@ export default function Compose() {
             />
             {workoutId && <aside className="compose-attachment" aria-label="共有するメニュー">
               <p>トレーニング記録を添付</p>
-              <p className="compose-workout-notice">{WORKOUT_MOCK_NOTICE}</p>
               {workout && <ul className="compose-workout-menus">
                 {workout.exercises.filter((exercise) => exercise.sets.length > 0).map((exercise) => (
                   <li key={exercise.workout_exercise_id}>

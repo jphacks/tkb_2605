@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { createSearchParams, Link, useLocation, useParams } from "react-router";
-import { fetchWorkout, WORKOUT_MOCK_NOTICE, type WorkoutDetail } from "../api/workouts.ts";
+import { fetchWorkout, type WorkoutDetail } from "../api/workouts.ts";
 import type { ComposeLocationState } from "../features/posts/navigation.ts";
 import { paths } from "../routes.ts";
 import "./WorkoutResults.css";
@@ -38,7 +38,8 @@ function WorkoutResultsContent({ workoutId }: { workoutId: string }) {
     <section className="workout-results" aria-labelledby="workout-results-heading">
       <header className="workout-results-header">
         <h1 id="workout-results-heading">今日のメニュー</h1>
-        <p>{WORKOUT_MOCK_NOTICE}</p>
+        <p>{workout ? workout.is_completed ? "保存済みのトレーニング記録" : "このトレーニングはまだ終了していません。" : "トレーニング記録"}</p>
+        {workout && !workout.is_completed && <Link to={{ pathname: paths.exercises, search: "?" + createSearchParams({ workoutId }) }}>記録を続ける</Link>}
       </header>
 
       <div className="workout-results-content" tabIndex={0} role="region" aria-label="行ったメニュー" aria-busy={state.status === "loading"}>
@@ -67,13 +68,13 @@ function WorkoutResultsContent({ workoutId }: { workoutId: string }) {
           </ol>
         ) : (
           <div className="workout-results-empty" role="status">
-            <p>応答にメニューがありません</p>
+            <p>保存されたメニューはまだありません</p>
           </div>
         ))}
       </div>
 
       <footer className="workout-results-actions">
-        {workout && exercises.length > 0 ? (
+        {workout?.is_completed && exercises.length > 0 ? (
           <Link
             to={{ pathname: paths.compose, search: `?${createSearchParams({ workoutId: workout.workout_id })}` }}
             state={{ backgroundLocation: location, workout } satisfies ComposeLocationState}

@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { WORKOUT_MOCK_NOTICE } from "../api/workouts.ts";
 import { resolveRecommendation, type RecommendationKey } from "../features/exercises/serverCatalog.ts";
 import { useExerciseCatalog } from "../features/exercises/useExerciseCatalog.ts";
 import { useWorkoutSelection } from "../features/workouts/useWorkoutSelection.ts";
@@ -53,7 +52,6 @@ export default function Recommendations() {
         {menus.map((item, index) => <option key={item.part} value={index + 1}>おすすめメニュー{index + 1} {item.part}メニュー</option>)}
       </select>
       <p className="recommendations-note">説明はサンプルです。画像は準備中です。</p>
-      <p className="recommendations-note">{WORKOUT_MOCK_NOTICE}</p>
       {catalogError && <p className="recommendations-error" role="alert">{catalogError}</p>}
       {error && <p className="recommendations-error" role="alert">{error}</p>}
       {busy && <p className="recommendations-note" role="status">トレーニングを確認しています…</p>}
