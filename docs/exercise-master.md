@@ -15,4 +15,19 @@
 
 変更時は既存IDを維持し、関連・おすすめ対応を更新して `cd frontend` → `npm test` を実行してください。おすすめ理由・コメントと画像の仮枠は画面側にあります。おすすめキーを追加する場合は画面のメニュー構成と検証対象も合わせて更新します。
 
-現行の記録APIはこのファイルを参照せず、どの種目IDを送っても固定の `exercise-1`（ベンチプレス）を返します。例示IDに合わせてこのJSONのIDを書き換えません。種目DBモデル・seedは未実装です。将来、永続化APIを接続するときは、このファイルとDBのID・名称・関連を同期する仕様を確認し、既存IDを別の種目へ割り当てないようにします。
+記録APIはDBの種目マスターを参照します。存在しない種目IDの追加は404になります。モックの例示IDに合わせてJSONのIDを書き換えたり、既存IDを別の種目へ割り当てたりしないでください。
+
+## DBへの初期投入・更新
+
+リポジトリのルートで実行します。
+
+```bash
+docker compose exec -T backend python manage.py migrate
+docker compose exec -T backend python manage.py seed_exercises - < frontend/src/features/exercises/serverCatalogData.json
+```
+
+[seed_exercises](../backend/note/management/commands/seed_exercises.py)は、種目・部位・器具をUUIDで登録・更新し、対象種目の部位・器具との関連をJSONに一致させます。何度実行しても重複せず、既存の記録・セットやJSONにないマスターは削除しません。名称変更は同じUUIDの行へ反映するため、その種目を参照する過去の記録にも新しい名称が表示されます。
+
+JSONの形式・UUID・IDや部位/器具名の重複・参照先・名称の長さを検証し、不正なデータはエラーにします。DB更新は1トランザクションで行い、別UUIDで同じ部位/器具名が登録済みなどの競合時は全件ロールバックします。既存IDを名前一致で付け替えることはありません。おすすめの対応も検証しますが、DBには保存せずフロントで保持します。
+
+正本JSONを複製せず、標準入力でコンテナへ渡します。コンテナ内のファイルを使う場合は`python manage.py seed_exercises /path/to/catalog.json`も使用できます。本番も同じJSONを`docker compose -f compose.prod.yaml exec -T backend python manage.py seed_exercises -`の標準入力へ渡します。起動時の自動実行は行わないため、初回・マスター変更時に明示的に実行してください。

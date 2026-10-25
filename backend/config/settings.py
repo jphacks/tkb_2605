@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "core",
     "posts.apps.PostsConfig",
+    "note.apps.NoteConfig",
 ]
 
 MIDDLEWARE = [
