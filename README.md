@@ -153,3 +153,64 @@ VMへの入り方：Tailscaleで共有を受けて `ssh <自分のユーザー�
 4. `docker login ghcr.io` → `docker compose -f compose.prod.yaml --env-file .env up -d`
 5. `https://<PUBLIC_HOST>/api/health/` が `{"status":"ok","database":"ok"}` を返すことを確認
 6. 自宅が戻ったら、オーナーと相談するまで自宅側は起動しない（移行先のDBを自宅へ戻してから切り替える）
+
+
+### dbのユーザモデルの切り替え
+新しいユーザーモデルのコードを取り込む前に実施してください。
+
+#### 1. 旧コードで管理画面のマイグレーションを戻す
+
+```bash
+docker compose exec backend python manage.py migrate admin zero --plan
+```
+
+変更対象が `admin` だけであることを確認してから実行します。
+管理画面の操作履歴は削除されます。
+
+```bash
+docker compose exec backend python manage.py migrate admin zero
+```
+
+#### 2. 新しいコードをGitで取り込む
+
+`users/migrations/0001_initial.py` を含む変更を取り込んでください。
+受け取った側で `makemigrations` を実行する必要はありません。
+
+#### 3. 新しいユーザーテーブルを反映する
+
+```bash
+docker compose exec backend python manage.py migrate users --plan
+```
+
+想定外のアプリが含まれていなければ実行します。
+
+```bash
+docker compose exec backend python manage.py migrate users
+```
+
+#### 4. 管理画面のテーブルを作り直す
+
+```bash
+docker compose exec backend python manage.py migrate admin --plan
+```
+
+変更対象が `admin` だけなら実行します。
+
+```bash
+docker compose exec backend python manage.py migrate admin
+```
+
+#### 5. 確認する
+
+```bash
+docker compose exec backend python manage.py check
+docker compose exec backend python manage.py showmigrations users admin
+```
+
+チェックがエラーなしで終了し、表示されるマイグレーションが
+すべて `[X]` なら完了です。
+
+※ 初めてDBを作る環境では、この切り替え手順は不要です。
+※ すでに新しいコードを取り込んだ場合や、途中でエラーが出た場合は、
+そのまま進めず状況を確認してください。
+※ DBファイルやDockerボリューム全体を削除する必要はありません。

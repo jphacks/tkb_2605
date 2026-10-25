@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "core",
     "posts.apps.PostsConfig",
+    "users.apps.UsersConfig",
     "note.apps.NoteConfig",
 ]
 
@@ -113,3 +114,5 @@ LOGGING = {
     "handlers": {"console": {"class": "logging.StreamHandler"}},
     "root": {"handlers": ["console"], "level": os.environ.get("DJANGO_LOG_LEVEL", "INFO")},
 }
+
+AUTH_USER_MODEL = "users.User"
