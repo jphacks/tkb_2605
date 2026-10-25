@@ -16,8 +16,8 @@ export function parseSets(inputs: SetInput[]): RecordedSet[] {
     const repsText = input.reps.trim();
     const weight = Number(weightText);
     const reps = Number(repsText);
-    if (!/^\d+(?:\.\d)?$/.test(weightText) || !Number.isFinite(weight) || weight > Number.MAX_SAFE_INTEGER / 10) {
-      throw new Error(`セット${index + 1}の重量は、0以上・小数第1位までで入力してください。`);
+    if (!/^\d+(?:\.\d)?$/.test(weightText) || !Number.isFinite(weight) || weight > 99999.9) {
+      throw new Error(`セット${index + 1}の重量は、0〜99999.9・小数第1位までで入力してください。`);
     }
     if (!/^\d+$/.test(repsText) || !Number.isSafeInteger(reps) || reps < 1) {
       throw new Error(`セット${index + 1}の回数は、1以上の整数で入力してください。`);

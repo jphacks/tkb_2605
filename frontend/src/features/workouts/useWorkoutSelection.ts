@@ -36,8 +36,7 @@ export function useWorkoutSelection(from: SelectionScreen) {
       if (!active()) return;
       const added = await addWorkoutExercise(id, exerciseId);
       if (!active()) return;
-      // The mock always returns its sample exercise, regardless of selection.
-      // Use returned IDs consistently instead of pretending it added the master.
+      // Use the saved workout-exercise instance, not a client-generated ID.
       void navigate({
         pathname: workoutExercisePath(id, added.exercise_id),
         search: "?" + createSearchParams({ workoutExerciseId: added.workout_exercise_id, from }),

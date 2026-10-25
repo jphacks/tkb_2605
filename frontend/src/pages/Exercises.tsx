@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { WORKOUT_MOCK_NOTICE } from "../api/workouts.ts";
 import { Link } from "react-router";
 import { filterServerExercises } from "../features/exercises/serverCatalog.ts";
 import { useExerciseCatalog } from "../features/exercises/useExerciseCatalog.ts";
@@ -27,8 +26,6 @@ export default function Exercises() {
         <label className="block min-w-0"><span className="sr-only">部位</span><select value={bodyPartId} onChange={(event) => setBodyPartId(event.target.value)} disabled={!catalog} aria-label="部位" className="min-h-11 w-full rounded-xl border border-line bg-canvas px-3 text-sm text-ink disabled:cursor-not-allowed"><option value="">部位（すべて）</option>{catalog?.body_parts.map((part) => <option key={part.body_part_id} value={part.body_part_id}>{part.name}</option>)}</select></label>
         <label className="block min-w-0"><span className="sr-only">器具</span><select value={equipmentId} onChange={(event) => setEquipmentId(event.target.value)} disabled={!catalog} aria-label="器具" className="min-h-11 w-full rounded-xl border border-line bg-canvas px-3 text-sm text-ink disabled:cursor-not-allowed"><option value="">器具（すべて）</option>{catalog?.equipment.map((item) => <option key={item.equipment_id} value={item.equipment_id}>{item.name}</option>)}</select></label>
       </div>
-      <p className="mt-2 text-[11px] leading-5 text-muted">画像は準備中です。</p>
-      <p className="mt-2 text-xs leading-5 text-muted">{WORKOUT_MOCK_NOTICE}</p>
       {catalogError && <p role="alert" className="mt-3 text-sm text-error">{catalogError}</p>}
       {error && <p role="alert" className="mt-3 text-sm text-error">{error}</p>}
       {busy && <p role="status" className="mt-3 text-sm text-muted">トレーニングを確認しています…</p>}

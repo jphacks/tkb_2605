@@ -1,6 +1,5 @@
 // HTTP contract: https://github.com/jphacks/tkb_2605/issues/31
-// Current endpoints return fixed samples, ignore request bodies, and do not persist.
-export const WORKOUT_MOCK_NOTICE = "現在は動作確認用のサンプルが表示されます。選択した種目や入力内容、終了状態は保存されません。";
+// DB-backed implementation: PR #44. Same URLs, authenticated session, persisted state.
 export type Workout = { workout_id: string; user_id: number; performed_at: string; is_completed: boolean };
 export type WorkoutExercise = { workout_exercise_id: string; workout_id: string; exercise_id: string; display_name: string; position: number };
 export type WorkoutSetInput = { set_number: number; reps: number; weight: string };
@@ -30,7 +29,7 @@ export class WorkoutApiError extends Error {
 function object(value: unknown): value is Record<string, unknown> { return value !== null && typeof value === "object" && !Array.isArray(value); }
 function id(value: unknown): value is string { return typeof value === "string" && value.trim().length > 0; }
 function positiveInt(value: unknown): value is number { return typeof value === "number" && Number.isSafeInteger(value) && value >= 1; }
-function weight(value: unknown): value is string { return typeof value === "string" && /^\d+(?:\.\d)?$/.test(value); }
+function weight(value: unknown): value is string { return typeof value === "string" && /^\d+(?:\.\d)?$/.test(value) && Number(value) <= 99999.9; }
 function unique(values: readonly (string | number)[]): boolean { return new Set(values).size === values.length; }
 function ascending(values: readonly number[]): boolean { return values.every((value, index) => index === 0 || values[index - 1] < value); }
 function validWorkout(value: unknown): value is Workout {
@@ -82,7 +81,7 @@ function requestHeaders(write: boolean): Headers {
   }
   return headers;
 }
-const uncertainMessage = "応答を確認できませんでした。接続を確認して再試行してください。";
+const uncertainMessage = "応答を確認できませんでした。保存済みの可能性があります。記録を再取得して確認してください。";
 function invalidResponse(write: boolean, status?: number, cause?: unknown): WorkoutApiError {
   return new WorkoutApiError("記録APIの応答形式を確認できませんでした。" + (write ? uncertainMessage : ""), {
     kind: "response", writeOutcome: write ? "unknown" : undefined, status, cause,
@@ -94,10 +93,9 @@ async function request(url: string, method: "GET" | "POST" | "PATCH", expectedSt
   const write = method !== "GET";
   let response: Response;
   try {
-    // No automatic retries. A response confirms only the current mock operation,
-    // never database persistence or an authenticated user's identity.
+    // Never automatically repeat a write: a lost response may have committed to the DB.
     response = await fetch(url, { method, credentials: "same-origin", redirect: "error", headers: requestHeaders(write),
-      ...(write ? { body: JSON.stringify(body) } : {}), ...(signal ? { signal } : {}) });
+      cache: "no-store", ...(write ? { body: JSON.stringify(body) } : {}), signal: signal ? AbortSignal.any([signal, AbortSignal.timeout(10_000)]) : AbortSignal.timeout(10_000) });
   } catch (cause) {
     if (!write && isAbort(cause)) throw cause;
     throw new WorkoutApiError(write ? uncertainMessage : "記録を取得できませんでした。接続を確認して再試行してください。", {
@@ -108,7 +106,11 @@ async function request(url: string, method: "GET" | "POST" | "PATCH", expectedSt
     const unknown = write && (response.status >= 500 || response.status === 408);
     const message = response.status === 401 || response.status === 403
       ? "記録機能を利用するにはログイン状態の確認が必要です。"
-      : response.status === 404 || response.status === 405 || response.status === 501
+      : response.status === 409
+        ? "このトレーニングは終了済みです。記録を再取得して確認してください。"
+      : response.status === 404
+        ? "記録または種目が見つかりません。対象とログイン中のアカウントを確認してください。"
+      : response.status === 405 || response.status === 501
         ? "記録APIにまだ接続できません。時間をおいて再試行してください。"
         : `記録APIでエラーが発生しました（${response.status}）。`;
     throw new WorkoutApiError(message + (unknown ? uncertainMessage : ""), {
@@ -133,7 +135,7 @@ export async function addWorkoutExercise(workoutId: string, exerciseId: string):
   const url = `/api/workouts/${encodedId(workoutId)}/exercises/`;
   encodedId(exerciseId);
   const value = await request(url, "POST", 201, { exercise_id: exerciseId });
-  if (!object(value) || !validExerciseFields(value) || !("workout_id" in value) || value.workout_id !== workoutId) {
+  if (!object(value) || !validExerciseFields(value) || !("workout_id" in value) || value.workout_id !== workoutId || value.exercise_id !== exerciseId) {
     throw invalidResponse(true, 201);
   }
   return value as WorkoutExercise;
@@ -144,11 +146,12 @@ export async function saveWorkoutSets(workoutExerciseId: string, sets: readonly 
   if (!Array.isArray(sets) || !sets.length || !sets.every(validSetInput) || !unique(sets.map((set) => set.set_number))) {
     throw new WorkoutApiError("セットを1つ以上指定し、セット番号・回数は1以上の整数、重量は0以上・小数第1位までの文字列で入力してください。", { kind: "input", writeOutcome: "not-sent" });
   }
-  // This is the frontend's input format, not a request contract enforced by the
-  // current backend. It returns fixed sets regardless of these values or count.
+  // The backend atomically replaces all sets for this workout-exercise instance.
   const sent = sets.map(({ set_number, reps, weight }) => ({ set_number, reps, weight }));
   const value = await request(url, "POST", 201, { sets: sent });
-  if (!object(value) || value.workout_exercise_id !== workoutExerciseId || !validSets(value.sets, false, false)) {
+  const returnedSets = object(value) ? value.sets : null;
+  if (!object(value) || value.workout_exercise_id !== workoutExerciseId || !validSets(returnedSets, false, true) || returnedSets.length !== sent.length
+    || sent.some((input) => !returnedSets.some((set) => set.set_number === input.set_number && set.reps === input.reps && Number(set.weight) === Number(input.weight)))) {
     throw invalidResponse(true, 201);
   }
   return value as WorkoutSets;

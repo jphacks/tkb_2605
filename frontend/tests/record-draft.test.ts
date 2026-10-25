@@ -22,7 +22,7 @@ test("valid decimal weights and positive integer reps become consecutive set num
 
 test("empty, negative, fractional reps and unsupported weights are rejected", () => {
   for (const reps of ["", " ", "0", "-1", "1.5", "NaN", "Infinity"]) assert.throws(() => parseSets([{ id: "a", weight: "0", reps }]), /回数/);
-  for (const weight of ["", "-1", "0.12", "NaN", "Infinity", "1e3"]) assert.throws(() => parseSets([{ id: "a", weight, reps: "8" }]), /重量/);
+  for (const weight of ["", "-1", "0.12", "NaN", "Infinity", "1e3", "100000"]) assert.throws(() => parseSets([{ id: "a", weight, reps: "8" }]), /重量/);
   assert.throws(() => parseSets([]), /1つ以上/);
 });
 
