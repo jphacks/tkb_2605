@@ -41,3 +41,8 @@
 .notification-send-error { margin: 12px; padding: 12px; background: var(--error-soft); color: var(--error); font-size: 12px; }
 .feed-tabs button { display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
 .notifications-toolbar h2 { font-size: 14px; font-weight: 700; }
+
+.post-detail-home { margin-left:auto; color:var(--brand); font-size:13px; }
+.post-detail-page .post-text { white-space:pre-wrap; overflow-wrap:anywhere; margin-top:16px; }
+.post-detail-note { margin-top:24px; color:var(--muted); font-size:12px; }
+.post-detail-page .notifications-error a { display:inline-block; margin:12px; text-decoration:underline; }

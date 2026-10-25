@@ -59,8 +59,8 @@ export default function Compose() {
       : { post_type: 1, content: message };
 
     try {
-      await createPost(input, controller.signal);
-      if (!controller.signal.aborted) returnToBackground();
+      const created = await createPost(input, controller.signal);
+      if (!controller.signal.aborted) void navigate("/posts/" + encodeURIComponent(created.post_id), { replace: true });
     } catch (cause: unknown) {
       if (!controller.signal.aborted) {
         setError(cause instanceof Error && cause.name !== "TypeError"
