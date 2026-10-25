@@ -33,3 +33,4 @@ class Like(models.Model):
     
     # あとでForeignKeyに変更する
     user_id = models.CharField(max_length=100)
+    
