@@ -44,6 +44,14 @@ def get_user_new_posts(user_id: str, limit: int, offset: int) -> QuerySet[Posts]
 def post_exists(post_id: str) -> bool:
     return Posts.objects.filter(post_id=post_id).exists()
 
+# 全ユーザーの投稿を新しい順に取得
+def get_all_new_posts(limit: int, offset: int) -> QuerySet[Posts]:
+    return get_new_posts(
+        Posts.objects.all(),
+        limit=limit,
+        offset=offset,
+    )
+
 # いいねする
 def like_post(user_id: str, post_id: str) -> Like:
     like, _ = Like.objects.get_or_create(

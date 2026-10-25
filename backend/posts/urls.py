@@ -10,7 +10,7 @@ urlpatterns = urlpatterns = [
         name="get_user_posts",
     ),
     path(
-        "posts/<str:post_id>/like/",
+        "posts/<uuid:post_id>/like/",
         views.like_post,
         name="like_post",
     ),
