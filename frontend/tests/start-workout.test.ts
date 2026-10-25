@@ -81,3 +81,22 @@ test("preview exit invalidates old callbacks and isolates a new pending start", 
   finish(response(workout));
   assert.deepEqual(await old, workout);
 });
+
+test("only a successful new workout sends one start notification for concurrent clicks", async () => {
+  respond(workout);
+  let sent = 0;
+  const onStarted = async () => { sent++; };
+  await Promise.all([startWorkout({ onStarted }), startWorkout({ onStarted })]);
+  assert.equal(sent, 1);
+  respond({}, 403);
+  await assert.rejects(startWorkout({ onStarted }));
+  assert.equal(sent, 1);
+});
+test("preview exit before creation completes does not emit a late start notification", async () => {
+  let finish!: (value: Response) => void;
+  let sent = 0;
+  globalThis.fetch = () => new Promise((resolve) => { finish = resolve; });
+  const starting = startWorkout({ onStarted: async () => { sent++; } });
+  clearWorkoutSession(); finish(response(workout)); await starting;
+  assert.equal(sent, 0);
+});

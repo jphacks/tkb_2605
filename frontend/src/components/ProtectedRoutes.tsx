@@ -1,10 +1,15 @@
 import { Navigate, Outlet, useLocation } from "react-router";
 import { paths } from "../routes.ts";
+import { useAuth } from "../features/auth/useAuth.ts";
+import { refreshSession } from "../features/auth/session.ts";
 
-export default function ProtectedRoutes({ allowAccess }: { allowAccess: boolean }) {
+export default function ProtectedRoutes() {
   const location = useLocation();
+  const auth = useAuth();
+  if (auth.status === "loading") return <main className="auth-status" role="status">ログイン状態を確認しています…</main>;
+  if (auth.status === "error") return <main className="auth-status"><p role="alert">{auth.error}</p><button className="primary-button" onClick={() => void refreshSession()}>再試行</button></main>;
 
-  if (!allowAccess) {
+  if (auth.status !== "authenticated") {
     return (
       <Navigate
         to={paths.login}
@@ -14,5 +19,5 @@ export default function ProtectedRoutes({ allowAccess }: { allowAccess: boolean 
     );
   }
 
-  return <Outlet />;
+  return <Outlet key={auth.revision} />;
 }

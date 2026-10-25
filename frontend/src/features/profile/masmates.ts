@@ -1,6 +1,10 @@
 // Preview-only, undirected relationships. Replace with server state when the API is available.
 const relationships = new Set<string>();
 const listeners = new Set<() => void>();
+export function clearPreviewMasmates() {
+  relationships.clear();
+  listeners.forEach((listener) => listener());
+}
 
 function pairKey(firstId: string, secondId: string): string | null {
   if (!firstId.trim() || !secondId.trim() || firstId === secondId) return null;

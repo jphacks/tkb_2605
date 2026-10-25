@@ -1,3 +1,4 @@
+import { apiFetch, authenticatedUserId } from "./http.ts";
 // HTTP contract: https://github.com/jphacks/tkb_2605/issues/31
 // DB-backed implementation: PR #44. Same URLs, authenticated session, persisted state.
 export type Workout = { workout_id: string; user_id: number; performed_at: string; is_completed: boolean };
@@ -94,7 +95,7 @@ async function request(url: string, method: "GET" | "POST" | "PATCH", expectedSt
   let response: Response;
   try {
     // Never automatically repeat a write: a lost response may have committed to the DB.
-    response = await fetch(url, { method, credentials: "same-origin", redirect: "error", headers: requestHeaders(write),
+    response = await apiFetch(url, { method, credentials: "same-origin", redirect: "error", headers: requestHeaders(write),
       cache: "no-store", ...(write ? { body: JSON.stringify(body) } : {}), signal: signal ? AbortSignal.any([signal, AbortSignal.timeout(10_000)]) : AbortSignal.timeout(10_000) });
   } catch (cause) {
     if (!write && isAbort(cause)) throw cause;
@@ -127,7 +128,7 @@ async function request(url: string, method: "GET" | "POST" | "PATCH", expectedSt
 
 export async function createWorkout(): Promise<Workout> {
   const value = await request("/api/workouts/", "POST", 201, {});
-  if (!validWorkout(value) || value.is_completed) throw invalidResponse(true, 201);
+  if (!validWorkout(value) || (authenticatedUserId() !== null && String(value.user_id) !== authenticatedUserId()) || value.is_completed) throw invalidResponse(true, 201);
   return value;
 }
 
@@ -159,12 +160,12 @@ export async function saveWorkoutSets(workoutExerciseId: string, sets: readonly 
 
 export async function fetchWorkout(workoutId: string, { signal }: { signal?: AbortSignal } = {}): Promise<WorkoutDetail> {
   const value = await request(`/api/workouts/${encodedId(workoutId)}/`, "GET", 200, undefined, signal);
-  if (!validDetail(value) || value.workout_id !== workoutId) throw invalidResponse(false, 200);
+  if (!validDetail(value) || (authenticatedUserId() !== null && String(value.user_id) !== authenticatedUserId()) || value.workout_id !== workoutId) throw invalidResponse(false, 200);
   return value;
 }
 
 export async function completeWorkout(workoutId: string): Promise<Workout> {
   const value = await request(`/api/workouts/${encodedId(workoutId)}/`, "PATCH", 200, { is_completed: true });
-  if (!validWorkout(value) || value.workout_id !== workoutId || !value.is_completed) throw invalidResponse(true, 200);
+  if (!validWorkout(value) || (authenticatedUserId() !== null && String(value.user_id) !== authenticatedUserId()) || value.workout_id !== workoutId || !value.is_completed) throw invalidResponse(true, 200);
   return value;
 }
