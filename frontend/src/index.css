@@ -57,8 +57,9 @@ svg { flex-shrink: 0; }
 .account-link > svg { margin-left: auto; color: var(--muted); }
 .main-column { position: relative; min-width: 0; background: white; border-left: 1px solid var(--line); border-right: 1px solid var(--line); }
 .preview-exit { position: absolute; z-index: 1; top: 12px; right: 124px; padding: 2px 0; background: transparent; color: var(--muted); font-size: 10px; text-decoration: underline; }
+.home-page { display: flex; flex-direction: column; min-height: 100dvh; }
 /* Keep controls usable on short screens; the timeline gets roughly two thirds of the available height in portrait. */
-.home-top { --home-header-height: 44px; --chest-height: 64px; --home-top-height: clamp(180px, calc(100dvh / 3), 224px); height: var(--home-top-height); display: grid; grid-template-rows: var(--home-header-height) minmax(0, 1fr); }
+.home-top { --home-header-height: 44px; --chest-height: 64px; --home-top-height: clamp(180px, calc(100dvh / 3), 224px); height: var(--home-top-height); flex-shrink: 0; display: grid; grid-template-rows: var(--home-header-height) minmax(0, 1fr); }
 .home-header { display: flex; align-items: center; justify-content: space-between; padding: 0 24px; background: var(--surface); }
 .home-header h1 { display: flex; align-items: center; gap: 10px; font-size: 16px; font-weight: 750; letter-spacing: .05em; }
 .home-header h1 > span { color: var(--muted); font-size: 9px; letter-spacing: .18em; font-weight: 500; }
@@ -83,7 +84,8 @@ svg { flex-shrink: 0; }
 .training-start:hover { background: var(--brand-hover); box-shadow: 0 6px 18px var(--brand-shadow-strong); }
 .training-recommended { color: var(--brand); background: var(--brand-subtle); border: 1px solid var(--brand-border); }
 .training-recommended:hover { background: var(--brand-subtle-hover); }
-.timeline-section { min-height: calc(100dvh * 2 / 3); }
+/* Fill the remaining viewport, but let longer feeds scroll naturally. Reserve room for the compose button. */
+.timeline-section { flex: 1; min-width: 0; padding-bottom: calc(96px + env(safe-area-inset-bottom)); }
 .timeline-heading { display: flex; align-items: center; justify-content: space-between; padding: 10px 28px 2px; }
 .timeline-heading h2 { display: flex; align-items: center; gap: 12px; font-size: 15px; font-weight: 700; }
 .timeline-heading h2 > span { font-size: 8px; letter-spacing: .16em; font-weight: 500; color: var(--muted); }
@@ -145,7 +147,8 @@ a.post-content:hover { color: var(--brand); }
 .tip-card a { display: flex; justify-content: space-between; align-items: center; font-size: 10px; font-weight: 600; color: var(--brand); margin-top: 20px; padding-top: 15px; border-top: 1px solid var(--line); }
 .sidebar-footnote { margin: 25px 6px; font-size: 9px; color: var(--muted); line-height: 2; }
 .sidebar-footnote span { font-size: 8px; letter-spacing: .1em; }
-.floating-compose { position: fixed; bottom: 30px; right: max(28px, calc((100vw - 1230px) / 2 + 290px)); z-index: 10; display: grid; place-items: center; width: 56px; height: 56px; background: var(--brand); color: white; border-radius: 50%; box-shadow: 0 5px 18px var(--brand-shadow); }
+/* Align inside the main column: shell padding + right sidebar + gap + 20px inset. */
+.floating-compose { position: fixed; bottom: calc(30px + env(safe-area-inset-bottom)); right: calc(max(0px, (100vw - 1230px) / 2) + 12px + 260px + 28px + 20px); z-index: 10; display: grid; place-items: center; width: 56px; height: 56px; background: var(--brand); color: white; border-radius: 50%; box-shadow: 0 5px 18px var(--brand-shadow); }
 .floating-compose:hover { background: var(--brand-hover); box-shadow: 0 5px 18px var(--brand-shadow-strong); }
 .empty-state { display: flex; align-items: center; flex-direction: column; gap: 13px; text-align: center; padding: 55px 25px; }
 .empty-state > svg { color: var(--muted); }
@@ -160,7 +163,7 @@ a.post-content:hover { color: var(--brand); }
 @media (max-width: 1199px) {
   .app-shell { grid-template-columns: 185px minmax(0, 680px); max-width: 920px; gap: 25px; padding: 0 15px; }
   .right-sidebar { display: none; }
-  .floating-compose { right: max(27px, calc((100vw - 920px) / 2 + 28px)); }
+  .floating-compose { right: calc(max(0px, (100vw - 920px) / 2) + 15px + 20px); }
   .brand { font-size: 20px; }
   .desktop-nav a { padding-left: 12px; }
 }
@@ -168,7 +171,7 @@ a.post-content:hover { color: var(--brand); }
   body { background: white; }
   .app-shell { display: block; padding: 0; max-width: 100%; }
   .sidebar, .right-sidebar { display: none; }
-  .main-column { border: 0; min-height: 100dvh; padding-bottom: calc(20px + env(safe-area-inset-bottom)); }
+  .main-column { border: 0; min-height: 100dvh; }
   .home-header { padding: 0 16px; }
   .preview-exit { right: 116px; }
   .training-button > svg { display: none; }

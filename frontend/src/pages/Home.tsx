@@ -40,7 +40,7 @@ export default function Home() {
     }
   }
 
-  return <>
+  return <div className="home-page">
     <div className="home-top">
     <header className="home-header">
       <h1><span>HOME</span></h1>
@@ -85,5 +85,5 @@ export default function Home() {
       </div>
       {feed === "notifications" && <p className="feed-note" role="status">通知は準備中です。</p>}
     </section>
-  </>;
+  </div>;
 }
