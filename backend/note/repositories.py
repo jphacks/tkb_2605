@@ -100,7 +100,7 @@ def get_workout_detail(user_id: int, workout_id: UUID | str) -> Workout:
     )
     return Workout.objects.prefetch_related(
         Prefetch("exercises", queryset=exercises)
-    ).get(workout_id=workout_id, user_id=user_id)
+    ).get(workout_id=workout_id)
 
 
 @transaction.atomic
