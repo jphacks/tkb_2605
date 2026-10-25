@@ -1,4 +1,6 @@
 import { useState } from "react";
+import Notifications from "./pages/Notifications.tsx";
+import NotificationProvider from "./features/notifications/NotificationProvider.tsx";
 import { Route, Routes, useLocation } from "react-router";
 import ProtectedRoutes from "./components/ProtectedRoutes.tsx";
 import type { ComposeLocationState } from "./features/posts/navigation.ts";
@@ -36,7 +38,7 @@ export default function App() {
   }
 
   return (
-    <>
+    <NotificationProvider enabled={allowPreview}>
       <Routes location={backgroundLocation ?? location}>
         <Route path={paths.login} element={<Login onPreview={() => setPreviewEnabled(true)} />} />
         <Route element={<ProtectedRoutes allowAccess={allowPreview} />}>
@@ -46,7 +48,7 @@ export default function App() {
           </Route>
           <Route element={<AppLayout onExitPreview={exitPreview} />}>
             <Route path="/posts/:postId" element={<HomeDestination title="投稿詳細・返信" />} />
-            <Route path="/notifications" element={<HomeDestination title="通知" />} />
+            <Route path={paths.notifications} element={<Notifications />} />
             <Route path="/settings" element={<HomeDestination title="設定" />} />
             <Route path={paths.profile} element={<Profile />} />
             <Route path={paths.profileEdit} element={<ProfileEditPlaceholder />} />
@@ -66,6 +68,6 @@ export default function App() {
           </Route>
         </Routes>
       )}
-    </>
+    </NotificationProvider>
   );
 }
