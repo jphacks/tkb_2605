@@ -98,11 +98,6 @@
   overflow-wrap: anywhere;
 }
 
-.workout-results-set-number {
-  color: var(--muted);
-  font-size: 11px;
-}
-
 .workout-results-sets li:not(:last-child) {
   padding-inline-end: 6px;
   border-inline-end: 1px solid var(--brand-line);
